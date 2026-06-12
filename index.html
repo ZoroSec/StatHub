@@ -792,7 +792,7 @@ function showToast(msg) {
 // ──────────────────────────────────────────────
 function buildChart(ds, width, height, interactive = false) {
   if (!ds.data || ds.data.length === 0) return "";
-  const pad = { top:8, right:8, bottom:28, left:36 };
+  const pad = { top:8, right:8, bottom:28, left:52 };
   const W = width - pad.left - pad.right;
   const H = height - pad.top - pad.bottom;
   const vals = ds.data.map(d => d.value);
@@ -808,7 +808,7 @@ function buildChart(ds, width, height, interactive = false) {
   const accent = ds.accent || "#6366f1";
 
   // Grid + axes
-  const gridLines = 4;
+  const gridLines = 3;
   let grid = "";
   let yLabels = "";
   for (let i = 0; i <= gridLines; i++) {
