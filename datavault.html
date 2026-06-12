@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Datavault</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    background: #0a0a0f;
+    color: #e2e8f0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+  input, textarea, select, button { font-family: inherit; }
+  input::placeholder, textarea::placeholder { color: #334155; }
+  select option { background: #111118; }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0a0a0f; }
+  ::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 3px; }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%,60%  { transform: translateX(-8px); }
+    40%,80%  { transform: translateX(8px); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── Utility ── */
+  .fade-up   { animation: fadeUp 0.3s ease both; }
+  .fade-in   { animation: fadeIn 0.25s ease both; }
+  .hidden    { display: none !important; }
+
+  /* ── NAV ── */
+  #nav {
+    border-bottom: 1px solid #1e1e2e;
+    padding: 0 32px;
+  }
+  #nav-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #nav-logo { font-size: 16px; font-weight: 700; color: #f1f5f9; letter-spacing: -0.3px; }
+  #nav-right { display: flex; align-items: center; gap: 16px; }
+  #nav-count  { font-size: 12px; color: #334155; }
+
+  /* ── MAIN ── */
+  #main { max-width: 820px; margin: 0 auto; padding: 48px 20px 60px; }
+
+  /* ── HERO ── */
+  #hero { text-align: center; margin-bottom: 48px; }
+  #hero h1 { font-size: 36px; font-weight: 800; color: #f1f5f9; letter-spacing: -1px; margin-bottom: 12px; }
+  #hero p  { color: #475569; font-size: 14px; margin-bottom: 28px; }
+
+  /* ── SEARCH ── */
+  #search-wrap { position: relative; max-width: 480px; margin: 0 auto; }
+  #search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #334155; pointer-events: none; }
+  #search-input {
+    width: 100%;
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 10px;
+    padding: 12px 14px 12px 38px;
+    font-size: 14px;
+    color: #e2e8f0;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  #search-input:focus { border-color: #6366f1; }
+  #search-results {
+    max-width: 480px;
+    margin: 10px auto 0;
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .search-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #1e1e2e;
+    cursor: pointer;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    transition: background 0.1s;
+  }
+  .search-item:hover { background: #1a1a26; }
+  .search-item:last-child { border-bottom: none; }
+  .search-item-title { font-size: 13px; color: #e2e8f0; font-weight: 500; }
+  .search-item-sub   { font-size: 11px; color: #475569; }
+  #search-empty { padding: 14px 16px; color: #334155; font-size: 13px; }
+
+  /* ── CATEGORY PILLS ── */
+  #cat-pills { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+  .cat-pill {
+    background: #111118;
+    color: #475569;
+    border: 1px solid #1e1e2e;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .cat-pill.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+  .cat-pill-count  { font-size: 11px; opacity: 0.6; }
+
+  /* ── CARDS GRID ── */
+  #cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ds-card {
+    background: #111118;
+    border: 1px solid #1e1e2e;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+  .ds-card:hover { transform: translateY(-1px); }
+  .ds-card-source { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .ds-card-title  { font-size: 15px; font-weight: 600; color: #f1f5f9; margin-bottom: 6px; }
+  .ds-card-sub    { font-size: 12px; color: #475569; margin-bottom: 18px; }
+  .ds-card-chart  { height: 70px; margin-bottom: 14px; }
+  .ds-card-tags   { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px;
+    background: #1e1e2e;
+    color: #475569;
+    border-radius: 5px;
+    padding: 3px 8px;
+  }
+  .tag-accent { background: transparent; }
+
+  /* ── EMPTY STATE ── */
+  #empty-state { text-align: center; padding: 60px 0; }
+  #empty-state p { color: #334155; font-size: 14px; margin-bottom: 12px; }
+
+  /* ── DATASET PAGE ── */
+  #ds-page { max-width: 820px; margin: 0 auto; animation: fadeUp 0.25s ease; padding: 32px 20px 60px; }
+  #ds-back { background: none; border: none; color: #475569; font-size: 13px; cursor: pointer; margin-bottom: 24px; padding: 0; display: flex; align-items: center; gap: 6px; }
+  #ds-back:hover { color: #94a3b8; }
+  #ds-source  { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  #ds-title   { font-size: 26px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; letter-spacing: -0.5px; }
+  #ds-subtitle{ color: #475569; font-size: 13px; margin-bottom: 28px; }
+  #ks-row     { display: grid; gap: 10px; margin-bottom: 20px; }
+  .ks-card    { background: #111118; border: 1px solid #1e1e2e; border-radius: 10px; padding: 16px 18px; }
+  .ks-val     { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ks-lbl     { font-size: 11px; color: #475569; margin-top: 4px; }
+  #ticker-row { display: flex; gap: 10px; margin-bottom: 20px; }
+  .ticker-cell{ flex: 1; background: #111118; border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 14px; text-align: center; }
+  .ticker-val { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ticker-lbl { font-size: 10px; color: #334155; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
+  #chart-box  { border-radius: 14px; padding: 24px 20px 16px; margin-bottom: 20px; }
+  #chart-box-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  #chart-box-lbl { font-size: 11px; color: #334155; text-transform: uppercase; letter-spacing: 0.1em; }
+  #chart-box-hint{ font-size: 11px; opacity: 0.6; }
+  #ds-bottom  { display: grid; gap: 16px; }
+  .report-box { background: #111118; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px 22px; }
+  .report-box-lbl{ font-size: 11px; color: #334155; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .report-text{ font-size: 13px; color: #94a3b8; line-height: 1.8; }
+  .insights-list { display: flex; flex-direction: column; gap: 12px; }
+  .insight-item  { display: flex; gap: 10px; animation: fadeUp 0.3s ease both; }
+  .insight-bullet{ flex-shrink: 0; margin-top: 1px; }
+  .insight-text  { font-size: 13px; color: #94a3b8; line-height: 1.65; }
+
+  /* ── TOOLTIP ── */
+  #chart-tooltip {
+    position: fixed;
+    background: #0d0d14;
+    border-radius: 10px;
+    padding: 10px 16px;
+    pointer-events: none;
+    z-index: 1000;
+    min-width: 100px;
+    display: none;
+  }
+  #tt-label { color: #475569; font-size: 11px; margin-bottom: 4px; }
+  #tt-value { font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
+
+  /* ── SVG CHARTS ── */
+  .chart-svg { width: 100%; height: 100%; overflow: visible; }
+  .chart-axis-text { font-size: 11px; fill: #334155; }
+  .chart-grid-line { stroke: #1a1a26; stroke-dasharray: 3 3; }
+  .chart-bar { transition: opacity 0.1s; }
+  .chart-bar:hover { opacity: 1 !important; }
+  .chart-dot { transition: r 0.1s; }
+
+  /* ── PASSWORD GATE ── */
+  #pw-gate {
+    position: fixed; inset: 0;
+    background: #0a0a0f;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200;
+  }
+  #pw-box { width: 320px; }
+  #pw-icon-wrap {
+    width: 48px; height: 48px;
+    background: #111118; border: 1px solid #1e1e2e; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; font-size: 22px;
+  }
+  #pw-title { font-size: 16px; font-weight: 700; color: #f1f5f9; text-align: center; }
+  #pw-hint  { font-size: 13px; color: #475569; margin-top: 6px; text-align: center; margin-bottom: 32px; }
+  #pw-input {
+    width: 100%;
+    background: #111118; border: 1px solid #1e1e2e; border-radius: 10px;
+    padding: 12px 16px; font-size: 14px; color: #e2e8f0; outline: none;
+    margin-bottom: 10px; transition: border-color 0.15s;
+  }
+  #pw-input:focus { border-color: #6366f1; }
+  #pw-input.error { border-color: #f87171; }
+  #pw-err { font-size: 12px; color: #f87171; margin-bottom: 10px; }
+  #pw-submit {
+    width: 100%; background: #6366f1; color: #fff; border: none;
+    border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  #pw-submit:disabled { background: #111118; color: #334155; border: 1px solid #1e1e2e; cursor: not-allowed; }
+
+  /* ── ADMIN PANEL ── */
+  #admin-panel {
+    position: fixed; inset: 0;
+    background: #0a0a0f;
+    z-index: 100;
+    overflow-y: auto;
+  }
+  #admin-nav {
+    border-bottom: 1px solid #1e1e2e; padding: 0 32px;
+    position: sticky; top: 0; background: #0a0a0f; z-index: 50;
+  }
+  #admin-nav-inner {
+    max-width: 920px; margin: 0 auto; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  #admin-nav-left { display: flex; align-items: center; gap: 12px; }
+  #admin-back-btn { background: none; border: none; color: #475569; cursor: pointer; font-size: 13px; padding: 0; }
+  #admin-back-btn:hover { color: #94a3b8; }
+  #admin-divider  { color: #1e1e2e; }
+  #admin-title-lbl{ font-size: 14px; font-weight: 600; color: #f1f5f9; }
+  #admin-auth-badge { font-size: 11px; background: #6366f120; color: #6366f1; border-radius: 4px; padding: 2px 7px; }
+  #admin-content  { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* admin list */
+  #admin-list-header { font-size: 11px; color: #334155; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 20px; }
+  #admin-ds-list  { display: flex; flex-direction: column; gap: 10px; }
+  .admin-ds-row {
+    background: #111118; border: 1px solid #1e1e2e; border-radius: 10px;
+    padding: 16px 20px; display: flex; align-items: center; gap: 16px;
+  }
+  .admin-ds-dot    { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .admin-ds-info   { flex: 1; }
+  .admin-ds-name   { font-size: 14px; font-weight: 600; color: #f1f5f9; }
+  .admin-ds-meta   { font-size: 11px; color: #475569; margin-top: 2px; }
+  .admin-ds-sparkline { width: 80px; height: 36px; }
+  .admin-ds-actions{ display: flex; gap: 8px; }
+  .btn-edit {
+    background: #1e1e2e; border: none; color: #94a3b8;
+    border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer;
+  }
+  .btn-edit:hover { background: #2a2a3e; }
+  .btn-delete {
+    background: transparent; border: 1px solid #3f1212; color: #f87171;
+    border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer;
+  }
+  .btn-delete:hover { background: #3f121220; }
+  #admin-empty { text-align: center; color: #334155; padding: 60px 0; }
+  .btn-add {
+    background: #6366f1; color: #fff; border: none;
+    border-radius: 8px; padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .btn-add:hover { background: #5254cc; }
+
+  /* admin form */
+  #admin-form-header { font-size: 16px; font-weight: 700; color: #f1f5f9; margin-bottom: 24px; }
+  #form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .field { margin-bottom: 16px; }
+  .field-label { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .field-hint  { font-size: 11px; color: #334155; margin-top: 4px; }
+  .inp {
+    background: #0d0d14; border: 1px solid #1e1e2e; border-radius: 8px;
+    padding: 9px 12px; font-size: 13px; color: #e2e8f0; outline: none;
+    width: 100%; transition: border-color 0.15s;
+  }
+  .inp:focus { border-color: #6366f1; }
+  .sel { cursor: pointer; }
+  .inp-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .inp-3col { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .accent-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .accent-swatch {
+    width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; transition: transform 0.1s;
+  }
+  .accent-swatch:hover { transform: scale(1.2); }
+  .accent-swatch.active { border-color: #fff; }
+  #form-preview-wrap {
+    background: #111118; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;
+  }
+  #form-preview-lbl { font-size: 11px; color: #334155; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  #form-preview-chart { height: 140px; }
+  .form-btns { display: flex; gap: 10px; }
+  .btn-save {
+    flex: 1; background: #6366f1; color: #fff; border: none;
+    border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .btn-save:hover { background: #5254cc; }
+  .btn-cancel {
+    background: #1e1e2e; color: #94a3b8; border: none;
+    border-radius: 8px; padding: 11px 20px; font-size: 13px; cursor: pointer;
+  }
+  .btn-cancel:hover { background: #2a2a3e; }
+  .btn-all-ds { background: #1e1e2e; color: #94a3b8; border: none; border-radius: 8px; padding: 7px 14px; font-size: 13px; cursor: pointer; }
+  .btn-all-ds:hover { background: #2a2a3e; }
+
+  /* ── IMAGE-TO-CHART ── */
+  #img2chart-wrap {
+    background: #0d0d14; border: 1px solid #1e1e2e; border-radius: 14px;
+    padding: 20px; margin-bottom: 24px;
+  }
+  #img2chart-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  #img2chart-lbl  { font-size: 12px; color: #6366f1; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  #img2chart-badge{ font-size: 10px; background: #6366f120; color: #6366f1; border-radius: 4px; padding: 2px 7px; }
+  #img2chart-desc { font-size: 12px; color: #475569; margin-bottom: 16px; line-height: 1.6; }
+  #img-dropzone {
+    border: 1px dashed #1e1e2e; border-radius: 10px; padding: 28px;
+    text-align: center; cursor: pointer; transition: all 0.15s;
+  }
+  #img-dropzone:hover { border-color: #6366f1; background: #6366f108; }
+  #img-dropzone-icon  { font-size: 28px; margin-bottom: 8px; }
+  #img-dropzone-text  { font-size: 13px; color: #475569; }
+  #img-dropzone-hint  { font-size: 11px; color: #334155; margin-top: 4px; }
+  #img-file-input { display: none; }
+  #img-preview-wrap { position: relative; margin-bottom: 12px; }
+  #img-preview-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px; background: #111118; border: 1px solid #1e1e2e; }
+  #img-clear-btn { position: absolute; top: 8px; right: 8px; background: #1e1e2e; border: none; color: #94a3b8; border-radius: 6px; padding: 4px 8px; font-size: 11px; cursor: pointer; }
+  #img-err { font-size: 12px; color: #f87171; margin-bottom: 10px; line-height: 1.5; }
+  #img-extract-btn {
+    width: 100%; border: none; border-radius: 8px; padding: 10px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  #img-extract-btn.loading { background: #111118; color: #475569; border: 1px solid #1e1e2e; cursor: default; }
+  #img-extract-btn.ready   { background: #6366f1; color: #fff; }
+  .spin { display: inline-block; animation: spin 1s linear infinite; }
+  #img-extracted-preview { }
+  #extracted-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .extracted-col-lbl { font-size: 10px; color: #334155; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  #ext-original-img { width: 100%; height: 160px; object-fit: contain; border-radius: 8px; background: #111118; border: 1px solid #1e1e2e; }
+  #ext-chart-wrap   { height: 160px; background: #111118; border: 1px solid #1e1e2e; border-radius: 8px; padding: 8px; }
+  #ext-meta { background: #111118; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; }
+  #ext-meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .ext-meta-lbl { color: #475569; }
+  .ext-meta-val { color: #94a3b8; }
+  #ext-confirm-btn { flex: 1; background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  #ext-retry-btn   { background: #1e1e2e; color: #94a3b8; border: none; border-radius: 8px; padding: 10px 16px; font-size: 13px; cursor: pointer; }
+  #img2chart-done  { text-align: center; padding: 16px 0; }
+  #img2chart-done-icon { font-size: 24px; margin-bottom: 8px; }
+  #img2chart-done-title{ font-size: 13px; color: #34d399; font-weight: 600; margin-bottom: 4px; }
+  #img2chart-done-sub  { font-size: 12px; color: #475569; margin-bottom: 14px; }
+  #img2chart-retry-btn { background: #111118; border: 1px solid #1e1e2e; color: #94a3b8; border-radius: 8px; padding: 7px 16px; font-size: 12px; cursor: pointer; }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed; top: 20px; right: 20px;
+    background: #111118; border: 1px solid #6366f1; color: #a5b4fc;
+    border-radius: 8px; padding: 10px 18px; font-size: 13px; z-index: 300;
+    animation: fadeUp 0.2s ease;
+    pointer-events: none;
+  }
+
+  /* ── LOADING ── */
+  #loading-screen {
+    background: #0a0a0f; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    color: #334155;
+  }
+  #loading-screen span { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  @media (max-width: 600px) {
+    #cards-grid { grid-template-columns: 1fr; }
+    #form-grid  { grid-template-columns: 1fr; }
+    #ticker-row { flex-wrap: wrap; }
+    #ks-row     { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loading-screen"><span>Loading…</span></div>
+
+<!-- Tooltip -->
+<div id="chart-tooltip">
+  <div id="tt-label"></div>
+  <div id="tt-value"></div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden"></div>
+
+<!-- ─── MAIN SITE ─────────────────────────────────────────────── -->
+<div id="site" class="hidden">
+  <div id="nav">
+    <div id="nav-inner">
+      <div id="nav-logo">Datavault</div>
+      <div id="nav-right">
+        <span id="nav-count">0 datasets</span>
+        <!-- Admin button intentionally NOT here — hidden from public -->
+      </div>
+    </div>
+  </div>
+
+  <div id="main">
+    <!-- Hero -->
+    <div id="hero">
+      <h1>Data you can trust.</h1>
+      <p>Charts, reports, and insights — curated and ready to explore.</p>
+      <div id="search-wrap">
+        <span id="search-icon">⊙</span>
+        <input id="search-input" type="text" placeholder="Search datasets…" autocomplete="off" />
+      </div>
+      <div id="search-results" class="hidden"></div>
+    </div>
+
+    <!-- Category Pills -->
+    <div id="cat-pills"></div>
+
+    <!-- Cards -->
+    <div id="cards-grid"></div>
+    <div id="empty-state" class="hidden">
+      <p>No datasets in this category yet.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── DATASET PAGE ──────────────────────────────────────────── -->
+<div id="ds-page-wrap" class="hidden">
+  <div id="nav"><!-- re-used nav styling via clone below --></div>
+  <div id="ds-page">
+    <button id="ds-back">← Back</button>
+    <div id="ds-source"></div>
+    <h2 id="ds-title"></h2>
+    <p id="ds-subtitle"></p>
+    <div id="ks-row"></div>
+    <div id="ticker-row"></div>
+    <div id="chart-box">
+      <div id="chart-box-top">
+        <div id="chart-box-lbl">Interactive Chart</div>
+        <div id="chart-box-hint">Hover to explore</div>
+      </div>
+      <div id="chart-box-inner" style="height:260px;"></div>
+    </div>
+    <div id="ds-bottom"></div>
+  </div>
+</div>
+
+<!-- ─── PASSWORD GATE ─────────────────────────────────────────── -->
+<div id="pw-gate" class="hidden">
+  <div id="pw-box">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div id="pw-icon-wrap"><span id="pw-icon">🔐</span></div>
+      <div id="pw-title">Admin Access</div>
+      <div id="pw-hint" id="pw-hint">Enter your password to continue</div>
+    </div>
+    <input id="pw-input" type="password" placeholder="Password" autocomplete="off" />
+    <div id="pw-err" class="hidden"></div>
+    <button id="pw-submit">Unlock Admin</button>
+  </div>
+</div>
+
+<!-- ─── ADMIN PANEL ───────────────────────────────────────────── -->
+<div id="admin-panel" class="hidden">
+  <div id="admin-nav">
+    <div id="admin-nav-inner">
+      <div id="admin-nav-left">
+        <button id="admin-back-btn">← Back to site</button>
+        <span id="admin-divider">|</span>
+        <span id="admin-title-lbl">Admin Panel</span>
+        <span id="admin-auth-badge">Authenticated</span>
+      </div>
+      <div id="admin-nav-right">
+        <button id="admin-add-btn" class="btn-add">+ Add Dataset</button>
+      </div>
+    </div>
+  </div>
+  <div id="admin-content">
+    <!-- LIST VIEW -->
+    <div id="admin-list-view">
+      <div id="admin-list-header"></div>
+      <div id="admin-ds-list"></div>
+      <div id="admin-empty" class="hidden">No datasets yet.</div>
+    </div>
+    <!-- FORM VIEW -->
+    <div id="admin-form-view" class="hidden">
+      <div id="admin-form-header">New Dataset</div>
+      <!-- Image-to-chart -->
+      <div id="img2chart-wrap">
+        <div id="img2chart-header">
+          <span id="img2chart-lbl">✦ Image → Interactive Chart</span>
+          <span id="img2chart-badge">AI-Powered</span>
+        </div>
+        <p id="img2chart-desc">Upload any chart image — Claude will read the data and fill in the form automatically.</p>
+        <!-- States: upload / loading / preview / done -->
+        <div id="i2c-upload">
+          <div id="img-dropzone">
+            <div id="img-dropzone-icon">📊</div>
+            <div id="img-dropzone-text">Click or drag a chart image here</div>
+            <div id="img-dropzone-hint">PNG, JPG, WEBP supported</div>
+            <input id="img-file-input" type="file" accept="image/*" />
+          </div>
+        </div>
+        <div id="i2c-loaded" class="hidden">
+          <div id="img-preview-wrap">
+            <img id="img-preview-img" alt="uploaded chart" />
+            <button id="img-clear-btn">✕</button>
+          </div>
+          <div id="img-err" class="hidden"></div>
+          <button id="img-extract-btn" class="ready">Extract &amp; Preview Chart Data</button>
+        </div>
+        <div id="i2c-preview" class="hidden">
+          <div id="extracted-grid">
+            <div>
+              <div class="extracted-col-lbl">Original</div>
+              <img id="ext-original-img" alt="original" />
+            </div>
+            <div>
+              <div id="ext-count-lbl" class="extracted-col-lbl">Extracted</div>
+              <div id="ext-chart-wrap"></div>
+            </div>
+          </div>
+          <div id="ext-meta">
+            <div id="ext-meta-grid">
+              <div><span class="ext-meta-lbl">Title: </span><span id="ext-meta-title" class="ext-meta-val"></span></div>
+              <div><span class="ext-meta-lbl">Unit: </span><span id="ext-meta-unit" class="ext-meta-val"></span></div>
+              <div><span class="ext-meta-lbl">Type: </span><span id="ext-meta-type" class="ext-meta-val"></span></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button id="ext-confirm-btn">✓ Use this data — fill form</button>
+            <button id="ext-retry-btn">Retry</button>
+          </div>
+        </div>
+        <div id="i2c-done" class="hidden">
+          <div id="img2chart-done">
+            <div id="img2chart-done-icon">✅</div>
+            <div id="img2chart-done-title">Data extracted successfully</div>
+            <div id="img2chart-done-sub">Review the form below and fill in any missing fields</div>
+            <button id="img2chart-retry-btn">Try another image</button>
+          </div>
+        </div>
+      </div>
+      <!-- Form fields -->
+      <div id="form-grid">
+        <div><!-- LEFT COL -->
+          <div class="field">
+            <div class="field-label">Title</div>
+            <input class="inp" id="f-title" type="text" placeholder="e.g. India GDP Growth" />
+          </div>
+          <div class="field">
+            <div class="field-label">Subtitle</div>
+            <input class="inp" id="f-subtitle" type="text" placeholder="e.g. Annual % change — 2015 to 2024" />
+          </div>
+          <div class="inp-2col">
+            <div class="field">
+              <div class="field-label">Unit</div>
+              <input class="inp" id="f-unit" type="text" placeholder="%, $B, M…" />
+            </div>
+            <div class="field">
+              <div class="field-label">Source</div>
+              <input class="inp" id="f-source" type="text" placeholder="World Bank, 2024" />
+            </div>
+          </div>
+          <div class="inp-2col">
+            <div class="field">
+              <div class="field-label">Category</div>
+              <select class="inp sel" id="f-category">
+                <option value="economy">Economy</option>
+                <option value="technology">Technology</option>
+                <option value="health">Health</option>
+                <option value="sports">Sports</option>
+                <option value="environment">Environment</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Chart Type</div>
+              <select class="inp sel" id="f-charttype">
+                <option value="bar">Bar</option>
+                <option value="line">Line</option>
+                <option value="area">Area</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Accent Colour</div>
+            <div class="accent-swatches" id="accent-swatches"></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Data Points</div>
+            <div class="field-hint">Format: label, value (one per line)</div>
+            <textarea class="inp" id="f-data" rows="7" style="resize:vertical;font-family:monospace;font-size:12px;margin-top:4px;"
+              placeholder="2020, 10&#10;2021, 20&#10;2022, 30"></textarea>
+          </div>
+        </div>
+        <div><!-- RIGHT COL -->
+          <div class="field">
+            <div class="field-label">Key Stats (up to 3)</div>
+            <div class="inp-3col">
+              <input class="inp" id="ks1l" placeholder="Label" /><input class="inp" id="ks1v" placeholder="Value" /><input class="inp" id="ks1y" placeholder="Year" />
+            </div>
+            <div class="inp-3col">
+              <input class="inp" id="ks2l" placeholder="Label" /><input class="inp" id="ks2v" placeholder="Value" /><input class="inp" id="ks2y" placeholder="Year" />
+            </div>
+            <div class="inp-3col">
+              <input class="inp" id="ks3l" placeholder="Label" /><input class="inp" id="ks3v" placeholder="Value" /><input class="inp" id="ks3y" placeholder="Year" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Report</div>
+            <textarea class="inp" id="f-report" rows="5" style="resize:vertical;" placeholder="Write your analysis here…"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Insights</div>
+            <div class="field-hint">One insight per line</div>
+            <textarea class="inp" id="f-insights" rows="4" style="resize:vertical;margin-top:4px;" placeholder="First key insight&#10;Second key insight"></textarea>
+          </div>
+          <div id="form-preview-wrap">
+            <div id="form-preview-lbl">Live Preview</div>
+            <div id="form-preview-chart"></div>
+          </div>
+          <div class="form-btns">
+            <button class="btn-save" id="form-save-btn">Add Dataset</button>
+            <button class="btn-cancel" id="form-cancel-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+// CONFIG
+// ──────────────────────────────────────────────
+const ADMIN_PASSWORD = "datavault2024";
+const ACCENTS = ["#6366f1","#34d399","#f59e0b","#f87171","#a78bfa","#38bdf8","#fbbf24","#6ee7b7","#fb923c","#e879f9"];
+const CATEGORIES = [
+  { id:"economy",     label:"Economy",     icon:"◈" },
+  { id:"technology",  label:"Technology",  icon:"⬡" },
+  { id:"health",      label:"Health",      icon:"♡" },
+  { id:"sports",      label:"Sports",      icon:"◎" },
+  { id:"environment", label:"Environment", icon:"◉" },
+  { id:"other",       label:"Other",       icon:"◌" },
+];
+const SEED = [
+  {
+    id:"gdp-growth", category:"economy",
+    title:"Global GDP Growth Rate", subtitle:"Annual % change — 2015 to 2024",
+    unit:"%", source:"World Bank, 2024", chartType:"area", accent:"#6366f1",
+    data:[
+      {label:"2015",value:2.9},{label:"2016",value:2.6},{label:"2017",value:3.3},
+      {label:"2018",value:3.1},{label:"2019",value:2.6},{label:"2020",value:-3.1},
+      {label:"2021",value:6.0},{label:"2022",value:3.5},{label:"2023",value:3.1},{label:"2024",value:3.2},
+    ],
+    keyStats:[
+      {label:"Peak growth",value:"6.0%",year:"2021"},
+      {label:"Worst year",value:"−3.1%",year:"2020"},
+      {label:"10yr avg",value:"2.8%",year:""},
+    ],
+    report:"Global GDP contracted sharply in 2020 due to the COVID-19 pandemic, recording a −3.1% decline — the worst since the Great Depression. The subsequent 2021 rebound of 6.0% was driven by pent-up demand, fiscal stimulus, and vaccine rollouts.",
+    insights:[
+      "The pandemic caused a larger GDP shock than the 2008 financial crisis.",
+      "2021's 6% bounce was the fastest global recovery in post-war history.",
+      "India and China together accounted for over 40% of global growth in 2023.",
+    ],
+  },
+  {
+    id:"ai-market", category:"technology",
+    title:"AI Market Size", subtitle:"Global revenue in USD billions — 2020 to 2024",
+    unit:"$B", source:"IDC, 2024", chartType:"bar", accent:"#a78bfa",
+    data:[
+      {label:"2020",value:62},{label:"2021",value:87},{label:"2022",value:120},
+      {label:"2023",value:197},{label:"2024",value:305},
+    ],
+    keyStats:[
+      {label:"2024 size",value:"$305B",year:""},
+      {label:"YoY growth",value:"+55%",year:"2023–24"},
+      {label:"5yr growth",value:"+392%",year:""},
+    ],
+    report:"The AI market has experienced explosive growth, driven primarily by generative AI adoption following the launch of ChatGPT in late 2022. Enterprise software, cloud AI services, and hardware (particularly GPUs) have seen the highest spend.",
+    insights:[
+      "ChatGPT's launch triggered a 3x acceleration in enterprise AI adoption.",
+      "NVIDIA's GPU business grew 200%+ YoY in 2023–24.",
+      "Healthcare and finance are the top two industries by AI spend.",
+    ],
+  },
+  {
+    id:"ipl-viewership", category:"sports",
+    title:"IPL TV Viewership", subtitle:"Total viewers in millions per season",
+    unit:"M", source:"BCCI / BARC, 2024", chartType:"bar", accent:"#fbbf24",
+    data:[
+      {label:"2019",value:462},{label:"2020",value:405},{label:"2021",value:380},
+      {label:"2022",value:505},{label:"2023",value:530},{label:"2024",value:590},
+    ],
+    keyStats:[
+      {label:"2024 viewers",value:"590M",year:""},
+      {label:"COVID low",value:"380M",year:"2021"},
+      {label:"6yr growth",value:"+28%",year:""},
+    ],
+    report:"IPL viewership has grown consistently, making it the most-watched cricket league globally. The 2022 expansion to 10 teams and JioCinema's free-streaming deal drove a massive spike in digital viewership.",
+    insights:[
+      "JioCinema's free streaming in 2023 added 300M+ digital viewers.",
+      "The IPL brand value crossed $10 billion in 2024.",
+      "Women's IPL debuted in 2023 with 50M+ viewers in its first season.",
+    ],
+  },
+];
+
+// ──────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────
+let allDs = [];
+let activeCat = "economy";
+let activeDs = null;
+let adminOpen = false;
+let adminAuthed = false;
+let adminView = "list"; // "list" | "add"
+let editId = null;
+let selectedAccent = "#6366f1";
+let i2cStep = "upload"; // upload | loaded | preview | done
+let i2cImgBase64 = null;
+let i2cMediaType = "image/png";
+let i2cImgSrc = null;
+let i2cPreviewData = null;
+let pwAttempts = 0;
+let pwLocked = false;
+let pwLockTimer = 0;
+let pwLockInterval = null;
+
+// ──────────────────────────────────────────────
+// STORAGE
+// ──────────────────────────────────────────────
+async function loadDs() {
+  try {
+    const res = await window.storage.get("dv-datasets");
+    allDs = res?.value ? JSON.parse(res.value) : SEED;
+    if (!res?.value) await window.storage.set("dv-datasets", JSON.stringify(SEED));
+  } catch { allDs = SEED; }
+}
+async function persistDs() {
+  try { await window.storage.set("dv-datasets", JSON.stringify(allDs)); } catch {}
+}
+
+// ──────────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────────
+function slugify(str) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"") || Date.now().toString();
+}
+function show(el) { el.classList.remove("hidden"); }
+function hide(el) { el.classList.add("hidden"); }
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  show(t);
+  setTimeout(() => hide(t), 2500);
+}
+
+// ──────────────────────────────────────────────
+// SVG CHARTS
+// ──────────────────────────────────────────────
+function buildChart(ds, width, height, interactive = false) {
+  if (!ds.data || ds.data.length === 0) return "";
+  const pad = { top:8, right:8, bottom:28, left:36 };
+  const W = width - pad.left - pad.right;
+  const H = height - pad.top - pad.bottom;
+  const vals = ds.data.map(d => d.value);
+  const rawMin = Math.min(...vals);
+  const rawMax = Math.max(...vals);
+  const hasNeg = rawMin < 0;
+  const vMin = hasNeg ? rawMin * 1.1 : 0;
+  const vMax = rawMax * 1.1 || 1;
+  const vRange = vMax - vMin;
+  const yScale = v => H - ((v - vMin) / vRange) * H;
+  const xStep = W / ds.data.length;
+  const xCenter = (i) => pad.left + xStep * i + xStep / 2;
+  const accent = ds.accent || "#6366f1";
+
+  // Grid + axes
+  const gridLines = 4;
+  let grid = "";
+  let yLabels = "";
+  for (let i = 0; i <= gridLines; i++) {
+    const v = vMin + (vRange / gridLines) * (gridLines - i);
+    const y = pad.top + (H / gridLines) * i;
+    grid += `<line x1="${pad.left}" y1="${y}" x2="${pad.left + W}" y2="${y}" class="chart-grid-line" />`;
+    const lv = Math.abs(v) >= 100 ? Math.round(v) : v.toFixed(1);
+    yLabels += `<text x="${pad.left - 4}" y="${y + 3}" class="chart-axis-text" text-anchor="end">${lv}</text>`;
+  }
+  // Zero line
+  let zeroLine = "";
+  if (hasNeg) {
+    const zy = pad.top + yScale(0);
+    zeroLine = `<line x1="${pad.left}" y1="${zy}" x2="${pad.left + W}" y2="${zy}" stroke="#334155" stroke-dasharray="4 2" />`;
+  }
+  // X labels (only every Nth to avoid clutter)
+  const every = Math.max(1, Math.ceil(ds.data.length / 7));
+  let xLabels = "";
+  ds.data.forEach((d, i) => {
+    if (i % every === 0 || i === ds.data.length - 1) {
+      const x = xCenter(i);
+      xLabels += `<text x="${x}" y="${pad.top + H + 18}" class="chart-axis-text" text-anchor="middle">${d.label}</text>`;
+    }
+  });
+
+  let chartBody = "";
+  const uid = ds.id + "-" + Date.now();
+
+  if (ds.chartType === "bar") {
+    const bw = Math.max(4, xStep * 0.55);
+    ds.data.forEach((d, i) => {
+      const x = xCenter(i) - bw / 2;
+      const y0 = pad.top + yScale(0);
+      const yv = pad.top + yScale(d.value);
+      const bh = Math.abs(y0 - yv);
+      const by = Math.min(y0, yv);
+      const isNeg = d.value < 0;
+      chartBody += `<rect class="chart-bar" x="${x}" y="${by}" width="${bw}" height="${bh}"
+        fill="${isNeg ? "#f87171" : accent}" opacity="0.85" rx="3"
+        ${interactive ? `data-label="${d.label}" data-value="${d.value}"` : ""} />`;
+    });
+  } else if (ds.chartType === "line") {
+    const pts = ds.data.map((d,i) => `${xCenter(i)},${pad.top + yScale(d.value)}`).join(" ");
+    chartBody += `<polyline points="${pts}" fill="none" stroke="${accent}" stroke-width="2.5" stroke-linejoin="round" />`;
+    if (interactive) {
+      ds.data.forEach((d,i) => {
+        chartBody += `<circle class="chart-dot" cx="${xCenter(i)}" cy="${pad.top+yScale(d.value)}" r="3"
+          fill="${accent}" data-label="${d.label}" data-value="${d.value}" />`;
+      });
+    }
+  } else { // area
+    const pts = ds.data.map((d,i) => `${xCenter(i)},${pad.top + yScale(d.value)}`).join(" ");
+    const first = xCenter(0);
+    const last  = xCenter(ds.data.length-1);
+    const zeroY = pad.top + yScale(Math.max(0, vMin));
+    chartBody += `
+      <defs>
+        <linearGradient id="g${uid}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%"  stop-color="${accent}" stop-opacity="0.25"/>
+          <stop offset="95%" stop-color="${accent}" stop-opacity="0.02"/>
+        </linearGradient>
+      </defs>
+      <polygon points="${first},${zeroY} ${pts} ${last},${zeroY}" fill="url(#g${uid})" />
+      <polyline points="${pts}" fill="none" stroke="${accent}" stroke-width="2.5" stroke-linejoin="round" />`;
+    if (interactive) {
+      ds.data.forEach((d,i) => {
+        chartBody += `<circle class="chart-dot" cx="${xCenter(i)}" cy="${pad.top+yScale(d.value)}" r="3"
+          fill="${accent}" data-label="${d.label}" data-value="${d.value}" />`;
+      });
+    }
+  }
+
+  return `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" class="chart-svg">
+    ${grid}${zeroLine}${yLabels}${xLabels}${chartBody}
+  </svg>`;
+}
+
+function renderChart(container, ds, height = 240, interactive = false) {
+  const w = container.getBoundingClientRect().width || 400;
+  container.innerHTML = buildChart(ds, w, height, interactive);
+  if (interactive) attachTooltip(container, ds);
+}
+
+function attachTooltip(container, ds) {
+  const tooltip = document.getElementById("chart-tooltip");
+  const ttLabel = document.getElementById("tt-label");
+  const ttValue = document.getElementById("tt-value");
+  container.querySelectorAll("[data-label]").forEach(el => {
+    el.style.cursor = "crosshair";
+    el.addEventListener("mouseenter", e => {
+      const label = el.dataset.label;
+      const val   = parseFloat(el.dataset.value);
+      const isNeg = val < 0;
+      ttLabel.textContent = label;
+      ttValue.textContent = val + ds.unit;
+      ttValue.style.color = isNeg ? "#f87171" : ds.accent;
+      tooltip.style.border = `1px solid ${ds.accent}60`;
+      tooltip.style.boxShadow = `0 8px 32px ${ds.accent}20`;
+      tooltip.style.display = "block";
+    });
+    el.addEventListener("mousemove", e => {
+      tooltip.style.left = (e.clientX + 14) + "px";
+      tooltip.style.top  = (e.clientY - 40) + "px";
+    });
+    el.addEventListener("mouseleave", () => { tooltip.style.display = "none"; });
+  });
+}
+
+// ──────────────────────────────────────────────
+// MAIN SITE RENDER
+// ──────────────────────────────────────────────
+function renderSite() {
+  const site = document.getElementById("site");
+  show(site);
+  hide(document.getElementById("loading-screen"));
+  hide(document.getElementById("ds-page-wrap"));
+  hide(document.getElementById("pw-gate"));
+  hide(document.getElementById("admin-panel"));
+
+  // Nav count
+  document.getElementById("nav-count").textContent = allDs.length + " dataset" + (allDs.length !== 1 ? "s" : "");
+
+  // Category pills
+  const pillsEl = document.getElementById("cat-pills");
+  pillsEl.innerHTML = "";
+  const byCat = {};
+  CATEGORIES.forEach(c => { byCat[c.id] = allDs.filter(d => d.category === c.id); });
+  CATEGORIES.forEach(c => {
+    const btn = document.createElement("button");
+    btn.className = "cat-pill" + (activeCat === c.id ? " active" : "");
+    btn.innerHTML = `<span>${c.icon}</span>${c.label}${byCat[c.id].length > 0 ? `<span class="cat-pill-count">(${byCat[c.id].length})</span>` : ""}`;
+    btn.onclick = () => { activeCat = c.id; renderSite(); };
+    pillsEl.appendChild(btn);
+  });
+
+  // Cards
+  const grid = document.getElementById("cards-grid");
+  const empty = document.getElementById("empty-state");
+  const catDs = byCat[activeCat] || [];
+  grid.innerHTML = "";
+  if (catDs.length === 0) { show(empty); return; }
+  hide(empty);
+  catDs.forEach((ds, i) => {
+    const card = document.createElement("div");
+    card.className = "ds-card fade-up";
+    card.style.animationDelay = (i * 0.05) + "s";
+    card.innerHTML = `
+      <div class="ds-card-source" style="color:${ds.accent}">${ds.source}</div>
+      <div class="ds-card-title">${ds.title}</div>
+      <div class="ds-card-sub">${ds.subtitle || ""}</div>
+      <div class="ds-card-chart" id="mini-${ds.id}"></div>
+      <div class="ds-card-tags">
+        <span class="tag tag-accent" style="background:${ds.accent}18;color:${ds.accent}">${ds.chartType}</span>
+        ${ds.report ? `<span class="tag">Report</span>` : ""}
+        ${ds.insights?.length > 0 ? `<span class="tag">${ds.insights.length} insights</span>` : ""}
+        <span class="tag">${ds.data.length} pts</span>
+      </div>`;
+    card.onmouseenter = () => { card.style.borderColor = ds.accent + "60"; card.style.boxShadow = `0 0 24px ${ds.accent}18`; };
+    card.onmouseleave = () => { card.style.borderColor = "#1e1e2e"; card.style.boxShadow = "none"; };
+    card.onclick = () => openDataset(ds);
+    grid.appendChild(card);
+    // Mini chart (after DOM paint)
+    requestAnimationFrame(() => {
+      const mc = document.getElementById("mini-" + ds.id);
+      if (mc) renderChart(mc, ds, 70, false);
+    });
+  });
+}
+
+// ──────────────────────────────────────────────
+// DATASET PAGE
+// ──────────────────────────────────────────────
+function openDataset(ds) {
+  activeDs = ds;
+  hide(document.getElementById("site"));
+  const page = document.getElementById("ds-page-wrap");
+  show(page);
+
+  document.getElementById("ds-source").textContent = ds.source;
+  document.getElementById("ds-source").style.color = ds.accent;
+  document.getElementById("ds-title").textContent = ds.title;
+  document.getElementById("ds-subtitle").textContent = ds.subtitle || "";
+
+  // Key stats
+  const ksRow = document.getElementById("ks-row");
+  ksRow.style.gridTemplateColumns = `repeat(${ds.keyStats?.length || 1}, 1fr)`;
+  ksRow.innerHTML = (ds.keyStats || []).map(k => `
+    <div class="ks-card">
+      <div class="ks-val" style="color:${ds.accent}">${k.value}</div>
+      <div class="ks-lbl">${k.label}${k.year ? ` · ${k.year}` : ""}</div>
+    </div>`).join("");
+
+  // Ticker
+  const vals = ds.data.map(d => d.value);
+  const mx = Math.max(...vals), mn = Math.min(...vals);
+  const latest = ds.data[ds.data.length - 1];
+  const prev   = ds.data[ds.data.length - 2];
+  const trend  = prev ? (latest.value - prev.value).toFixed(1) : "0";
+  const tUp = Number(trend) >= 0;
+  document.getElementById("ticker-row").innerHTML = [
+    {label:"Latest", value:`${latest?.value}${ds.unit}`, color:ds.accent},
+    {label:"Change", value:`${tUp?"+":""}${trend}${ds.unit}`, color:tUp?"#34d399":"#f87171"},
+    {label:"Max",    value:`${mx}${ds.unit}`,   color:"#94a3b8"},
+    {label:"Min",    value:`${mn}${ds.unit}`,   color:"#94a3b8"},
+  ].map(s => `<div class="ticker-cell"><div class="ticker-val" style="color:${s.color}">${s.value}</div><div class="ticker-lbl">${s.label}</div></div>`).join("");
+
+  // Main chart
+  const chartBox = document.getElementById("chart-box");
+  chartBox.style.background = "#111118";
+  chartBox.style.border = `1px solid ${ds.accent}20`;
+  document.getElementById("chart-box-hint").style.color = ds.accent;
+  const chartInner = document.getElementById("chart-box-inner");
+  requestAnimationFrame(() => renderChart(chartInner, ds, 260, true));
+
+  // Report + Insights
+  const bottom = document.getElementById("ds-bottom");
+  const hasBoth = ds.report && ds.insights?.length;
+  bottom.style.gridTemplateColumns = hasBoth ? "1fr 1fr" : "1fr";
+  let html = "";
+  if (ds.report) {
+    html += `<div class="report-box">
+      <div class="report-box-lbl">Report</div>
+      <p class="report-text">${ds.report}</p>
+    </div>`;
+  }
+  if (ds.insights?.length > 0) {
+    html += `<div class="report-box" style="border-color:${ds.accent}25">
+      <div class="report-box-lbl" style="color:${ds.accent}">Key Insights</div>
+      <div class="insights-list">
+        ${ds.insights.map((ins,i) => `<div class="insight-item" style="animation-delay:${i*0.07}s">
+          <span class="insight-bullet" style="color:${ds.accent}">✦</span>
+          <span class="insight-text">${ins}</span>
+        </div>`).join("")}
+      </div>
+    </div>`;
+  }
+  bottom.innerHTML = html;
+}
+
+// ──────────────────────────────────────────────
+// SEARCH
+// ──────────────────────────────────────────────
+function setupSearch() {
+  const inp = document.getElementById("search-input");
+  const res = document.getElementById("search-results");
+  inp.addEventListener("input", () => {
+    const q = inp.value.trim();
+    if (q.length < 2) { hide(res); return; }
+    const matches = allDs.filter(d =>
+      d.title.toLowerCase().includes(q.toLowerCase()) ||
+      (d.subtitle || "").toLowerCase().includes(q.toLowerCase())
+    );
+    if (matches.length === 0) {
+      res.innerHTML = `<div id="search-empty">No results found</div>`;
+    } else {
+      res.innerHTML = matches.map(d => `
+        <div class="search-item" data-id="${d.id}">
+          <span style="color:${d.accent}">▦</span>
+          <div>
+            <div class="search-item-title">${d.title}</div>
+            <div class="search-item-sub">${d.subtitle || ""}</div>
+          </div>
+        </div>`).join("");
+      res.querySelectorAll(".search-item").forEach(el => {
+        el.onclick = () => {
+          const ds = allDs.find(d => d.id === el.dataset.id);
+          if (ds) { inp.value = ""; hide(res); openDataset(ds); }
+        };
+      });
+    }
+    show(res);
+  });
+  document.addEventListener("click", e => {
+    if (!document.getElementById("search-wrap").contains(e.target)) hide(res);
+  });
+}
+
+// ──────────────────────────────────────────────
+// DATASET PAGE BACK
+// ──────────────────────────────────────────────
+document.getElementById("ds-back").onclick = () => {
+  activeDs = null;
+  hide(document.getElementById("ds-page-wrap"));
+  renderSite();
+};
+
+// ──────────────────────────────────────────────
+// SECRET ADMIN ACCESS
+// Admin is hidden from public.
+// Access via: Ctrl+Shift+A  OR  URL hash #admin
+// ──────────────────────────────────────────────
+function openAdminGate() {
+  adminAuthed = false;
+  pwAttempts = 0;
+  pwLocked = false;
+  clearInterval(pwLockInterval);
+  hide(document.getElementById("site"));
+  hide(document.getElementById("ds-page-wrap"));
+  show(document.getElementById("pw-gate"));
+  document.getElementById("pw-input").value = "";
+  document.getElementById("pw-err").classList.add("hidden");
+  document.getElementById("pw-input").classList.remove("error");
+  document.getElementById("pw-icon").textContent = "🔐";
+  document.getElementById("pw-hint").textContent = "Enter your password to continue";
+  document.getElementById("pw-submit").disabled = false;
+  document.getElementById("pw-submit").textContent = "Unlock Admin";
+  setTimeout(() => document.getElementById("pw-input").focus(), 100);
+}
+
+// Keyboard shortcut
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && e.shiftKey && e.key === "A") {
+    e.preventDefault();
+    if (!adminOpen) openAdminGate();
+  }
+});
+
+// URL hash check
+if (location.hash === "#admin") {
+  window.addEventListener("load", () => setTimeout(openAdminGate, 300));
+}
+
+// ──────────────────────────────────────────────
+// PASSWORD GATE LOGIC
+// ──────────────────────────────────────────────
+function setupPwGate() {
+  const inp = document.getElementById("pw-input");
+  const err = document.getElementById("pw-err");
+  const btn = document.getElementById("pw-submit");
+  const icon= document.getElementById("pw-icon");
+  const hint= document.getElementById("pw-hint");
+  const box = document.getElementById("pw-box");
+
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") attempt(); });
+  btn.addEventListener("click", attempt);
+
+  function attempt() {
+    if (pwLocked) return;
+    if (inp.value === ADMIN_PASSWORD) {
+      adminAuthed = true;
+      adminOpen = true;
+      hide(document.getElementById("pw-gate"));
+      renderAdmin();
+    } else {
+      pwAttempts++;
+      inp.classList.add("error");
+      inp.value = "";
+      show(err);
+      const rem = 3 - pwAttempts;
+      if (rem > 0) {
+        err.textContent = `Incorrect password. ${rem} attempt${rem !== 1 ? "s" : ""} remaining.`;
+      } else {
+        err.textContent = "Incorrect password.";
+      }
+      box.style.animation = "shake 0.4s ease";
+      setTimeout(() => { box.style.animation = "none"; }, 400);
+      if (pwAttempts >= 3) {
+        pwLocked = true;
+        pwLockTimer = 30;
+        btn.disabled = true;
+        icon.textContent = "🚫";
+        btn.textContent = `Locked (${pwLockTimer}s)`;
+        hint.textContent = `Too many attempts. Wait ${pwLockTimer}s`;
+        inp.disabled = true;
+        pwLockInterval = setInterval(() => {
+          pwLockTimer--;
+          btn.textContent = `Locked (${pwLockTimer}s)`;
+          hint.textContent = `Too many attempts. Wait ${pwLockTimer}s`;
+          if (pwLockTimer <= 0) {
+            clearInterval(pwLockInterval);
+            pwLocked = false;
+            btn.disabled = false;
+            inp.disabled = false;
+            icon.textContent = "🔐";
+            hint.textContent = "Enter your password to continue";
+            btn.textContent = "Unlock Admin";
+            hide(err);
+          }
+        }, 1000);
+      }
+      setTimeout(() => inp.classList.remove("error"), 1000);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// ADMIN PANEL
+// ──────────────────────────────────────────────
+function renderAdmin() {
+  hide(document.getElementById("site"));
+  hide(document.getElementById("ds-page-wrap"));
+  hide(document.getElementById("pw-gate"));
+  const panel = document.getElementById("admin-panel");
+  show(panel);
+  renderAdminList();
+  showAdminListView();
+}
+
+function showAdminListView() {
+  adminView = "list";
+  show(document.getElementById("admin-list-view"));
+  hide(document.getElementById("admin-form-view"));
+  show(document.getElementById("admin-add-btn"));
+  hide(document.querySelector("#admin-nav-right .btn-all-ds") || document.createElement("span"));
+}
+
+function showAdminFormView(editing = false) {
+  adminView = "add";
+  hide(document.getElementById("admin-list-view"));
+  show(document.getElementById("admin-form-view"));
+  hide(document.getElementById("admin-add-btn"));
+  document.getElementById("admin-form-header").textContent = editing ? "Edit Dataset" : "New Dataset";
+  document.getElementById("form-save-btn").textContent = editing ? "Save Changes" : "Add Dataset";
+  resetI2C();
+  renderFormPreview();
+}
+
+function renderAdminList() {
+  const all = allDs;
+  const listEl = document.getElementById("admin-ds-list");
+  const emptyEl = document.getElementById("admin-empty");
+  const header  = document.getElementById("admin-list-header");
+  header.textContent = all.length + " datasets";
+  if (all.length === 0) { listEl.innerHTML = ""; show(emptyEl); return; }
+  hide(emptyEl);
+  listEl.innerHTML = "";
+  all.forEach(ds => {
+    const row = document.createElement("div");
+    row.className = "admin-ds-row";
+    const catLabel = CATEGORIES.find(c => c.id === ds.category)?.label || ds.category;
+    row.innerHTML = `
+      <div class="admin-ds-dot" style="background:${ds.accent}"></div>
+      <div class="admin-ds-info">
+        <div class="admin-ds-name">${ds.title}</div>
+        <div class="admin-ds-meta">${catLabel} · ${ds.chartType} · ${ds.data.length} pts · ${ds.source}</div>
+      </div>
+      <div class="admin-ds-sparkline" id="sp-${ds.id}"></div>
+      <div class="admin-ds-actions">
+        <button class="btn-edit">Edit</button>
+        <button class="btn-delete">Delete</button>
+      </div>`;
+    row.querySelector(".btn-edit").onclick = () => openEdit(ds);
+    row.querySelector(".btn-delete").onclick = () => {
+      allDs = allDs.filter(d => d.id !== ds.id);
+      persistDs();
+      renderAdminList();
+      showToast("Deleted");
+    };
+    listEl.appendChild(row);
+    requestAnimationFrame(() => {
+      const sp = document.getElementById("sp-" + ds.id);
+      if (sp) renderChart(sp, ds, 36, false);
+    });
+  });
+}
+
+function openEdit(ds) {
+  editId = ds.id;
+  selectedAccent = ds.accent;
+  // Fill form
+  document.getElementById("f-title").value    = ds.title;
+  document.getElementById("f-subtitle").value = ds.subtitle || "";
+  document.getElementById("f-unit").value     = ds.unit || "";
+  document.getElementById("f-source").value   = ds.source || "";
+  document.getElementById("f-category").value = ds.category;
+  document.getElementById("f-charttype").value= ds.chartType;
+  document.getElementById("f-data").value     = ds.data.map(r => `${r.label}, ${r.value}`).join("\n");
+  document.getElementById("f-report").value   = ds.report || "";
+  document.getElementById("f-insights").value = (ds.insights || []).join("\n");
+  const ks = ds.keyStats || [];
+  document.getElementById("ks1l").value = ks[0]?.label || "";
+  document.getElementById("ks1v").value = ks[0]?.value || "";
+  document.getElementById("ks1y").value = ks[0]?.year  || "";
+  document.getElementById("ks2l").value = ks[1]?.label || "";
+  document.getElementById("ks2v").value = ks[1]?.value || "";
+  document.getElementById("ks2y").value = ks[1]?.year  || "";
+  document.getElementById("ks3l").value = ks[2]?.label || "";
+  document.getElementById("ks3v").value = ks[2]?.value || "";
+  document.getElementById("ks3y").value = ks[2]?.year  || "";
+  showAdminFormView(true);
+  buildAccentSwatches();
+  renderFormPreview();
+}
+
+function openAdd() {
+  editId = null;
+  selectedAccent = "#6366f1";
+  document.getElementById("f-title").value    = "";
+  document.getElementById("f-subtitle").value = "";
+  document.getElementById("f-unit").value     = "";
+  document.getElementById("f-source").value   = "";
+  document.getElementById("f-category").value = "economy";
+  document.getElementById("f-charttype").value= "bar";
+  document.getElementById("f-data").value     = "2020, 10\n2021, 20\n2022, 30";
+  document.getElementById("f-report").value   = "";
+  document.getElementById("f-insights").value = "";
+  ["ks1l","ks1v","ks1y","ks2l","ks2v","ks2y","ks3l","ks3v","ks3y"].forEach(id => document.getElementById(id).value = "");
+  showAdminFormView(false);
+  buildAccentSwatches();
+  renderFormPreview();
+}
+
+function buildAccentSwatches() {
+  const wrap = document.getElementById("accent-swatches");
+  wrap.innerHTML = "";
+  ACCENTS.forEach(a => {
+    const s = document.createElement("div");
+    s.className = "accent-swatch" + (a === selectedAccent ? " active" : "");
+    s.style.background = a;
+    s.onclick = () => {
+      selectedAccent = a;
+      document.querySelectorAll(".accent-swatch").forEach(el => el.classList.remove("active"));
+      s.classList.add("active");
+      renderFormPreview();
+    };
+    wrap.appendChild(s);
+  });
+}
+
+function getFormData() {
+  const dataRaw = document.getElementById("f-data").value;
+  const data = dataRaw.split("\n").map(r => r.trim()).filter(Boolean).map(r => {
+    const parts = r.split(",");
+    return { label: parts[0]?.trim(), value: parseFloat(parts[1]) };
+  }).filter(r => r.label && !isNaN(r.value));
+  const insights = document.getElementById("f-insights").value.split("\n").map(s=>s.trim()).filter(Boolean);
+  const keyStats = [
+    { label:document.getElementById("ks1l").value, value:document.getElementById("ks1v").value, year:document.getElementById("ks1y").value },
+    { label:document.getElementById("ks2l").value, value:document.getElementById("ks2v").value, year:document.getElementById("ks2y").value },
+    { label:document.getElementById("ks3l").value, value:document.getElementById("ks3v").value, year:document.getElementById("ks3y").value },
+  ].filter(k => k.label && k.value);
+  return {
+    title:    document.getElementById("f-title").value.trim(),
+    subtitle: document.getElementById("f-subtitle").value.trim(),
+    unit:     document.getElementById("f-unit").value.trim(),
+    source:   document.getElementById("f-source").value.trim(),
+    category: document.getElementById("f-category").value,
+    chartType:document.getElementById("f-charttype").value,
+    accent:   selectedAccent,
+    report:   document.getElementById("f-report").value.trim(),
+    data, insights, keyStats,
+  };
+}
+
+function renderFormPreview() {
+  const fd = getFormData();
+  const pw = document.getElementById("form-preview-wrap");
+  const pc = document.getElementById("form-preview-chart");
+  if (fd.data.length === 0) { hide(pw); return; }
+  show(pw);
+  const previewDs = { ...fd, id: "form-preview" };
+  requestAnimationFrame(() => renderChart(pc, previewDs, 140, true));
+}
+
+["f-title","f-subtitle","f-unit","f-source","f-data","f-report","f-insights",
+ "f-category","f-charttype","ks1l","ks1v","ks1y","ks2l","ks2v","ks2y","ks3l","ks3v","ks3y"
+].forEach(id => {
+  document.getElementById(id)?.addEventListener("input", renderFormPreview);
+  document.getElementById(id)?.addEventListener("change", renderFormPreview);
+});
+
+document.getElementById("admin-add-btn").onclick = openAdd;
+document.getElementById("admin-back-btn").onclick = () => {
+  adminOpen = false;
+  adminAuthed = false;
+  hide(document.getElementById("admin-panel"));
+  // Clear hash if set
+  if (location.hash === "#admin") history.replaceState(null, "", location.pathname);
+  renderSite();
+};
+document.getElementById("form-save-btn").onclick = () => {
+  const fd = getFormData();
+  if (!fd.title) { showToast("Title is required"); return; }
+  if (fd.data.length === 0) { showToast("Add at least one data point"); return; }
+  const id = editId || slugify(fd.title);
+  const ds = { ...fd, id };
+  if (editId) {
+    allDs = allDs.map(d => d.id === editId ? ds : d);
+  } else {
+    allDs = [...allDs, ds];
+  }
+  persistDs();
+  showToast(editId ? "Dataset updated ✓" : "Dataset added ✓");
+  editId = null;
+  renderAdminList();
+  showAdminListView();
+};
+document.getElementById("form-cancel-btn").onclick = () => {
+  editId = null;
+  renderAdminList();
+  showAdminListView();
+};
+
+// ──────────────────────────────────────────────
+// IMAGE TO CHART
+// ──────────────────────────────────────────────
+function i2cSetStep(step) {
+  i2cStep = step;
+  hide(document.getElementById("i2c-upload"));
+  hide(document.getElementById("i2c-loaded"));
+  hide(document.getElementById("i2c-preview"));
+  hide(document.getElementById("i2c-done"));
+  if (step === "upload")  show(document.getElementById("i2c-upload"));
+  if (step === "loaded")  show(document.getElementById("i2c-loaded"));
+  if (step === "preview") show(document.getElementById("i2c-preview"));
+  if (step === "done")    show(document.getElementById("i2c-done"));
+}
+
+function resetI2C() {
+  i2cImgBase64 = null; i2cImgSrc = null; i2cPreviewData = null;
+  const errEl = document.getElementById("img-err");
+  hide(errEl);
+  i2cSetStep("upload");
+}
+
+function handleImageFile(file) {
+  if (!file || !file.type.startsWith("image/")) return;
+  i2cMediaType = file.type || "image/png";
+  const reader = new FileReader();
+  reader.onload = ev => {
+    i2cImgSrc = ev.target.result;
+    i2cImgBase64 = ev.target.result.split(",")[1];
+    document.getElementById("img-preview-img").src = i2cImgSrc;
+    hide(document.getElementById("img-err"));
+    const btn = document.getElementById("img-extract-btn");
+    btn.className = "ready";
+    btn.innerHTML = "Extract &amp; Preview Chart Data";
+    i2cSetStep("loaded");
+  };
+  reader.readAsDataURL(file);
+}
+
+document.getElementById("img-dropzone").onclick = () => document.getElementById("img-file-input").click();
+document.getElementById("img-dropzone").ondragover = e => e.preventDefault();
+document.getElementById("img-dropzone").ondrop = e => {
+  e.preventDefault();
+  handleImageFile(e.dataTransfer.files?.[0]);
+};
+document.getElementById("img-file-input").onchange = e => handleImageFile(e.target.files?.[0]);
+document.getElementById("img-clear-btn").onclick = resetI2C;
+
+document.getElementById("img-extract-btn").onclick = async () => {
+  if (!i2cImgBase64) return;
+  const btn = document.getElementById("img-extract-btn");
+  btn.className = "loading";
+  btn.innerHTML = `<span class="spin">⟳</span> Analysing image with Claude…`;
+  hide(document.getElementById("img-err"));
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        model:"claude-sonnet-4-6",
+        max_tokens:1200,
+        messages:[{
+          role:"user",
+          content:[
+            { type:"image", source:{ type:"base64", media_type:i2cMediaType, data:i2cImgBase64 } },
+            { type:"text", text:`You are a data extraction specialist. Analyze this chart image carefully and extract ALL visible data.\n\nReturn ONLY a valid JSON object — no markdown, no backticks, no explanation. Use this exact schema:\n{\n  "title": "chart title if visible, otherwise empty string",\n  "subtitle": "axis labels or description",\n  "unit": "unit symbol only: %, $, M, B, K, etc. Empty string if none.",\n  "chartType": "bar, line, or area — pick best match",\n  "source": "data source if mentioned, otherwise empty string",\n  "data": [{"label": "x-axis label", "value": numeric_value}, ...]\n}\nExtract EVERY visible data point. Labels are strings. Values are numbers. Sort chronologically.` }
+          ]
+        }]
+      })
+    });
+    const json = await res.json();
+    const text = json.content?.[0]?.text || "";
+    const clean = text.replace(/```json|```/g,"").trim();
+    const parsed = JSON.parse(clean);
+    if (!parsed.data || parsed.data.length === 0) throw new Error("No data");
+    i2cPreviewData = parsed;
+    // Show preview
+    document.getElementById("ext-original-img").src = i2cImgSrc;
+    document.getElementById("ext-count-lbl").textContent = `Extracted (${parsed.data.length} points)`;
+    document.getElementById("ext-meta-title").textContent = parsed.title || "—";
+    document.getElementById("ext-meta-unit").textContent  = parsed.unit  || "—";
+    document.getElementById("ext-meta-type").textContent  = parsed.chartType;
+    const extChart = document.getElementById("ext-chart-wrap");
+    const previewDs = { ...parsed, id:"ext-preview", accent:"#6366f1" };
+    requestAnimationFrame(() => renderChart(extChart, previewDs, 144, false));
+    i2cSetStep("preview");
+  } catch(e) {
+    const errEl = document.getElementById("img-err");
+    errEl.textContent = "Couldn't extract data. Try a cleaner chart image with visible labels.";
+    show(errEl);
+    btn.className = "ready";
+    btn.innerHTML = "Extract &amp; Preview Chart Data";
+  }
+};
+
+document.getElementById("ext-confirm-btn").onclick = () => {
+  if (!i2cPreviewData) return;
+  const p = i2cPreviewData;
+  if (p.title)    document.getElementById("f-title").value    = p.title;
+  if (p.subtitle) document.getElementById("f-subtitle").value = p.subtitle;
+  if (p.unit)     document.getElementById("f-unit").value     = p.unit;
+  if (p.source)   document.getElementById("f-source").value   = p.source;
+  if (p.chartType)document.getElementById("f-charttype").value= p.chartType;
+  if (p.data)     document.getElementById("f-data").value     = p.data.map(r=>`${r.label}, ${r.value}`).join("\n");
+  i2cSetStep("done");
+  renderFormPreview();
+  showToast("Data extracted ✓ — review and fill in any missing fields");
+};
+
+document.getElementById("ext-retry-btn").onclick = () => { i2cSetStep("loaded"); };
+document.getElementById("img2chart-retry-btn").onclick = resetI2C;
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+(async function init() {
+  await loadDs();
+  setupSearch();
+  setupPwGate();
+  hide(document.getElementById("loading-screen"));
+  renderSite();
+  // Check hash on load
+  if (location.hash === "#admin") {
+    setTimeout(openAdminGate, 200);
+  }
+})();
+</script>
+</body>
+</html>
