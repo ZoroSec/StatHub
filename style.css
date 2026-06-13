@@ -61,6 +61,14 @@ select option { background: #ffffff; color: var(--ink); }
 }
 .theme-toggle-btn:hover, #theme-toggle:hover { border-color: var(--brand); color: var(--brand); }
 
+#admin-nav-btn {
+  background: var(--surface-alt); border: 1px solid var(--line); color: var(--ink-soft);
+  border-radius: 999px; padding: 7px 14px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; font-weight: 600; transition: all 0.15s;
+  text-decoration: none; margin-left: 8px;
+}
+#admin-nav-btn:hover { border-color: var(--brand); color: var(--brand); }
+
 /* Navigation */
 .site-nav-bar, #nav {
   border-bottom: 1px solid rgba(191, 206, 223, 0.8); padding: 0 32px;

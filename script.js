@@ -411,6 +411,14 @@ document.getElementById("ds-back").onclick = () => {
   history.replaceState(null, "", location.pathname);
 };
 
+// Admin shortcut: Ctrl+Shift+` → open admin panel
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && e.shiftKey && e.key === "`") {
+    e.preventDefault();
+    window.location.href = "admin.html";
+  }
+});
+
 // INIT
 (async function init() {
   applyTheme();
