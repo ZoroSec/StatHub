@@ -1,13 +1,26 @@
 [
   {
-    "id": "gdp-growth",
-    "category": "economy",
     "title": "Global GDP Growth Rate",
     "subtitle": "Annual % change — 2015 to 2024",
     "unit": "%",
     "source": "World Bank, 2024",
+    "notes": "",
+    "lastUpdated": "",
+    "category": "economy",
     "chartType": "area",
     "accent": "#6366f1",
+    "report": "Global GDP contracted sharply in 2020 due to the COVID-19 pandemic, recording a −3.1% decline — the worst since the Great Depression. The subsequent 2021 rebound of 6.0% was driven by pent-up demand, fiscal stimulus, and vaccine rollouts.",
+    "compareData": [],
+    "compareLabel": "",
+    "annotations": [],
+    "showLabels": true,
+    "negativeRed": true,
+    "showTrendLine": false,
+    "showCompare": true,
+    "published": true,
+    "allowPng": true,
+    "allowCsv": true,
+    "allowEmbed": true,
     "data": [
       {
         "label": "2015",
@@ -50,29 +63,35 @@
         "value": 3.2
       }
     ],
-    "keyStats": [
-      {
-        "label": "Peak growth",
-        "value": "6.0%",
-        "year": "2021"
-      },
-      {
-        "label": "Worst year",
-        "value": "−3.1%",
-        "year": "2020"
-      },
-      {
-        "label": "10yr avg",
-        "value": "2.8%",
-        "year": ""
-      }
-    ],
-    "report": "Global GDP contracted sharply in 2020 due to the COVID-19 pandemic, recording a −3.1% decline — the worst since the Great Depression. The subsequent 2021 rebound of 6.0% was driven by pent-up demand, fiscal stimulus, and vaccine rollouts.",
     "insights": [
       "The pandemic caused a larger GDP shock than the 2008 financial crisis.",
       "2021's 6% bounce was the fastest global recovery in post-war history.",
       "India and China together accounted for over 40% of global growth in 2023."
-    ]
+    ],
+    "keyStats": [
+      {
+        "label": "Peak growth",
+        "value": "6.0%",
+        "year": "2021",
+        "trend": "",
+        "trendDir": "up"
+      },
+      {
+        "label": "Worst year",
+        "value": "−3.1%",
+        "year": "2020",
+        "trend": "",
+        "trendDir": "up"
+      },
+      {
+        "label": "10yr avg",
+        "value": "2.8%",
+        "year": "",
+        "trend": "",
+        "trendDir": "down"
+      }
+    ],
+    "id": "gdp-growth"
   },
   {
     "id": "ai-market",
