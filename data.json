@@ -1,0 +1,235 @@
+[
+  {
+    "id": "gdp-growth",
+    "category": "economy",
+    "title": "Global GDP Growth Rate",
+    "subtitle": "Annual % change — 2015 to 2024",
+    "unit": "%",
+    "source": "World Bank, 2024",
+    "chartType": "area",
+    "accent": "#6366f1",
+    "data": [
+      {
+        "label": "2015",
+        "value": 2.9
+      },
+      {
+        "label": "2016",
+        "value": 2.6
+      },
+      {
+        "label": "2017",
+        "value": 3.3
+      },
+      {
+        "label": "2018",
+        "value": 3.1
+      },
+      {
+        "label": "2019",
+        "value": 2.6
+      },
+      {
+        "label": "2020",
+        "value": -3.1
+      },
+      {
+        "label": "2021",
+        "value": 6
+      },
+      {
+        "label": "2022",
+        "value": 3.5
+      },
+      {
+        "label": "2023",
+        "value": 3.1
+      },
+      {
+        "label": "2024",
+        "value": 3.2
+      }
+    ],
+    "keyStats": [
+      {
+        "label": "Peak growth",
+        "value": "6.0%",
+        "year": "2021"
+      },
+      {
+        "label": "Worst year",
+        "value": "−3.1%",
+        "year": "2020"
+      },
+      {
+        "label": "10yr avg",
+        "value": "2.8%",
+        "year": ""
+      }
+    ],
+    "report": "Global GDP contracted sharply in 2020 due to the COVID-19 pandemic, recording a −3.1% decline — the worst since the Great Depression. The subsequent 2021 rebound of 6.0% was driven by pent-up demand, fiscal stimulus, and vaccine rollouts.",
+    "insights": [
+      "The pandemic caused a larger GDP shock than the 2008 financial crisis.",
+      "2021's 6% bounce was the fastest global recovery in post-war history.",
+      "India and China together accounted for over 40% of global growth in 2023."
+    ]
+  },
+  {
+    "id": "ai-market",
+    "category": "technology",
+    "title": "AI Market Size",
+    "subtitle": "Global revenue in USD billions — 2020 to 2024",
+    "unit": "$B",
+    "source": "IDC, 2024",
+    "chartType": "bar",
+    "accent": "#a78bfa",
+    "data": [
+      {
+        "label": "2020",
+        "value": 62
+      },
+      {
+        "label": "2021",
+        "value": 87
+      },
+      {
+        "label": "2022",
+        "value": 120
+      },
+      {
+        "label": "2023",
+        "value": 197
+      },
+      {
+        "label": "2024",
+        "value": 305
+      }
+    ],
+    "keyStats": [
+      {
+        "label": "2024 size",
+        "value": "$305B",
+        "year": ""
+      },
+      {
+        "label": "YoY growth",
+        "value": "+55%",
+        "year": "2023–24"
+      },
+      {
+        "label": "5yr growth",
+        "value": "+392%",
+        "year": ""
+      }
+    ],
+    "report": "The AI market has experienced explosive growth, driven primarily by generative AI adoption following the launch of ChatGPT in late 2022. Enterprise software, cloud AI services, and hardware (particularly GPUs) have seen the highest spend.",
+    "insights": [
+      "ChatGPT's launch triggered a 3x acceleration in enterprise AI adoption.",
+      "NVIDIA's GPU business grew 200%+ YoY in 2023–24.",
+      "Healthcare and finance are the top two industries by AI spend."
+    ]
+  },
+  {
+    "id": "ipl-viewership",
+    "category": "sports",
+    "title": "IPL TV Viewership",
+    "subtitle": "Total viewers in millions per season",
+    "unit": "M",
+    "source": "BCCI / BARC, 2024",
+    "chartType": "bar",
+    "accent": "#fbbf24",
+    "data": [
+      {
+        "label": "2019",
+        "value": 462
+      },
+      {
+        "label": "2020",
+        "value": 405
+      },
+      {
+        "label": "2021",
+        "value": 380
+      },
+      {
+        "label": "2022",
+        "value": 505
+      },
+      {
+        "label": "2023",
+        "value": 530
+      },
+      {
+        "label": "2024",
+        "value": 590
+      }
+    ],
+    "keyStats": [
+      {
+        "label": "2024 viewers",
+        "value": "590M",
+        "year": ""
+      },
+      {
+        "label": "COVID low",
+        "value": "380M",
+        "year": "2021"
+      },
+      {
+        "label": "6yr growth",
+        "value": "+28%",
+        "year": ""
+      }
+    ],
+    "report": "IPL viewership has grown consistently, making it the most-watched cricket league globally. The 2022 expansion to 10 teams and JioCinema's free-streaming deal drove a massive spike in digital viewership.",
+    "insights": [
+      "JioCinema's free streaming in 2023 added 300M+ digital viewers.",
+      "The IPL brand value crossed $10 billion in 2024.",
+      "Women's IPL debuted in 2023 with 50M+ viewers in its first season."
+    ]
+  },
+  {
+    "title": "Global GDP Growth Rate",
+    "subtitle": "Annual % change — 2015 to 2024",
+    "unit": "",
+    "source": "",
+    "notes": "",
+    "lastUpdated": "",
+    "category": "economy",
+    "chartType": "bar",
+    "accent": "#6366f1",
+    "report": "",
+    "compareData": [],
+    "compareLabel": "",
+    "annotations": [],
+    "showLabels": true,
+    "negativeRed": true,
+    "showTrendLine": false,
+    "showCompare": true,
+    "published": true,
+    "allowPng": true,
+    "allowCsv": true,
+    "allowEmbed": true,
+    "data": [
+      {
+        "label": "2020",
+        "value": 10
+      },
+      {
+        "label": "2021",
+        "value": 20
+      },
+      {
+        "label": "2022",
+        "value": 30
+      },
+      {
+        "label": "2024",
+        "value": 70
+      }
+    ],
+    "insights": [],
+    "keyStats": [],
+    "id": "global-gdp-growth-rate"
+  }
+]
