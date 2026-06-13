@@ -19,6 +19,42 @@
     --brand-deep: #0a2e78;
     --shadow: 0 18px 44px rgba(16, 35, 61, 0.08);
   }
+  body.dark {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-alt: #16161f;
+    --ink: #e2e8f0;
+    --ink-soft: #64748b;
+    --line: #1e1e2e;
+    --line-strong: #2a2a3e;
+    --brand: #818cf8;
+    --brand-deep: #a5b4fc;
+    --shadow: 0 18px 44px rgba(0,0,0,0.3);
+  }
+  body.dark #nav { background: rgba(10,10,15,0.92); }
+  body.dark #search-input { background: #111118; color: #e2e8f0; }
+  body.dark #search-results { background: #111118; }
+  body.dark .search-item:hover { background: #1e1e2e; }
+  body.dark .mi-filter { background: #16161f; border-color: #1e1e2e; }
+  body.dark .mi-filter-value { color: #e2e8f0; }
+  body.dark #mi-screen { background: linear-gradient(180deg, #1e1e2e, #16161f 12%, #111118 100%); border-color: #2a2a3e; }
+  body.dark #mi-screen-inner { background: #16161f; border-color: #2a2a3e; }
+  body.dark #mi-floating-panel { background: rgba(17,17,24,0.98); border-color: #2a2a3e; }
+  body.dark .ds-card { background: rgba(17,17,24,0.95); border-color: rgba(30,30,46,0.92); }
+  body.dark .ks-card, body.dark .ticker-cell, body.dark #chart-box, body.dark .report-box { background: rgba(17,17,24,0.95); border-color: var(--line); }
+  body.dark .tag { background: #1e1e2e; color: #64748b; border-color: #2a2a3e; }
+  body.dark #hero-copy, body.dark #hero-brief { background: rgba(17,17,24,0.84); border-color: rgba(30,30,46,0.9); }
+  body.dark .hero-stat { background: #16161f; }
+  body.dark #market-insights { background: linear-gradient(135deg, rgba(99,102,241,0.04), rgba(17,17,24,0.8) 28%, rgba(99,102,241,0.03) 100%); }
+  body.dark .cat-pill { background: rgba(17,17,24,0.88); color: var(--ink-soft); border-color: var(--line); }
+  body.dark .nav-link-pill { background: rgba(17,17,24,0.92); }
+  body.dark #empty-state { background: rgba(17,17,24,0.75); }
+  body.dark .chart-grid-line { stroke: #1e1e2e; }
+  body.dark .chart-axis-text { fill: #475569; }
+  body.dark #table-view-wrap { background: var(--surface); border-color: var(--line); }
+  body.dark table th { background: #16161f; color: #94a3b8; border-color: #1e1e2e; }
+  body.dark table td { border-color: #1e1e2e; color: #e2e8f0; }
+  body.dark table tr:nth-child(even) td { background: #13131a; }
   body {
     background:
       radial-gradient(circle at top left, rgba(12, 79, 183, 0.08), transparent 28%),
@@ -26,7 +62,19 @@
     color: var(--ink);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
   }
+  body.dark {
+    background: #0a0a0f;
+  }
+  /* Dark mode toggle */
+  #theme-toggle {
+    background: var(--surface-alt); border: 1px solid var(--line); color: var(--ink-soft);
+    border-radius: 999px; padding: 7px 14px; font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px; font-weight: 600;
+    transition: all 0.15s;
+  }
+  #theme-toggle:hover { border-color: var(--brand); color: var(--brand); }
   input, textarea, select, button { font-family: inherit; }
   input::placeholder, textarea::placeholder { color: #7e90a3; }
   select option { background: #ffffff; color: var(--ink); }
@@ -59,6 +107,43 @@
   .fade-up   { animation: fadeUp 0.3s ease both; }
   .fade-in   { animation: fadeIn 0.25s ease both; }
   .hidden    { display: none !important; }
+
+  /* ── SHARED NAV BAR (reused on ds-page + main) ── */
+  .site-nav-bar {
+    border-bottom: 1px solid rgba(191, 206, 223, 0.8);
+    padding: 0 32px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 80;
+  }
+  body.dark .site-nav-bar {
+    background: rgba(10, 10, 15, 0.92);
+    border-color: #1e1e2e;
+  }
+  .site-nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 18px 0 16px;
+  }
+  .site-nav-logo {
+    font-size: 58px;
+    line-height: 0.92;
+    font-weight: 800;
+    color: var(--brand-deep);
+    letter-spacing: -2.2px;
+  }
+  /* ── SHARED THEME TOGGLE BUTTON ── */
+  .theme-toggle-btn {
+    background: var(--surface-alt); border: 1px solid var(--line); color: var(--ink-soft);
+    border-radius: 999px; padding: 7px 14px; font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px; font-weight: 600;
+    transition: all 0.15s;
+  }
+  .theme-toggle-btn:hover { border-color: var(--brand); color: var(--brand); }
 
   /* ── NAV ── */
   #nav {
@@ -274,6 +359,30 @@
     border: 1px solid rgba(191, 206, 223, 0.65);
     border-radius: 18px;
     padding: 10px 10px 6px;
+  }
+  #hero-brief-btn {
+    margin-top: 16px;
+    width: 100%;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 13px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: -0.2px;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+    box-shadow: 0 8px 20px rgba(12, 79, 183, 0.22);
+  }
+  #hero-brief-btn:hover {
+    background: var(--brand-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(12, 79, 183, 0.32);
+  }
+  body.dark #hero-brief-btn {
+    background: var(--brand);
+    box-shadow: 0 8px 20px rgba(129, 140, 248, 0.2);
   }
 
   /* ── SEARCH ── */
@@ -619,12 +728,13 @@
     font-weight: 700;
   }
   .ds-card-chart  {
-    height: 124px;
+    height: 160px;
     margin-bottom: 16px;
-    padding: 10px 10px 0;
-    background: linear-gradient(180deg, rgba(12, 79, 183, 0.04), rgba(255, 255, 255, 0.65));
-    border: 1px solid rgba(216, 226, 238, 0.9);
+    padding: 12px 8px 4px;
+    background: linear-gradient(180deg, rgba(12, 79, 183, 0.03), rgba(255, 255, 255, 0.5));
+    border: 1px solid rgba(216, 226, 238, 0.7);
     border-radius: 18px;
+    position: relative;
   }
   .ds-card-tags   { display: flex; gap: 8px; flex-wrap: wrap; }
   .tag {
@@ -678,14 +788,14 @@
   #chart-box  {
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 28px 24px 20px;
+    border-radius: 28px;
+    padding: 32px 28px 24px;
     margin-bottom: 24px;
     box-shadow: var(--shadow);
   }
-  #chart-box-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  #chart-box-lbl { font-size: 11px; color: #7e90a3; text-transform: uppercase; letter-spacing: 0.1em; }
-  #chart-box-hint{ font-size: 11px; opacity: 0.6; }
+  #chart-box-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  #chart-box-lbl { font-size: 12px; color: #7e90a3; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; }
+  #chart-box-hint{ font-size: 12px; opacity: 0.7; font-weight: 600; }
   #ds-bottom  { display: grid; gap: 16px; }
   .report-box { background: rgba(255, 255, 255, 0.95); border: 1px solid var(--line); border-radius: 20px; padding: 22px 24px; box-shadow: 0 10px 24px rgba(16, 35, 61, 0.05); }
   .report-box-lbl{ font-size: 11px; color: #7e90a3; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
@@ -712,11 +822,51 @@
 
   /* ── SVG CHARTS ── */
   .chart-svg { width: 100%; height: 100%; overflow: visible; }
-  .chart-axis-text { font-size: 11px; fill: #8092a6; }
+  .chart-axis-text { font-size: 11px; fill: #8092a6; font-weight: 600; }
   .chart-grid-line { stroke: #d7e2ee; stroke-dasharray: 3 3; }
-  .chart-bar { transition: opacity 0.1s; }
-  .chart-bar:hover { opacity: 1 !important; }
-  .chart-dot { transition: r 0.1s; }
+  body.dark .chart-grid-line { stroke: #1e1e2e; }
+  body.dark .chart-axis-text { fill: #475569; }
+  .chart-bar { transition: opacity 0.12s; cursor: crosshair; }
+  .chart-bar:hover { opacity: 1 !important; filter: brightness(1.1); }
+  .chart-dot { transition: r 0.12s; cursor: crosshair; }
+  .chart-dot:hover { r: 6px; }
+
+  /* ── HEATMAP ── */
+  #heatmap-section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 24px rgba(16,35,61,0.05);
+  }
+  #heatmap-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); margin-bottom: 16px; }
+  #heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+  .hm-cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.1s;
+    position: relative;
+  }
+  .hm-cell:hover { transform: scale(1.15); z-index: 2; }
+  #heatmap-legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .hm-legend-item { display: flex; align-items: center; gap: 6px; }
+  .hm-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  #heatmap-labels { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 6px; }
+  .hm-day-label { font-size: 10px; color: var(--ink-soft); text-align: center; font-weight: 600; }
 
   /* ── PASSWORD GATE ── */
   #pw-gate {
@@ -753,50 +903,52 @@
   /* ── ADMIN PANEL ── */
   #admin-panel {
     position: fixed; inset: 0;
-    background: #0a0a0f;
+    background: var(--bg);
     z-index: 100;
     overflow-y: auto;
   }
   #admin-nav {
-    border-bottom: 1px solid #1e1e2e; padding: 0 32px;
-    position: sticky; top: 0; background: #0a0a0f; z-index: 50;
+    border-bottom: 1px solid var(--line); padding: 0 32px;
+    position: sticky; top: 0; background: var(--surface); z-index: 50;
+    backdrop-filter: blur(10px);
   }
   #admin-nav-inner {
     max-width: 920px; margin: 0 auto; height: 56px;
     display: flex; align-items: center; justify-content: space-between;
   }
+  #admin-nav-right { display: flex; align-items: center; gap: 10px; }
   #admin-nav-left { display: flex; align-items: center; gap: 12px; }
-  #admin-back-btn { background: none; border: none; color: #475569; cursor: pointer; font-size: 13px; padding: 0; }
-  #admin-back-btn:hover { color: #94a3b8; }
-  #admin-divider  { color: #1e1e2e; }
-  #admin-title-lbl{ font-size: 14px; font-weight: 600; color: #f1f5f9; }
-  #admin-auth-badge { font-size: 11px; background: #6366f120; color: #6366f1; border-radius: 4px; padding: 2px 7px; }
+  #admin-back-btn { background: none; border: none; color: var(--ink-soft); cursor: pointer; font-size: 13px; padding: 0; }
+  #admin-back-btn:hover { color: var(--ink); }
+  #admin-divider  { color: var(--line); }
+  #admin-title-lbl{ font-size: 14px; font-weight: 600; color: var(--ink); }
+  #admin-auth-badge { font-size: 11px; background: rgba(99,102,241,0.12); color: #6366f1; border-radius: 4px; padding: 2px 7px; }
   #admin-content  { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
 
   /* admin list */
-  #admin-list-header { font-size: 11px; color: #334155; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 20px; }
+  #admin-list-header { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 20px; }
   #admin-ds-list  { display: flex; flex-direction: column; gap: 10px; }
   .admin-ds-row {
-    background: #111118; border: 1px solid #1e1e2e; border-radius: 10px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
     padding: 16px 20px; display: flex; align-items: center; gap: 16px;
   }
   .admin-ds-dot    { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .admin-ds-info   { flex: 1; }
-  .admin-ds-name   { font-size: 14px; font-weight: 600; color: #f1f5f9; }
-  .admin-ds-meta   { font-size: 11px; color: #475569; margin-top: 2px; }
+  .admin-ds-name   { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .admin-ds-meta   { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
   .admin-ds-sparkline { width: 80px; height: 36px; }
   .admin-ds-actions{ display: flex; gap: 8px; }
   .btn-edit {
-    background: #1e1e2e; border: none; color: #94a3b8;
+    background: var(--surface-alt); border: 1px solid var(--line); color: var(--ink-soft);
     border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer;
   }
-  .btn-edit:hover { background: #2a2a3e; }
+  .btn-edit:hover { border-color: var(--brand); color: var(--brand); background: var(--surface); }
   .btn-delete {
-    background: transparent; border: 1px solid #3f1212; color: #f87171;
+    background: transparent; border: 1px solid rgba(248,113,113,0.3); color: #f87171;
     border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer;
   }
-  .btn-delete:hover { background: #3f121220; }
-  #admin-empty { text-align: center; color: #334155; padding: 60px 0; }
+  .btn-delete:hover { background: rgba(248,113,113,0.1); }
+  #admin-empty { text-align: center; color: var(--ink-soft); padding: 60px 0; }
   .btn-add {
     background: #6366f1; color: #fff; border: none;
     border-radius: 8px; padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
@@ -804,14 +956,14 @@
   .btn-add:hover { background: #5254cc; }
 
   /* admin form */
-  #admin-form-header { font-size: 16px; font-weight: 700; color: #f1f5f9; margin-bottom: 24px; }
+  #admin-form-header { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 24px; }
   #form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
   .field { margin-bottom: 16px; }
-  .field-label { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
-  .field-hint  { font-size: 11px; color: #334155; margin-top: 4px; }
+  .field-label { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .field-hint  { font-size: 11px; color: var(--ink-soft); margin-top: 4px; opacity: 0.7; }
   .inp {
-    background: #0d0d14; border: 1px solid #1e1e2e; border-radius: 8px;
-    padding: 9px 12px; font-size: 13px; color: #e2e8f0; outline: none;
+    background: var(--surface-alt); border: 1px solid var(--line); border-radius: 8px;
+    padding: 9px 12px; font-size: 13px; color: var(--ink); outline: none;
     width: 100%; transition: border-color 0.15s;
   }
   .inp:focus { border-color: #6366f1; }
@@ -824,11 +976,11 @@
     border: 2px solid transparent; transition: transform 0.1s;
   }
   .accent-swatch:hover { transform: scale(1.2); }
-  .accent-swatch.active { border-color: #fff; }
+  .accent-swatch.active { border-color: var(--ink); }
   #form-preview-wrap {
-    background: #111118; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;
+    background: var(--surface-alt); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;
   }
-  #form-preview-lbl { font-size: 11px; color: #334155; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  #form-preview-lbl { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
   #form-preview-chart { height: 140px; }
   .form-btns { display: flex; gap: 10px; }
   .btn-save {
@@ -837,70 +989,270 @@
   }
   .btn-save:hover { background: #5254cc; }
   .btn-cancel {
-    background: #1e1e2e; color: #94a3b8; border: none;
+    background: var(--surface-alt); color: var(--ink-soft); border: 1px solid var(--line);
     border-radius: 8px; padding: 11px 20px; font-size: 13px; cursor: pointer;
   }
-  .btn-cancel:hover { background: #2a2a3e; }
-  .btn-all-ds { background: #1e1e2e; color: #94a3b8; border: none; border-radius: 8px; padding: 7px 14px; font-size: 13px; cursor: pointer; }
-  .btn-all-ds:hover { background: #2a2a3e; }
+  .btn-cancel:hover { border-color: var(--brand); color: var(--ink); }
+  .btn-all-ds { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid var(--line); border-radius: 8px; padding: 7px 14px; font-size: 13px; cursor: pointer; }
+  .btn-all-ds:hover { border-color: var(--brand); }
 
   /* ── IMAGE-TO-CHART ── */
   #img2chart-wrap {
-    background: #0d0d14; border: 1px solid #1e1e2e; border-radius: 14px;
+    background: var(--surface-alt); border: 1px solid var(--line); border-radius: 14px;
     padding: 20px; margin-bottom: 24px;
   }
   #img2chart-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
   #img2chart-lbl  { font-size: 12px; color: #6366f1; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
-  #img2chart-badge{ font-size: 10px; background: #6366f120; color: #6366f1; border-radius: 4px; padding: 2px 7px; }
-  #img2chart-desc { font-size: 12px; color: #475569; margin-bottom: 16px; line-height: 1.6; }
+  #img2chart-badge{ font-size: 10px; background: rgba(99,102,241,0.12); color: #6366f1; border-radius: 4px; padding: 2px 7px; }
+  #img2chart-desc { font-size: 12px; color: var(--ink-soft); margin-bottom: 16px; line-height: 1.6; }
   #img-dropzone {
-    border: 1px dashed #1e1e2e; border-radius: 10px; padding: 28px;
+    border: 1px dashed var(--line-strong); border-radius: 10px; padding: 28px;
     text-align: center; cursor: pointer; transition: all 0.15s;
   }
-  #img-dropzone:hover { border-color: #6366f1; background: #6366f108; }
+  #img-dropzone:hover { border-color: #6366f1; background: rgba(99,102,241,0.05); }
   #img-dropzone-icon  { font-size: 28px; margin-bottom: 8px; }
-  #img-dropzone-text  { font-size: 13px; color: #475569; }
-  #img-dropzone-hint  { font-size: 11px; color: #334155; margin-top: 4px; }
+  #img-dropzone-text  { font-size: 13px; color: var(--ink-soft); }
+  #img-dropzone-hint  { font-size: 11px; color: var(--ink-soft); margin-top: 4px; opacity: 0.6; }
   #img-file-input { display: none; }
   #img-preview-wrap { position: relative; margin-bottom: 12px; }
-  #img-preview-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px; background: #111118; border: 1px solid #1e1e2e; }
-  #img-clear-btn { position: absolute; top: 8px; right: 8px; background: #1e1e2e; border: none; color: #94a3b8; border-radius: 6px; padding: 4px 8px; font-size: 11px; cursor: pointer; }
+  #img-preview-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px; background: var(--surface-alt); border: 1px solid var(--line); }
+  #img-clear-btn { position: absolute; top: 8px; right: 8px; background: var(--surface-alt); border: 1px solid var(--line); color: var(--ink-soft); border-radius: 6px; padding: 4px 8px; font-size: 11px; cursor: pointer; }
   #img-err { font-size: 12px; color: #f87171; margin-bottom: 10px; line-height: 1.5; }
   #img-extract-btn {
     width: 100%; border: none; border-radius: 8px; padding: 10px;
     font-size: 13px; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  #img-extract-btn.loading { background: #111118; color: #475569; border: 1px solid #1e1e2e; cursor: default; }
+  #img-extract-btn.loading { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid var(--line); cursor: default; }
   #img-extract-btn.ready   { background: #6366f1; color: #fff; }
   .spin { display: inline-block; animation: spin 1s linear infinite; }
   #img-extracted-preview { }
   #extracted-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-  .extracted-col-lbl { font-size: 10px; color: #334155; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
-  #ext-original-img { width: 100%; height: 160px; object-fit: contain; border-radius: 8px; background: #111118; border: 1px solid #1e1e2e; }
-  #ext-chart-wrap   { height: 160px; background: #111118; border: 1px solid #1e1e2e; border-radius: 8px; padding: 8px; }
-  #ext-meta { background: #111118; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; }
+  .extracted-col-lbl { font-size: 10px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  #ext-original-img { width: 100%; height: 160px; object-fit: contain; border-radius: 8px; background: var(--surface-alt); border: 1px solid var(--line); }
+  #ext-chart-wrap   { height: 160px; background: var(--surface-alt); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+  #ext-meta { background: var(--surface-alt); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; }
   #ext-meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  .ext-meta-lbl { color: #475569; }
-  .ext-meta-val { color: #94a3b8; }
+  .ext-meta-lbl { color: var(--ink-soft); }
+  .ext-meta-val { color: var(--ink); font-weight: 600; }
   #ext-confirm-btn { flex: 1; background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 600; cursor: pointer; }
-  #ext-retry-btn   { background: #1e1e2e; color: #94a3b8; border: none; border-radius: 8px; padding: 10px 16px; font-size: 13px; cursor: pointer; }
+  #ext-retry-btn   { background: var(--surface-alt); color: var(--ink-soft); border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px; font-size: 13px; cursor: pointer; }
   #img2chart-done  { text-align: center; padding: 16px 0; }
   #img2chart-done-icon { font-size: 24px; margin-bottom: 8px; }
   #img2chart-done-title{ font-size: 13px; color: #34d399; font-weight: 600; margin-bottom: 4px; }
-  #img2chart-done-sub  { font-size: 12px; color: #475569; margin-bottom: 14px; }
-  #img2chart-retry-btn { background: #111118; border: 1px solid #1e1e2e; color: #94a3b8; border-radius: 8px; padding: 7px 16px; font-size: 12px; cursor: pointer; }
+  #img2chart-done-sub  { font-size: 12px; color: var(--ink-soft); margin-bottom: 14px; }
+  #img2chart-retry-btn { background: var(--surface-alt); border: 1px solid var(--line); color: var(--ink-soft); border-radius: 8px; padding: 7px 16px; font-size: 12px; cursor: pointer; }
 
+  /* ── ADMIN FORM ENHANCEMENTS ── */
+  .chart-type-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; }
+  .ctype-chip {
+    font-size:12px; padding:5px 14px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--line); background:var(--surface-alt); color:var(--ink-soft); transition:all 0.15s;
+  }
+  .ctype-chip:hover { border-color:#6366f1; color:#6366f1; }
+  .ctype-chip.active { background:#6366f1; color:#fff; border-color:#6366f1; }
+  .trend-badge-row { display:flex; gap:6px; align-items:center; margin-top:4px; }
+  .trend-inp { flex:1; }
+  .trend-badge {
+    font-size:11px; padding:3px 10px; border-radius:20px; cursor:pointer;
+    border:1px solid var(--line); white-space:nowrap; transition:all 0.12s; color:var(--ink-soft);
+  }
+  .trend-badge.up   { background:rgba(52,211,153,0.1); color:#34d399; border-color:rgba(52,211,153,0.3); }
+  .trend-badge.down { background:rgba(248,113,113,0.1); color:#f87171; border-color:rgba(248,113,113,0.3); }
+  .trend-badge.neutral { background:var(--surface-alt); color:var(--ink-soft); border-color:var(--line); }
+  .toggle-row-admin {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:8px 0; border-bottom:1px solid var(--line);
+  }
+  .toggle-row-admin:last-child { border-bottom:none; }
+  .tog-lbl { font-size:13px; color:var(--ink); }
+  .tog-sub { font-size:11px; color:var(--ink-soft); margin-top:1px; }
+  .tog-sw {
+    width:34px; height:19px; border-radius:10px; background:var(--line-strong);
+    border:1px solid var(--line); cursor:pointer; position:relative; flex-shrink:0;
+    transition:background 0.2s;
+  }
+  .tog-sw.on { background:#6366f1; border-color:#6366f1; }
+  .tog-sw::after {
+    content:''; position:absolute; top:2px; left:2px;
+    width:13px; height:13px; border-radius:50%; background:#fff;
+    transition:left 0.2s;
+  }
+  .tog-sw.on::after { left:17px; }
+  .ann-row-inp { display:flex; gap:6px; margin-bottom:6px; align-items:center; }
+  .ann-row-inp input { flex:1; }
+  .ann-lbl-sm { font-size:11px; color:var(--ink-soft); white-space:nowrap; }
+  .section-divider {
+    font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.1em;
+    margin:18px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--line);
+  }
+  .ks-trend-row { display:flex; gap:6px; align-items:center; margin-top:4px; margin-bottom:10px; }
+  .ks-trend-row input { flex:1; }
+  .publish-row {
+    background:var(--surface-alt); border:1px solid var(--line); border-radius:10px;
+    padding:14px 16px; margin-bottom:16px;
+  }
+  .publish-row-title { font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+
+  /* ── TABLE VIEW ── */
+  #view-toggle { display:flex; gap:8px; margin-bottom:16px; align-items:center; }
+  .view-btn {
+    background: var(--surface-alt); border: 1px solid var(--line); color: var(--ink-soft);
+    border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  }
+  .view-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  #table-view-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table th { padding: 12px 16px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft); background: var(--surface-alt); border-bottom: 1px solid var(--line); font-weight: 700; }
+  table td { padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--ink); }
+  table tr:last-child td { border-bottom: none; }
+  table tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+  table tr:hover td { background: rgba(12,79,183,0.04); cursor: pointer; }
+  /* ── DOWNLOAD / SHARE / EMBED ── */
+  #ds-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .ds-action-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink-soft);
+    border-radius: 10px; padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer;
+    transition: all 0.15s; box-shadow: 0 4px 10px rgba(16,35,61,0.05);
+  }
+  .ds-action-btn:hover { border-color: var(--brand); color: var(--brand); }
+  /* ── EMBED MODAL ── */
+  #embed-modal {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #embed-box {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+    padding: 28px; width: min(520px, 90vw); box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  }
+  #embed-box h3 { font-size: 16px; color: var(--ink); margin-bottom: 8px; }
+  #embed-box p  { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+  #embed-code {
+    width: 100%; background: var(--surface-alt); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px; font-size: 12px; font-family: monospace; color: var(--ink); resize: none; outline: none;
+  }
+  #embed-modal-btns { display: flex; gap: 10px; margin-top: 14px; }
+  /* ── RELATED ── */
+  #related-section { margin-top: 28px; }
+  #related-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 14px; }
+  #related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .related-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 14px 16px; cursor: pointer; transition: all 0.15s;
+  }
+  .related-card:hover { border-color: var(--brand); transform: translateY(-2px); }
+  .related-card-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .related-card-sub   { font-size: 11px; color: var(--ink-soft); }
+  /* ── PINNED / FEATURED ── */
+  .pin-btn { background: none; border: none; font-size: 16px; cursor: pointer; padding: 2px 4px; opacity: 0.4; transition: opacity 0.15s; }
+  .pin-btn.pinned { opacity: 1; }
+  /* ── BULK IMPORT ── */
+  #bulk-import-wrap { background: var(--surface-alt); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+  #bulk-import-lbl { font-size: 12px; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-weight: 600; }
+  #bulk-import-hint { font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; line-height: 1.6; }
+  #bulk-csv-input { display: none; }
+  #bulk-import-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  /* ── TAGS / FILTER BAR ── */
+  #filter-bar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+  #filter-bar label { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  #filter-bar select { background: var(--surface); border: 1px solid var(--line); color: var(--ink); border-radius: 8px; padding: 6px 12px; font-size: 12px; outline: none; cursor: pointer; }
+  #date-from, #date-to { background: var(--surface); border: 1px solid var(--line); color: var(--ink); border-radius: 8px; padding: 6px 12px; font-size: 12px; outline: none; width: 80px; }
+  #filter-clear { background: none; border: none; color: var(--brand); font-size: 12px; cursor: pointer; font-weight: 600; }
+  /* ── CHANGE PASSWORD ── */
+  #change-pw-wrap { background: var(--surface-alt); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-top: 32px; }
+  #change-pw-lbl { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600; }
+  #change-pw-row { display: flex; gap: 10px; }
+  /* ── DRAG REORDER ── */
+  .admin-ds-row { user-select: none; }
+  .admin-ds-row.dragging { opacity: 0.4; }
+  .admin-ds-row.drag-over { border-color: #6366f1; background: rgba(99,102,241,0.06); }
+  .drag-handle { cursor: grab; color: var(--ink-soft); font-size: 16px; padding: 0 4px; flex-shrink: 0; }
+  .drag-handle:active { cursor: grabbing; }
   /* ── TOAST ── */
   #toast {
     position: fixed; top: 20px; right: 20px;
-    background: #111118; border: 1px solid #6366f1; color: #a5b4fc;
+    background: var(--surface); border: 1px solid #6366f1; color: #6366f1;
     border-radius: 8px; padding: 10px 18px; font-size: 13px; z-index: 300;
     animation: fadeUp 0.2s ease;
     pointer-events: none;
+    box-shadow: var(--shadow);
   }
 
-  /* ── LOADING ── */
+  #admin-panel .theme-toggle-btn {
+    background: var(--surface-alt); border-color: var(--line); color: var(--ink-soft);
+  }
+  #admin-panel .theme-toggle-btn:hover { border-color: #6366f1; color: #6366f1; }
+  #pw-gate .theme-toggle-btn {
+    background: #1e1e2e; border-color: #2a2a3e; color: #94a3b8;
+  }
+  #pw-gate .theme-toggle-btn:hover { border-color: #6366f1; color: #a5b4fc; }
+
+  /* ── ADMIN TABS ── */
+  #admin-tabs { display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:0; }
+  .admin-tab-btn {
+    background:none; border:none; border-bottom:2px solid transparent;
+    padding:12px 18px; font-size:13px; font-weight:600; color:var(--ink-soft);
+    cursor:pointer; transition:all 0.15s; margin-bottom:-1px;
+  }
+  .admin-tab-btn.active { color:#6366f1; border-bottom-color:#6366f1; }
+  .admin-tab-btn:hover:not(.active) { color:var(--ink); }
+  .admin-tab-pane { display:none; }
+  .admin-tab-pane.active { display:block; }
+
+  /* ── CUSTOMIZE TAB ── */
+  #customize-tab { padding-top:24px; }
+  .cz-section { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:16px; }
+  .cz-section-title { font-size:11px; color:#6366f1; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .cz-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px; }
+  .cz-row:last-child { border-bottom:none; padding-bottom:0; }
+  .cz-row-label { font-size:13px; color:var(--ink); flex:1; }
+  .cz-row-sub { font-size:11px; color:var(--ink-soft); margin-top:2px; }
+  .cz-inp { background:var(--surface-alt); border:1px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; color:var(--ink); outline:none; min-width:0; }
+  .cz-inp:focus { border-color:#6366f1; }
+  .cz-inp-sm { width:90px; }
+  .cz-inp-md { width:150px; }
+  .cz-color { width:38px; height:32px; border-radius:6px; border:1px solid var(--line); cursor:pointer; padding:2px; background:none; }
+  .cz-select { background:var(--surface-alt); border:1px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; color:var(--ink); outline:none; cursor:pointer; }
+  .cz-range { width:120px; accent-color:#6366f1; }
+  .cz-tog { width:36px; height:20px; border-radius:10px; background:var(--line-strong); border:1px solid var(--line); cursor:pointer; position:relative; flex-shrink:0; transition:background 0.2s; }
+  .cz-tog.on { background:#6366f1; border-color:#6366f1; }
+  .cz-tog::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:#fff; transition:left 0.2s; }
+  .cz-tog.on::after { left:18px; }
+  .cz-palette-grid { display:grid; grid-template-columns: repeat(10, 32px); gap:6px; margin-top:8px; }
+  .cz-preset-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .cz-preset-btn { background:var(--surface-alt); border:1px solid var(--line); border-radius:6px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; color:var(--ink-soft); transition:all 0.12s; }
+  .cz-preset-btn:hover { border-color:#6366f1; color:#6366f1; }
+  .cz-chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .cz-chip { background:var(--surface-alt); border:1px solid var(--line); border-radius:6px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; color:var(--ink-soft); transition:all 0.12s; }
+  .cz-chip.active { background:#6366f1; color:#fff; border-color:#6366f1; }
+  .cz-upload-btn { display:inline-flex; align-items:center; gap:6px; background:var(--surface-alt); border:1px solid var(--line); color:var(--ink-soft); border-radius:8px; padding:7px 14px; font-size:12px; cursor:pointer; font-weight:600; }
+  .cz-save-row { display:flex; gap:10px; align-items:center; margin-top:20px; flex-wrap:wrap; }
+  .cz-publish-btn { background:#6366f1; color:#fff; border:none; border-radius:8px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; }
+  .cz-publish-btn:hover { background:#5254cc; }
+  .cz-discard-btn { background:var(--surface-alt); color:var(--ink-soft); border:1px solid var(--line); border-radius:8px; padding:10px 18px; font-size:13px; cursor:pointer; }
+  .cz-unsaved { font-size:12px; color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:6px; padding:4px 10px; }
+  /* Live preview panel */
+  #cz-preview-panel { position:fixed; right:0; top:0; bottom:0; width:420px; background:var(--surface); border-left:1px solid var(--line); z-index:200; overflow:hidden; display:flex; flex-direction:column; transform:translateX(100%); transition:transform 0.3s; }
+  #cz-preview-panel.open { transform:translateX(0); }
+  #cz-preview-header { padding:14px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
+  #cz-preview-header span { font-size:13px; font-weight:600; color:var(--ink); }
+  #cz-preview-close { background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:18px; padding:0; }
+  #cz-preview-frame-wrap { flex:1; overflow:hidden; transform-origin:top left; }
+  #cz-preview-frame { width:200%; height:200%; border:none; transform:scale(0.5); transform-origin:top left; }
+  .cz-preview-btn { background:var(--surface-alt); border:1px solid var(--line); color:var(--ink-soft); border-radius:8px; padding:7px 14px; font-size:12px; cursor:pointer; font-weight:600; }
+  .cz-preview-btn:hover { border-color:#6366f1; color:#6366f1; }
+  /* Dataset per-style overrides */
+  .ds-override-row { background:var(--surface-alt); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:16px; }
+  .ds-override-title { font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; font-weight:700; }
+  /* Announcement bar */
+  #announcement-bar { display:none; padding:9px 20px; text-align:center; font-size:13px; font-weight:600; }
+  /* Footer */
+  #site-footer { display:none; padding:32px 20px; }
+  #site-footer-inner { max-width:1120px; margin:0 auto; }
+  /* Coming soon */
+  #coming-soon-overlay { position:fixed; inset:0; z-index:250; background:var(--bg); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; }
+
   #loading-screen {
     background: #0a0a0f; min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
@@ -955,6 +1307,8 @@
         <div id="nav-links"></div>
       </div>
       <div id="nav-right">
+        <button id="admin-gate-btn" onclick="openAdminGate()" title="Open Admin Panel" style="background:var(--surface-alt);border:1px solid var(--line);color:var(--ink-soft);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:600;transition:all 0.15s;margin-right:8px;">⚙ Admin</button>
+        <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
       </div>
     </div>
   </div>
@@ -979,6 +1333,7 @@
           <div id="hero-brief-sub"></div>
           <div id="hero-brief-meta"></div>
           <div id="hero-brief-chart"></div>
+          <button id="hero-brief-btn" onclick="if(window._featuredDs) openDataset(window._featuredDs)">View Dataset →</button>
         </div>
       </div>
       <div id="search-results" class="hidden"></div>
@@ -1028,40 +1383,114 @@
       </div>
     </div>
 
+    <!-- Filter Bar -->
+    <div id="filter-bar">
+      <label>Filter:</label>
+      <select id="filter-sort" onchange="renderSite()">
+        <option value="default">Default order</option>
+        <option value="az">A → Z</option>
+        <option value="za">Z → A</option>
+        <option value="most-data">Most data points</option>
+        <option value="pinned">Pinned first</option>
+      </select>
+      <label>Year from</label>
+      <input id="date-from" type="number" placeholder="2018" min="1900" max="2100" oninput="renderSite()" />
+      <label>to</label>
+      <input id="date-to" type="number" placeholder="2024" min="1900" max="2100" oninput="renderSite()" />
+      <button id="filter-clear" onclick="clearFilters()">✕ Clear</button>
+    </div>
+    <!-- View Toggle -->
+    <div id="view-toggle">
+      <button class="view-btn active" id="view-cards-btn" onclick="setView('cards')">⊞ Cards</button>
+      <button class="view-btn" id="view-table-btn" onclick="setView('table')">≡ Table</button>
+    </div>
     <!-- Category Pills -->
     <div id="cat-pills"></div>
 
     <!-- Cards -->
     <div id="cards-grid"></div>
+    <div id="table-view-wrap" class="hidden"></div>
     <div id="empty-state" class="hidden">
       <p>No datasets in this category yet.</p>
     </div>
   </div>
 </div>
 
-<!-- ─── DATASET PAGE ──────────────────────────────────────────── -->
-<div id="ds-page-wrap" class="hidden">
-  <div id="nav"><!-- re-used nav styling via clone below --></div>
+  <div id="ds-page-wrap" class="hidden">
+  <div id="ds-nav" class="site-nav-bar">
+    <div class="site-nav-inner">
+      <div id="nav-brand-ds" style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0;">
+        <div class="site-nav-logo" onclick="document.getElementById('ds-back').click()" style="cursor:pointer;">StatHub</div>
+        <div id="ds-nav-links" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding-top:8px;">
+        <button onclick="openAdminGate()" title="Open Admin Panel" style="background:var(--surface-alt);border:1px solid var(--line);color:var(--ink-soft);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;font-weight:600;transition:all 0.15s;">⚙ Admin</button>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">🌙 Dark</button>
+      </div>
+    </div>
+  </div>
   <div id="ds-page">
     <button id="ds-back">← Back</button>
     <div id="ds-source"></div>
     <h2 id="ds-title"></h2>
     <p id="ds-subtitle"></p>
+    <!-- Action buttons -->
+    <div id="ds-actions">
+      <button class="ds-action-btn" id="btn-download-png">⬇ PNG</button>
+      <button class="ds-action-btn" id="btn-download-csv">⬇ CSV</button>
+      <button class="ds-action-btn" id="btn-share">⎘ Share Link</button>
+      <button class="ds-action-btn" id="btn-embed">‹/› Embed</button>
+    </div>
     <div id="ks-row"></div>
     <div id="ticker-row"></div>
+    <!-- Chart / Table toggle -->
+    <div id="view-toggle-ds" style="display:flex;gap:8px;margin-bottom:12px;">
+      <button class="view-btn active" id="ds-view-chart-btn" onclick="setDsView('chart')">📊 Chart</button>
+      <button class="view-btn" id="ds-view-table-btn" onclick="setDsView('table')">≡ Table</button>
+    </div>
     <div id="chart-box">
       <div id="chart-box-top">
         <div id="chart-box-lbl">Interactive Chart</div>
         <div id="chart-box-hint">Hover to explore</div>
       </div>
-      <div id="chart-box-inner" style="height:260px;"></div>
+      <div id="chart-box-inner" style="height:380px;"></div>
+    </div>
+    <div id="ds-table-wrap" class="hidden">
+      <div id="ds-table-inner"></div>
+    </div>
+    <div id="heatmap-section" class="hidden">
+      <div id="heatmap-title">Data Intensity · Heatmap View</div>
+      <div id="heatmap-labels"></div>
+      <div id="heatmap-grid"></div>
+      <div id="heatmap-legend"></div>
     </div>
     <div id="ds-bottom"></div>
+    <!-- Related -->
+    <div id="related-section" class="hidden">
+      <div id="related-title">You might also like</div>
+      <div id="related-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Embed Modal -->
+<div id="embed-modal" class="hidden">
+  <div id="embed-box">
+    <h3>Embed this chart</h3>
+    <p>Copy the iframe code below and paste it into any webpage.</p>
+    <textarea id="embed-code" rows="5" readonly></textarea>
+    <div id="embed-modal-btns">
+      <button class="btn-save" onclick="copyEmbed()" style="flex:1">Copy Code</button>
+      <button class="btn-cancel" onclick="hide(document.getElementById('embed-modal'))">Close</button>
+    </div>
   </div>
 </div>
 
 <!-- ─── PASSWORD GATE ─────────────────────────────────────────── -->
 <div id="pw-gate" class="hidden">
+  <div style="position:fixed;top:16px;right:20px;">
+    <button class="theme-toggle-btn" onclick="toggleTheme()" id="pw-theme-btn">🌙 Dark</button>
+  </div>
   <div id="pw-box">
     <div style="text-align:center;margin-bottom:32px;">
       <div id="pw-icon-wrap"><span id="pw-icon">🔐</span></div>
@@ -1085,16 +1514,68 @@
         <span id="admin-auth-badge">Authenticated</span>
       </div>
       <div id="admin-nav-right">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="admin-theme-btn">🌙 Dark</button>
         <button id="admin-add-btn" class="btn-add">+ Add Dataset</button>
       </div>
     </div>
+    <div id="admin-tabs">
+      <button class="admin-tab-btn active" data-tab="datasets">📋 Datasets</button>
+      <button class="admin-tab-btn" data-tab="notebooks">📓 Notebooks</button>
+      <button class="admin-tab-btn" data-tab="customize">🎨 Customize</button>
+      <button class="admin-tab-btn" data-tab="github">⚙ GitHub</button>
+    </div>
   </div>
   <div id="admin-content">
+    <!-- DATASETS TAB -->
+    <div id="tab-datasets" class="admin-tab-pane active">
     <!-- LIST VIEW -->
     <div id="admin-list-view">
       <div id="admin-list-header"></div>
       <div id="admin-ds-list"></div>
       <div id="admin-empty" class="hidden">No datasets yet.</div>
+      <!-- Change Password -->
+      <div id="change-pw-wrap">
+        <div id="change-pw-lbl">🔑 Change Admin Password</div>
+        <div id="change-pw-row">
+          <input class="inp" id="new-pw-input" type="password" placeholder="New password" style="flex:1" />
+          <input class="inp" id="new-pw-confirm" type="password" placeholder="Confirm new password" style="flex:1" />
+          <button class="btn-save" style="padding:9px 18px;" onclick="changePassword()">Save</button>
+        </div>
+        <div id="change-pw-err" style="font-size:12px;color:#f87171;margin-top:6px;"></div>
+      </div>
+      <!-- GitHub Config -->
+      <div id="gh-config-wrap" style="background:var(--surface-alt);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px;">
+        <div style="font-size:12px;color:#34d399;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;font-weight:600;">🐙 GitHub Storage</div>
+        <div style="font-size:12px;color:var(--ink-soft);margin-bottom:12px;line-height:1.6;">
+          Data saved here is committed to your GitHub repo as <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-size:11px;">data.json</code> and becomes publicly visible on your GitHub Pages site.
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <div>
+            <div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">GitHub Username / Org</div>
+            <input class="inp" id="gh-owner-input" placeholder="e.g. harshit" style="width:100%" />
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Repository name</div>
+            <input class="inp" id="gh-repo-input" placeholder="e.g. stathub" style="width:100%" />
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <div>
+            <div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">File path in repo</div>
+            <input class="inp" id="gh-path-input" placeholder="data.json" style="width:100%" />
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Personal Access Token <span style="color:#f87171">*</span></div>
+            <input class="inp" id="gh-token-input" type="password" placeholder="ghp_…  (stored in your browser only)" style="width:100%" />
+          </div>
+        </div>
+        <div style="font-size:11px;color:#f59e0b;margin-bottom:10px;">&#9888; Token stays in your browser only — never sent to anyone except GitHub. Create a fine-grained token with Contents: Read &amp; Write on this repo only.</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button class="btn-save" style="padding:9px 18px;background:#34d399;border-color:#34d399;color:#000;" onclick="saveGhConfigFromUI()">Save GitHub Config</button>
+          <button style="padding:9px 18px;background:none;border:1px solid var(--line);border-radius:8px;color:var(--ink-soft);font-size:13px;cursor:pointer;font-family:inherit;" onclick="testGhConnection()">Test connection</button>
+          <span id="gh-config-status" style="font-size:12px;color:#34d399;"></span>
+        </div>
+      </div>
     </div>
     <!-- FORM VIEW -->
     <div id="admin-form-view" class="hidden">
@@ -1155,6 +1636,15 @@
           </div>
         </div>
       </div>
+      <!-- Bulk CSV Import -->
+      <div id="bulk-import-wrap">
+        <div id="bulk-import-lbl">⬆ Bulk CSV Import</div>
+        <div id="bulk-import-hint">Upload a CSV with columns: title, subtitle, unit, source, category, chartType, data (label:value pairs separated by |), report, insights (separated by |)</div>
+        <input id="bulk-csv-input" type="file" accept=".csv" />
+        <button id="bulk-import-btn" onclick="document.getElementById('bulk-csv-input').click()">📂 Choose CSV file</button>
+        <div id="bulk-import-result" style="font-size:12px;color:#34d399;margin-top:8px;"></div>
+      </div>
+
       <!-- Form fields -->
       <div id="form-grid">
         <div><!-- LEFT COL -->
@@ -1189,36 +1679,95 @@
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Chart Type</div>
-              <select class="inp sel" id="f-charttype">
-                <option value="bar">Bar</option>
-                <option value="line">Line</option>
-                <option value="area">Area</option>
-              </select>
+              <div class="field-label">Last Updated</div>
+              <input class="inp" id="f-updated" type="date" />
             </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Chart Type</div>
+            <div class="chart-type-chips" id="chart-type-chips">
+              <span class="ctype-chip active" data-type="bar">Bar</span>
+              <span class="ctype-chip" data-type="line">Line</span>
+              <span class="ctype-chip" data-type="area">Area</span>
+              <span class="ctype-chip" data-type="donut">Donut</span>
+              <span class="ctype-chip" data-type="scatter">Scatter</span>
+            </div>
+            <input type="hidden" id="f-charttype" value="bar" />
           </div>
           <div class="field">
             <div class="field-label">Accent Colour</div>
             <div class="accent-swatches" id="accent-swatches"></div>
           </div>
           <div class="field">
+            <div class="field-label">Notes / Caveats</div>
+            <input class="inp" id="f-notes" type="text" placeholder="e.g. Adjusted for inflation, PPP basis" />
+          </div>
+          <div class="field">
             <div class="field-label">Data Points</div>
-            <div class="field-hint">Format: label, value (one per line)</div>
+            <div class="field-hint">Format: label, value (one per line). Negative values supported.</div>
             <textarea class="inp" id="f-data" rows="7" style="resize:vertical;font-family:monospace;font-size:12px;margin-top:4px;"
               placeholder="2020, 10&#10;2021, 20&#10;2022, 30"></textarea>
           </div>
+          <div class="field">
+            <div class="field-label">Comparison Dataset (optional)</div>
+            <div class="field-hint">Label: value per line — shown as dashed overlay line</div>
+            <textarea class="inp" id="f-compare" rows="4" style="resize:vertical;font-family:monospace;font-size:12px;margin-top:4px;"
+              placeholder="2020, 3.4&#10;2021, 6.1&#10;2022, 3.4"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Comparison Label</div>
+            <input class="inp" id="f-compare-label" type="text" placeholder="e.g. Global Average" />
+          </div>
+          <div class="section-divider">Annotations</div>
+          <div class="field-hint" style="margin-bottom:8px;">Pin labels on specific data points (e.g. "COVID impact" on 2020)</div>
+          <div id="ann-list">
+            <div class="ann-row-inp">
+              <span class="ann-lbl-sm">Point</span>
+              <input class="inp" placeholder="2020" style="max-width:80px;" data-ann-label />
+              <span class="ann-lbl-sm">Note</span>
+              <input class="inp" placeholder="COVID impact" data-ann-note />
+            </div>
+            <div class="ann-row-inp">
+              <span class="ann-lbl-sm">Point</span>
+              <input class="inp" placeholder="" style="max-width:80px;" data-ann-label />
+              <span class="ann-lbl-sm">Note</span>
+              <input class="inp" placeholder="" data-ann-note />
+            </div>
+          </div>
+          <button type="button" onclick="addAnnotationRow()" style="font-size:12px;padding:4px 10px;margin-top:4px;">+ Add annotation</button>
         </div>
         <div><!-- RIGHT COL -->
           <div class="field">
             <div class="field-label">Key Stats (up to 3)</div>
-            <div class="inp-3col">
-              <input class="inp" id="ks1l" placeholder="Label" /><input class="inp" id="ks1v" placeholder="Value" /><input class="inp" id="ks1y" placeholder="Year" />
+            <div style="margin-bottom:4px;font-size:10px;color:#334155;display:grid;grid-template-columns:2fr 1fr 1fr 80px;gap:6px;padding:0 2px;">
+              <span>Label</span><span>Value</span><span>Year</span><span>Trend</span>
             </div>
-            <div class="inp-3col">
-              <input class="inp" id="ks2l" placeholder="Label" /><input class="inp" id="ks2v" placeholder="Value" /><input class="inp" id="ks2y" placeholder="Year" />
+            <div class="inp-3col" style="grid-template-columns:2fr 1fr 1fr;">
+              <input class="inp" id="ks1l" placeholder="Label" />
+              <input class="inp" id="ks1v" placeholder="7.2%" />
+              <input class="inp" id="ks1y" placeholder="2024" />
             </div>
-            <div class="inp-3col">
-              <input class="inp" id="ks3l" placeholder="Label" /><input class="inp" id="ks3v" placeholder="Value" /><input class="inp" id="ks3y" placeholder="Year" />
+            <div class="ks-trend-row">
+              <input class="inp trend-inp" id="ks1t" placeholder="↑ +0.4% vs 2023" />
+              <button type="button" class="trend-badge up" id="tb1" onclick="cycleTrendBadge('tb1')">↑ Up</button>
+            </div>
+            <div class="inp-3col" style="grid-template-columns:2fr 1fr 1fr;">
+              <input class="inp" id="ks2l" placeholder="Label" />
+              <input class="inp" id="ks2v" placeholder="6.1%" />
+              <input class="inp" id="ks2y" placeholder="2024" />
+            </div>
+            <div class="ks-trend-row">
+              <input class="inp trend-inp" id="ks2t" placeholder="↑ Above global avg" />
+              <button type="button" class="trend-badge up" id="tb2" onclick="cycleTrendBadge('tb2')">↑ Up</button>
+            </div>
+            <div class="inp-3col" style="grid-template-columns:2fr 1fr 1fr;">
+              <input class="inp" id="ks3l" placeholder="Label" />
+              <input class="inp" id="ks3v" placeholder="-6.6%" />
+              <input class="inp" id="ks3y" placeholder="2020" />
+            </div>
+            <div class="ks-trend-row">
+              <input class="inp trend-inp" id="ks3t" placeholder="↓ 2020 (COVID)" />
+              <button type="button" class="trend-badge down" id="tb3" onclick="cycleTrendBadge('tb3')">↓ Down</button>
             </div>
           </div>
           <div class="field">
@@ -1230,6 +1779,49 @@
             <div class="field-hint">One insight per line</div>
             <textarea class="inp" id="f-insights" rows="4" style="resize:vertical;margin-top:4px;" placeholder="First key insight&#10;Second key insight"></textarea>
           </div>
+
+          <!-- Chart Options -->
+          <div class="publish-row">
+            <div class="publish-row-title">Chart options</div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Show value labels</div><div class="tog-sub">Numbers on each bar/point</div></div>
+              <div class="tog-sw on" id="tog-labels" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Colour negative bars red</div><div class="tog-sub">Values below 0 shown in red</div></div>
+              <div class="tog-sw on" id="tog-neg" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Show trend line</div><div class="tog-sub">Auto regression overlay</div></div>
+              <div class="tog-sw" id="tog-trend" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Show comparison overlay</div><div class="tog-sub">Dashed line from comparison data</div></div>
+              <div class="tog-sw on" id="tog-compare" onclick="this.classList.toggle('on')"></div>
+            </div>
+          </div>
+
+          <!-- Publish & Export -->
+          <div class="publish-row">
+            <div class="publish-row-title">Publish &amp; export</div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Published</div><div class="tog-sub">Visible on the public site</div></div>
+              <div class="tog-sw on" id="tog-published" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Allow PNG download</div></div>
+              <div class="tog-sw on" id="tog-png" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Allow CSV download</div></div>
+              <div class="tog-sw on" id="tog-csv" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row-admin">
+              <div><div class="tog-lbl">Show embed code</div></div>
+              <div class="tog-sw on" id="tog-embed" onclick="this.classList.toggle('on')"></div>
+            </div>
+          </div>
+
           <div id="form-preview-wrap">
             <div id="form-preview-lbl">Live Preview</div>
             <div id="form-preview-chart"></div>
@@ -1241,6 +1833,332 @@
         </div>
       </div>
     </div>
+    </div><!-- /tab-datasets -->
+
+    <!-- NOTEBOOKS TAB -->
+    <div id="tab-notebooks" class="admin-tab-pane">
+      <div style="padding:28px 0 0;">
+        <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px;">📓 Dataset Notebooks</div>
+        <div style="font-size:13px;color:var(--ink-soft);margin-bottom:20px;line-height:1.7;">Each dataset can have its own notebook — rich notes, analysis, sources, and context stored alongside the dataset.</div>
+        <div id="notebook-list"></div>
+        <div id="notebook-editor" class="hidden" style="margin-top:20px;">
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;" id="nb-dataset-title"></div>
+          <div style="font-size:11px;color:var(--ink-soft);margin-bottom:12px;">Notebook content is saved with the dataset and synced to GitHub.</div>
+          <textarea class="inp" id="nb-content" rows="14" style="resize:vertical;font-family:inherit;font-size:13px;line-height:1.7;width:100%;margin-bottom:10px;" placeholder="Write analysis, methodology notes, data sources, context..."></textarea>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-save" onclick="saveNotebook()">Save Notebook</button>
+            <button class="btn-cancel" onclick="closeNotebook()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-notebooks -->
+
+    <!-- CUSTOMIZE TAB -->
+    <div id="tab-customize" class="admin-tab-pane">
+      <div id="customize-tab">
+        <div class="cz-save-row" style="margin-bottom:20px;margin-top:4px;">
+          <button class="cz-publish-btn" onclick="publishTheme()">🚀 Publish Changes</button>
+          <button class="cz-discard-btn" onclick="discardTheme()">Discard Changes</button>
+          <span id="cz-unsaved-badge" class="cz-unsaved hidden">● Unsaved changes</span>
+          <button class="cz-preview-btn" onclick="openPreviewPanel()">👁 Live Preview</button>
+          <button class="cz-preview-btn" onclick="window.open(location.pathname,'_blank')">↗ Preview in full tab</button>
+          <button class="cz-preview-btn" onclick="exportTheme()">⬇ Export Theme</button>
+          <label class="cz-preview-btn" style="display:inline-flex;align-items:center;gap:6px;">⬆ Import Theme<input type="file" accept=".json" id="theme-import-input" style="display:none" onchange="importTheme(this)"></label>
+        </div>
+
+        <!-- BRANDING -->
+        <div class="cz-section">
+          <div class="cz-section-title">🏷 Branding</div>
+          <div class="cz-row"><div><div class="cz-row-label">Site Title</div></div><input class="cz-inp cz-inp-md" id="cz-site-title" value="StatHub" oninput="themeChanged()"/></div>
+          <div class="cz-row"><div><div class="cz-row-label">Tagline</div></div><input class="cz-inp cz-inp-md" id="cz-tagline" value="Insights Library" oninput="themeChanged()"/></div>
+          <div class="cz-row"><div><div class="cz-row-label">Logo</div><div class="cz-row-sub">Upload image (shown instead of text)</div></div><label class="cz-upload-btn">📁 Upload Logo<input type="file" accept="image/*" style="display:none" onchange="loadImageToField(this,'cz-logo-data')"></label><img id="cz-logo-preview" style="height:32px;border-radius:4px;display:none;margin-left:8px;" /><input type="hidden" id="cz-logo-data" /></div>
+          <div class="cz-row"><div><div class="cz-row-label">Favicon</div></div><label class="cz-upload-btn">📁 Upload Favicon<input type="file" accept="image/*" style="display:none" onchange="loadImageToField(this,'cz-favicon-data')"></label><input type="hidden" id="cz-favicon-data" /></div>
+        </div>
+
+        <!-- COLOR SCHEME -->
+        <div class="cz-section">
+          <div class="cz-section-title">🎨 Color Scheme</div>
+          <div class="cz-preset-row" id="theme-presets"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+            <div class="cz-row"><div class="cz-row-label">Primary Accent</div><input type="color" class="cz-color" id="cz-primary" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Secondary Accent</div><input type="color" class="cz-color" id="cz-secondary" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Background (light)</div><input type="color" class="cz-color" id="cz-bg-light" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Background (dark)</div><input type="color" class="cz-color" id="cz-bg-dark" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Surface (light)</div><input type="color" class="cz-color" id="cz-surface-light" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Surface (dark)</div><input type="color" class="cz-color" id="cz-surface-dark" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Text (light)</div><input type="color" class="cz-color" id="cz-text-light" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Text (dark)</div><input type="color" class="cz-color" id="cz-text-dark" oninput="themeChanged()" /></div>
+          </div>
+          <div style="margin-top:10px;"><button class="cz-discard-btn" onclick="resetColorDefaults()" style="font-size:12px;padding:6px 14px;">↺ Reset to defaults</button></div>
+        </div>
+
+        <!-- TYPOGRAPHY -->
+        <div class="cz-section">
+          <div class="cz-section-title">✏ Typography</div>
+          <div class="cz-row"><div class="cz-row-label">Font Family</div>
+            <select class="cz-select" id="cz-font" onchange="themeChanged();loadCustomFont()">
+              <option value="Inter">Inter</option>
+              <option value="DM Sans">DM Sans</option>
+              <option value="Sora">Sora</option>
+              <option value="Roboto">Roboto</option>
+              <option value="Poppins">Poppins</option>
+              <option value="Playfair Display">Playfair Display</option>
+            </select>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Base Font Size</div><div class="cz-row-sub" id="cz-font-size-lbl">16px</div></div><input type="range" class="cz-range" id="cz-font-size" min="12" max="18" value="16" oninput="themeChanged();document.getElementById('cz-font-size-lbl').textContent=this.value+'px'" /></div>
+          <div class="cz-row"><div class="cz-row-label">Heading Weight</div>
+            <div class="cz-chips" id="cz-heading-weight">
+              <span class="cz-chip" data-v="400">Normal</span>
+              <span class="cz-chip" data-v="600">Semibold</span>
+              <span class="cz-chip active" data-v="800">Bold</span>
+              <span class="cz-chip" data-v="900">Extrabold</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Letter Spacing</div>
+            <div class="cz-chips" id="cz-letter-spacing">
+              <span class="cz-chip" data-v="-0.05em">Tight</span>
+              <span class="cz-chip active" data-v="0">Normal</span>
+              <span class="cz-chip" data-v="0.04em">Wide</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="cz-section">
+          <div class="cz-section-title">⬛ Layout</div>
+          <div class="cz-row"><div class="cz-row-label">Dashboard Grid Columns</div>
+            <div class="cz-chips" id="cz-grid-cols">
+              <span class="cz-chip" data-v="1">1</span>
+              <span class="cz-chip active" data-v="2">2</span>
+              <span class="cz-chip" data-v="3">3</span>
+              <span class="cz-chip" data-v="4">4</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Card Border Radius</div>
+            <div class="cz-chips" id="cz-border-radius">
+              <span class="cz-chip" data-v="0px">None</span>
+              <span class="cz-chip" data-v="8px">Small</span>
+              <span class="cz-chip active" data-v="22px">Medium</span>
+              <span class="cz-chip" data-v="32px">Large</span>
+              <span class="cz-chip" data-v="999px">Pill</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Card Shadow</div>
+            <div class="cz-chips" id="cz-card-shadow">
+              <span class="cz-chip" data-v="none">None</span>
+              <span class="cz-chip active" data-v="soft">Soft</span>
+              <span class="cz-chip" data-v="medium">Medium</span>
+              <span class="cz-chip" data-v="strong">Strong</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Card Border</div>
+            <div class="cz-chips" id="cz-card-border">
+              <span class="cz-chip" data-v="none">None</span>
+              <span class="cz-chip active" data-v="subtle">Subtle</span>
+              <span class="cz-chip" data-v="visible">Visible</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Navbar Position</div>
+            <div class="cz-chips" id="cz-navbar-pos">
+              <span class="cz-chip active" data-v="sticky">Top Fixed</span>
+              <span class="cz-chip" data-v="static">Top Static</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Compact Mode</div><div class="cz-row-sub">Reduces padding and spacing</div></div><div class="cz-tog" id="cz-compact" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+        </div>
+
+        <!-- HERO SECTION -->
+        <div class="cz-section">
+          <div class="cz-section-title">🦸 Hero Section</div>
+          <div class="cz-row"><div class="cz-row-label">Show Hero</div><div class="cz-tog on" id="cz-hero-show" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Hero Title</div><input class="cz-inp cz-inp-md" id="cz-hero-title" value="Evidence, charts, and fast-moving market context." oninput="themeChanged()" /></div>
+          <div class="cz-row"><div class="cz-row-label">Hero Subtitle</div><input class="cz-inp cz-inp-md" id="cz-hero-subtitle" value="Browse a cleaner library of datasets..." oninput="themeChanged()" /></div>
+          <div class="cz-row"><div class="cz-row-label">Background Style</div>
+            <div class="cz-chips" id="cz-hero-bg">
+              <span class="cz-chip active" data-v="gradient">Gradient</span>
+              <span class="cz-chip" data-v="solid">Solid</span>
+              <span class="cz-chip" data-v="image">Image</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Hero Height</div>
+            <div class="cz-chips" id="cz-hero-height">
+              <span class="cz-chip" data-v="small">Small</span>
+              <span class="cz-chip active" data-v="medium">Medium</span>
+              <span class="cz-chip" data-v="large">Large</span>
+              <span class="cz-chip" data-v="fullscreen">Fullscreen</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Text Align</div>
+            <div class="cz-chips" id="cz-hero-align">
+              <span class="cz-chip active" data-v="left">Left</span>
+              <span class="cz-chip" data-v="center">Center</span>
+              <span class="cz-chip" data-v="right">Right</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Overlay Opacity</div><div class="cz-row-sub" id="cz-overlay-lbl">0%</div></div><input type="range" class="cz-range" id="cz-overlay-opacity" min="0" max="80" value="0" oninput="themeChanged();document.getElementById('cz-overlay-lbl').textContent=this.value+'%'" /></div>
+        </div>
+
+        <!-- GLOBAL CHART DEFAULTS -->
+        <div class="cz-section">
+          <div class="cz-section-title">📊 Global Chart Defaults</div>
+          <div style="margin-bottom:10px;">
+            <div style="font-size:11px;color:var(--ink-soft);margin-bottom:8px;font-weight:600;">CHART PALETTE</div>
+            <div class="cz-preset-row" id="chart-palette-presets"></div>
+            <div class="cz-palette-grid" id="chart-palette-colors"></div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Bar Rounded Corners</div><div style="display:flex;align-items:center;gap:10px;"><div class="cz-tog on" id="cz-bar-rounded" onclick="this.classList.toggle('on');themeChanged()"></div><input type="range" class="cz-range" id="cz-bar-radius" min="0" max="16" value="5" oninput="themeChanged()" /></div></div>
+          <div class="cz-row"><div class="cz-row-label">Bar Gap</div>
+            <div class="cz-chips" id="cz-bar-gap">
+              <span class="cz-chip" data-v="tight">Tight</span>
+              <span class="cz-chip active" data-v="normal">Normal</span>
+              <span class="cz-chip" data-v="wide">Wide</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Line Thickness</div><div class="cz-row-sub" id="cz-line-thick-lbl">3px</div></div><input type="range" class="cz-range" id="cz-line-thickness" min="1" max="5" value="3" oninput="themeChanged();document.getElementById('cz-line-thick-lbl').textContent=this.value+'px'" /></div>
+          <div class="cz-row"><div class="cz-row-label">Line Dot Size</div>
+            <div class="cz-chips" id="cz-dot-size">
+              <span class="cz-chip" data-v="none">None</span>
+              <span class="cz-chip" data-v="small">Small</span>
+              <span class="cz-chip active" data-v="medium">Medium</span>
+              <span class="cz-chip" data-v="large">Large</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Fill Opacity</div><div class="cz-row-sub" id="cz-fill-lbl">35%</div></div><input type="range" class="cz-range" id="cz-fill-opacity" min="0" max="80" value="35" oninput="themeChanged();document.getElementById('cz-fill-lbl').textContent=this.value+'%'" /></div>
+          <div class="cz-row"><div><div class="cz-row-label">Show Grid Lines</div></div><div style="display:flex;align-items:center;gap:10px;"><div class="cz-tog on" id="cz-show-grid" onclick="this.classList.toggle('on');themeChanged()"></div>
+            <div class="cz-chips" id="cz-grid-style">
+              <span class="cz-chip" data-v="solid">Solid</span>
+              <span class="cz-chip active" data-v="dashed">Dashed</span>
+              <span class="cz-chip" data-v="dotted">Dotted</span>
+            </div>
+          </div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Axis Labels</div><div class="cz-tog on" id="cz-show-axis" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Value Labels on Bars</div><div class="cz-tog on" id="cz-show-val-labels" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Tooltip</div><div class="cz-tog on" id="cz-show-tooltip" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Animation Duration</div>
+            <div class="cz-chips" id="cz-anim">
+              <span class="cz-chip" data-v="0">None</span>
+              <span class="cz-chip" data-v="150">Fast</span>
+              <span class="cz-chip active" data-v="300">Normal</span>
+              <span class="cz-chip" data-v="600">Slow</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Show Chart Title</div><div class="cz-tog on" id="cz-show-chart-title" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Trend Badge</div><div class="cz-tog on" id="cz-show-trend-badge" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Source Credit</div><div class="cz-tog on" id="cz-show-source" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Timestamp</div><div class="cz-tog on" id="cz-show-ts" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Card Padding</div>
+            <div class="cz-chips" id="cz-card-padding">
+              <span class="cz-chip" data-v="compact">Compact</span>
+              <span class="cz-chip active" data-v="normal">Normal</span>
+              <span class="cz-chip" data-v="spacious">Spacious</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUBLIC PAGE CONTROLS -->
+        <div class="cz-section">
+          <div class="cz-section-title">🌐 Public Page Controls</div>
+          <div class="cz-row"><div class="cz-row-label">Show Search Bar</div><div class="cz-tog on" id="cz-show-search" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Category Filters</div><div class="cz-tog on" id="cz-show-cats" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Dark Mode Toggle</div><div class="cz-tog on" id="cz-show-dark-toggle" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Dataset Count</div><div class="cz-tog on" id="cz-show-ds-count" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div><div class="cz-row-label">Password-Protect Public View</div><div class="cz-row-sub">Visitors must enter a password</div></div><div class="cz-tog" id="cz-public-pw" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Public Password</div><input class="cz-inp cz-inp-md" id="cz-public-pw-value" type="password" placeholder="Set public password" oninput="themeChanged()" /></div>
+          <div class="cz-row"><div><div class="cz-row-label">"Coming Soon" Mode</div><div class="cz-row-sub">Shows a coming soon screen instead of content</div></div><div class="cz-tog" id="cz-coming-soon" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+        </div>
+
+        <!-- ANNOUNCEMENT BAR & FOOTER -->
+        <div class="cz-section">
+          <div class="cz-section-title">📢 Announcement Bar</div>
+          <div class="cz-row"><div class="cz-row-label">Show Bar</div><div class="cz-tog" id="cz-ann-show" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Bar Text</div><input class="cz-inp cz-inp-md" id="cz-ann-text" value="📊 New datasets added weekly — stay updated!" oninput="themeChanged()" /></div>
+          <div class="cz-row"><div class="cz-row-label">Bar Background</div><input type="color" class="cz-color" id="cz-ann-bg" value="#6366f1" oninput="themeChanged()" /></div>
+        </div>
+        <div class="cz-section">
+          <div class="cz-section-title">🦶 Footer</div>
+          <div class="cz-row"><div class="cz-row-label">Show Footer</div><div class="cz-tog" id="cz-footer-show" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Columns</div>
+            <div class="cz-chips" id="cz-footer-cols">
+              <span class="cz-chip active" data-v="1">1</span>
+              <span class="cz-chip" data-v="2">2</span>
+              <span class="cz-chip" data-v="3">3</span>
+            </div>
+          </div>
+          <div class="cz-row" style="flex-direction:column;align-items:flex-start;gap:6px;"><div class="cz-row-label">Footer HTML</div><textarea class="cz-inp" id="cz-footer-html" rows="4" style="width:100%;resize:vertical;font-size:12px;font-family:monospace;" placeholder="<p>© 2024 StatHub</p>" oninput="themeChanged()"></textarea></div>
+        </div>
+
+        <!-- CUSTOM CSS -->
+        <div class="cz-section">
+          <div class="cz-section-title">💅 Custom CSS</div>
+          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;">Injected into the public page. Admin panel is not affected.</div>
+          <textarea class="cz-inp" id="cz-custom-css" rows="8" style="width:100%;resize:vertical;font-size:12px;font-family:monospace;" placeholder="/* your custom CSS here */&#10;.ds-card { border-radius: 32px; }" oninput="themeChanged()"></textarea>
+          <div style="margin-top:8px;"><button class="cz-discard-btn" onclick="document.getElementById('cz-custom-css').value='';themeChanged()" style="font-size:12px;padding:6px 14px;">↺ Reset custom CSS</button></div>
+        </div>
+      </div>
+    </div><!-- /tab-customize -->
+
+    <!-- GITHUB TAB -->
+    <div id="tab-github" class="admin-tab-pane">
+      <div style="padding-top:24px;">
+        <div id="gh-config-wrap-tab" style="background:var(--surface-alt);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:0;">
+          <div style="font-size:12px;color:#34d399;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;font-weight:600;">🐙 GitHub Storage</div>
+          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:12px;line-height:1.6;">
+            Data saved here is committed to your GitHub repo as <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-size:11px;">data.json</code>. Theme settings are saved as <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-size:11px;">theme.json</code>.
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">GitHub Username / Org</div><input class="inp" id="gh-owner-tab" placeholder="e.g. harshit" style="width:100%" /></div>
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Repository name</div><input class="inp" id="gh-repo-tab" placeholder="e.g. stathub" style="width:100%" /></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">File path in repo</div><input class="inp" id="gh-path-tab" placeholder="data.json" style="width:100%" /></div>
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Personal Access Token <span style="color:#f87171">*</span></div><input class="inp" id="gh-token-tab" type="password" placeholder="ghp_…" style="width:100%" /></div>
+          </div>
+          <div style="font-size:11px;color:#f59e0b;margin-bottom:10px;">&#9888; Token stays in your browser only — never sent to anyone except GitHub.</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button class="btn-save" style="padding:9px 18px;background:#34d399;border-color:#34d399;color:#000;" onclick="saveGhConfigTabFromUI()">Save GitHub Config</button>
+            <button style="padding:9px 18px;background:none;border:1px solid var(--line);border-radius:8px;color:var(--ink-soft);font-size:13px;cursor:pointer;font-family:inherit;" onclick="testGhConnectionTab()">Test connection</button>
+            <span id="gh-config-status-tab" style="font-size:12px;color:#34d399;"></span>
+          </div>
+        </div>
+        <!-- Change Password in GitHub tab -->
+        <div id="change-pw-wrap-tab" style="background:var(--surface-alt);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px;">
+          <div style="font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;font-weight:600;">🔑 Change Admin Password</div>
+          <div style="display:flex;gap:10px;">
+            <input class="inp" id="new-pw-tab" type="password" placeholder="New password" style="flex:1" />
+            <input class="inp" id="new-pw-confirm-tab" type="password" placeholder="Confirm" style="flex:1" />
+            <button class="btn-save" style="padding:9px 18px;" onclick="changePasswordTab()">Save</button>
+          </div>
+          <div id="change-pw-err-tab" style="font-size:12px;color:#f87171;margin-top:6px;"></div>
+        </div>
+      </div>
+    </div><!-- /tab-github -->
+
+  </div><!-- /admin-content -->
+</div>
+
+<!-- Live Preview Panel -->
+<div id="cz-preview-panel">
+  <div id="cz-preview-header">
+    <span>Live Preview (50% scale)</span>
+    <div style="display:flex;gap:8px;">
+      <button class="cz-preview-btn" onclick="window.open(location.pathname,'_blank')">Full Tab ↗</button>
+      <button id="cz-preview-close" onclick="closePreviewPanel()">✕</button>
+    </div>
+  </div>
+  <div id="cz-preview-frame-wrap">
+    <iframe id="cz-preview-frame" src="about:blank"></iframe>
+  </div>
+</div>
+
+<!-- Announcement Bar (public) -->
+<div id="announcement-bar"></div>
+
+<!-- Coming Soon Overlay -->
+<div id="coming-soon-overlay" class="hidden">
+  <div style="text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">🚀</div>
+    <div style="font-size:28px;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-0.8px;">Coming Soon</div>
+    <div style="font-size:15px;color:var(--ink-soft);">Something great is on its way. Check back later.</div>
   </div>
 </div>
 
@@ -1249,7 +2167,30 @@
 // CONFIG
 // ──────────────────────────────────────────────
 const ADMIN_PASSWORD = "datavault2024";
-const ACCENTS = ["#6366f1","#34d399","#f59e0b","#f87171","#a78bfa","#38bdf8","#fbbf24","#6ee7b7","#fb923c","#e879f9"];
+const ACCENTS = ["#8b5cf6","#f97316","#6366f1","#a855f7","#fb923c","#7c3aed","#c084fc","#38bdf8","#34d399","#f59e0b"];
+
+// Heatmap color scale inspired by the hexagonal heatmap (blue→purple→orange)
+function heatColor(t) {
+  // t = 0..1, 0=low(blue), 0.5=mid(purple/magenta), 1=high(orange)
+  if (t < 0.33) {
+    const r = Math.round(99 + (168-99)*t/0.33);
+    const g = Math.round(102 + (85-102)*t/0.33);
+    const b = Math.round(241 + (247-241)*t/0.33);
+    return `rgb(${r},${g},${b})`;
+  } else if (t < 0.67) {
+    const s = (t - 0.33) / 0.34;
+    const r = Math.round(168 + (249-168)*s);
+    const g = Math.round(85 + (115-85)*s);
+    const b = Math.round(247 + (22-247)*s);
+    return `rgb(${r},${g},${b})`;
+  } else {
+    const s = (t - 0.67) / 0.33;
+    const r = Math.round(249 + (251-249)*s);
+    const g = Math.round(115 + (146-115)*s);
+    const b = Math.round(22 + (9-22)*s);
+    return `rgb(${r},${g},${b})`;
+  }
+}
 const CATEGORIES = [
   { id:"economy",     label:"Economy",     icon:"◈" },
   { id:"technology",  label:"Technology",  icon:"⬡" },
@@ -1344,17 +2285,90 @@ let pwLockTimer = 0;
 let pwLockInterval = null;
 
 // ──────────────────────────────────────────────
-// STORAGE
+// GITHUB CONFIG HELPERS
 // ──────────────────────────────────────────────
+function getGhConfig() {
+  return {
+    owner: localStorage.getItem("gh-owner") || "",
+    repo:  localStorage.getItem("gh-repo")  || "",
+    path:  localStorage.getItem("gh-path")  || "data.json",
+    token: localStorage.getItem("gh-token") || "",
+  };
+}
+function saveGhConfig(owner, repo, path, token) {
+  localStorage.setItem("gh-owner", owner);
+  localStorage.setItem("gh-repo",  repo);
+  localStorage.setItem("gh-path",  path || "data.json");
+  if (token) localStorage.setItem("gh-token", token);
+}
+
+// ──────────────────────────────────────────────
+// STORAGE — GitHub Contents API
+// ──────────────────────────────────────────────
+let _ghFileSha = null; // track current SHA for updates
+
 async function loadDs() {
+  const { owner, repo, path } = getGhConfig();
+  if (owner && repo) {
+    try {
+      const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      const res = await fetch(url, {
+        headers: { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" }
+      });
+      if (res.ok) {
+        const json = await res.json();
+        _ghFileSha = json.sha;
+        const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g,""))));
+        allDs = JSON.parse(decoded);
+        return;
+      }
+    } catch (e) { console.warn("GitHub load failed:", e); }
+  }
+  // Fallback: localStorage seed
   try {
-    const res = await window.storage.get("dv-datasets");
-    allDs = res?.value ? JSON.parse(res.value) : SEED;
-    if (!res?.value) await window.storage.set("dv-datasets", JSON.stringify(SEED));
+    const saved = localStorage.getItem("dv-datasets-local");
+    allDs = saved ? JSON.parse(saved) : SEED;
   } catch { allDs = SEED; }
 }
+
 async function persistDs() {
-  try { await window.storage.set("dv-datasets", JSON.stringify(allDs)); } catch {}
+  const { owner, repo, path, token } = getGhConfig();
+  // Always keep a local backup
+  try { localStorage.setItem("dv-datasets-local", JSON.stringify(allDs)); } catch {}
+
+  if (!owner || !repo || !token) {
+    showToast("⚠ GitHub not configured — saved locally only");
+    return;
+  }
+  try {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(allDs, null, 2))));
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const body = {
+      message: "Update datasets via StatHub admin",
+      content,
+      ...(  _ghFileSha ? { sha: _ghFileSha } : {} )
+    };
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || res.status);
+    }
+    const result = await res.json();
+    _ghFileSha = result.content?.sha || _ghFileSha;
+    showToast("✓ Saved to GitHub");
+  } catch(e) {
+    showToast("❌ GitHub save failed: " + e.message);
+    console.error("GitHub persist error:", e);
+  }
 }
 
 // ──────────────────────────────────────────────
@@ -1377,7 +2391,9 @@ function showToast(msg) {
 // ──────────────────────────────────────────────
 function buildChart(ds, width, height, interactive = false) {
   if (!ds.data || ds.data.length === 0) return "";
-  const pad = { top:8, right:8, bottom:28, left:36 };
+  const pad = interactive
+    ? { top: 14, right: 14, bottom: 36, left: 46 }
+    : { top: 8,  right: 8,  bottom: 28, left: 36 };
   const W = width - pad.left - pad.right;
   const H = height - pad.top - pad.bottom;
   const vals = ds.data.map(d => d.value);
@@ -1401,7 +2417,7 @@ function buildChart(ds, width, height, interactive = false) {
     const y = pad.top + (H / gridLines) * i;
     grid += `<line x1="${pad.left}" y1="${y}" x2="${pad.left + W}" y2="${y}" class="chart-grid-line" />`;
     const lv = Math.abs(v) >= 100 ? Math.round(v) : v.toFixed(1);
-    yLabels += `<text x="${pad.left - 4}" y="${y + 3}" class="chart-axis-text" text-anchor="end">${lv}</text>`;
+    yLabels += `<text x="${pad.left - 6}" y="${y + 3}" class="chart-axis-text" text-anchor="end" style="${interactive ? 'font-size:12px' : ''}">${lv}</text>`;
   }
   // Zero line
   let zeroLine = "";
@@ -1415,7 +2431,7 @@ function buildChart(ds, width, height, interactive = false) {
   ds.data.forEach((d, i) => {
     if (i % every === 0 || i === ds.data.length - 1) {
       const x = xCenter(i);
-      xLabels += `<text x="${x}" y="${pad.top + H + 18}" class="chart-axis-text" text-anchor="middle">${d.label}</text>`;
+      xLabels += `<text x="${x}" y="${pad.top + H + (interactive ? 22 : 18)}" class="chart-axis-text" text-anchor="middle" style="${interactive ? 'font-size:12px' : ''}">${d.label}</text>`;
     }
   });
 
@@ -1423,7 +2439,8 @@ function buildChart(ds, width, height, interactive = false) {
   const uid = ds.id + "-" + Date.now();
 
   if (ds.chartType === "bar") {
-    const bw = Math.max(4, xStep * 0.55);
+    const bw = Math.max(4, xStep * 0.58);
+    const normVals = vals.map(v => (v - Math.min(...vals)) / (Math.max(...vals) - Math.min(...vals) || 1));
     ds.data.forEach((d, i) => {
       const x = xCenter(i) - bw / 2;
       const y0 = pad.top + yScale(0);
@@ -1431,17 +2448,18 @@ function buildChart(ds, width, height, interactive = false) {
       const bh = Math.abs(y0 - yv);
       const by = Math.min(y0, yv);
       const isNeg = d.value < 0;
+      const barColor = isNeg ? "#f87171" : heatColor(normVals[i]);
       chartBody += `<rect class="chart-bar" x="${x}" y="${by}" width="${bw}" height="${bh}"
-        fill="${isNeg ? "#f87171" : accent}" opacity="0.85" rx="3"
+        fill="${barColor}" opacity="${interactive ? 0.92 : 0.85}" rx="${interactive ? 5 : 3}"
         ${interactive ? `data-label="${d.label}" data-value="${d.value}"` : ""} />`;
     });
   } else if (ds.chartType === "line") {
     const pts = ds.data.map((d,i) => `${xCenter(i)},${pad.top + yScale(d.value)}`).join(" ");
-    chartBody += `<polyline points="${pts}" fill="none" stroke="${accent}" stroke-width="2.5" stroke-linejoin="round" />`;
+    chartBody += `<polyline points="${pts}" fill="none" stroke="${accent}" stroke-width="${interactive ? 3 : 2.5}" stroke-linejoin="round" stroke-linecap="round" />`;
     if (interactive) {
       ds.data.forEach((d,i) => {
-        chartBody += `<circle class="chart-dot" cx="${xCenter(i)}" cy="${pad.top+yScale(d.value)}" r="3"
-          fill="${accent}" data-label="${d.label}" data-value="${d.value}" />`;
+        chartBody += `<circle class="chart-dot" cx="${xCenter(i)}" cy="${pad.top+yScale(d.value)}" r="4.5"
+          fill="${accent}" stroke="white" stroke-width="2" data-label="${d.label}" data-value="${d.value}" />`;
       });
     }
   } else { // area
@@ -1452,16 +2470,21 @@ function buildChart(ds, width, height, interactive = false) {
     chartBody += `
       <defs>
         <linearGradient id="g${uid}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%"  stop-color="${accent}" stop-opacity="0.25"/>
+          <stop offset="5%"  stop-color="${accent}" stop-opacity="${interactive ? 0.35 : 0.25}"/>
           <stop offset="95%" stop-color="${accent}" stop-opacity="0.02"/>
+        </linearGradient>
+        <linearGradient id="gstroke${uid}" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#8b5cf6"/>
+          <stop offset="50%"  stop-color="#a855f7"/>
+          <stop offset="100%" stop-color="#f97316"/>
         </linearGradient>
       </defs>
       <polygon points="${first},${zeroY} ${pts} ${last},${zeroY}" fill="url(#g${uid})" />
-      <polyline points="${pts}" fill="none" stroke="${accent}" stroke-width="2.5" stroke-linejoin="round" />`;
+      <polyline points="${pts}" fill="none" stroke="url(#gstroke${uid})" stroke-width="${interactive ? 3 : 2.5}" stroke-linejoin="round" stroke-linecap="round" />`;
     if (interactive) {
       ds.data.forEach((d,i) => {
-        chartBody += `<circle class="chart-dot" cx="${xCenter(i)}" cy="${pad.top+yScale(d.value)}" r="3"
-          fill="${accent}" data-label="${d.label}" data-value="${d.value}" />`;
+        chartBody += `<circle class="chart-dot" cx="${xCenter(i)}" cy="${pad.top+yScale(d.value)}" r="4.5"
+          fill="${accent}" stroke="white" stroke-width="2" data-label="${d.label}" data-value="${d.value}" />`;
       });
     }
   }
@@ -1503,6 +2526,72 @@ function attachTooltip(container, ds) {
 }
 
 // ──────────────────────────────────────────────
+// COMPARISON OVERLAY
+// ──────────────────────────────────────────────
+function renderCompareOverlay(container, ds) {
+  const svg = container.querySelector("svg");
+  if (!svg || !ds.compareData?.length) return;
+  const mainData = ds.data;
+  const cmpData  = ds.compareData;
+  const w = parseFloat(svg.getAttribute("viewBox")?.split(" ")[2]) || 600;
+  const h = parseFloat(svg.getAttribute("viewBox")?.split(" ")[3]) || 320;
+  const pad = { top:20, bottom:40, left:52, right:16 };
+  const allVals = [...mainData.map(d=>d.value), ...cmpData.map(d=>d.value)];
+  const vMin = Math.min(...allVals), vMax = Math.max(...allVals);
+  const range = vMax - vMin || 1;
+  const innerW = w - pad.left - pad.right;
+  const innerH = h - pad.top - pad.bottom;
+  const n = mainData.length;
+  const xCenter = i => pad.left + (i + 0.5) * (innerW / n);
+  const yScale  = v => innerH * (1 - (v - vMin) / range);
+
+  const pts = cmpData.map((d, i) => {
+    const xi = mainData.findIndex(m => m.label === d.label);
+    const x = xi >= 0 ? xCenter(xi) : xCenter(Math.min(i, n-1));
+    return `${x.toFixed(1)},${(pad.top + yScale(d.value)).toFixed(1)}`;
+  }).join(" ");
+
+  const label = ds.compareLabel || "Comparison";
+  const overlay = document.createElementNS("http://www.w3.org/2000/svg","g");
+  overlay.innerHTML = `
+    <polyline points="${pts}" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round" stroke-linecap="round" opacity="0.85" />
+    <text x="${w - pad.right}" y="${pad.top - 4}" text-anchor="end" font-size="10" fill="#94a3b8" font-style="italic">— ${label}</text>`;
+  svg.appendChild(overlay);
+}
+
+// ──────────────────────────────────────────────
+// ANNOTATIONS
+// ──────────────────────────────────────────────
+function renderAnnotations(container, ds) {
+  const svg = container.querySelector("svg");
+  if (!svg || !ds.annotations?.length) return;
+  const w = parseFloat(svg.getAttribute("viewBox")?.split(" ")[2]) || 600;
+  const h = parseFloat(svg.getAttribute("viewBox")?.split(" ")[3]) || 320;
+  const pad = { top:20, bottom:40, left:52, right:16 };
+  const vals = ds.data.map(d=>d.value);
+  const vMin = Math.min(...vals), vMax = Math.max(...vals);
+  const range = vMax - vMin || 1;
+  const innerW = w - pad.left - pad.right;
+  const innerH = h - pad.top - pad.bottom;
+  const n = ds.data.length;
+  const xCenter = i => pad.left + (i + 0.5) * (innerW / n);
+  const yScale  = v => innerH * (1 - (v - vMin) / range);
+
+  ds.annotations.forEach(ann => {
+    const idx = ds.data.findIndex(d => String(d.label) === String(ann.label));
+    if (idx < 0) return;
+    const x = xCenter(idx);
+    const y = pad.top + yScale(ds.data[idx].value);
+    const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+    g.innerHTML = `
+      <line x1="${x}" y1="${y - 6}" x2="${x}" y2="${y - 28}" stroke="${ds.accent}" stroke-width="1.5" stroke-dasharray="3 2" />
+      <rect x="${x - 30}" y="${y - 44}" width="60" height="16" rx="4" fill="${ds.accent}" opacity="0.92" />
+      <text x="${x}" y="${y - 32}" text-anchor="middle" font-size="9" fill="#fff" font-weight="600">${ann.note}</text>`;
+    svg.appendChild(g);
+  });
+}
+
+// ──────────────────────────────────────────────
 // MAIN SITE RENDER
 // ──────────────────────────────────────────────
 function renderSite() {
@@ -1527,6 +2616,7 @@ function renderSite() {
   `).join("");
 
   const featured = [...allDs].sort((a, b) => (b.data?.length || 0) - (a.data?.length || 0))[0] || allDs[0];
+  window._featuredDs = featured;
   if (featured) {
     document.getElementById("hero-brief-title").textContent = featured.title;
     document.getElementById("hero-brief-sub").textContent = featured.subtitle || "A featured view into the current dataset library.";
@@ -1560,7 +2650,15 @@ function renderSite() {
       const link = document.createElement("button");
       link.className = "nav-link-pill" + (activeCat === c.id ? " active" : "");
       link.innerHTML = `<span class="nav-link-icon">${c.icon}</span><span>${c.label}</span>`;
-      link.onclick = () => { activeCat = c.id; renderSite(); };
+      link.onclick = () => {
+        activeCat = c.id;
+        renderSite();
+        // Scroll to the cards section smoothly after render
+        requestAnimationFrame(() => {
+          const target = document.getElementById("cat-pills") || document.getElementById("cards-grid");
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      };
       navLinksEl.appendChild(link);
     }
 
@@ -1595,18 +2693,43 @@ function renderSite() {
 
   // Cards
   const grid = document.getElementById("cards-grid");
+  const tableWrap = document.getElementById("table-view-wrap");
   const empty = document.getElementById("empty-state");
-  const catDs = byCat[activeCat] || [];
+  let catDs = byCat[activeCat] || [];
+  catDs = applyFilters(catDs);
   grid.innerHTML = "";
-  if (catDs.length === 0) { show(empty); return; }
+  tableWrap.innerHTML = "";
+
+  if (catDs.length === 0) { show(empty); hide(grid); hide(tableWrap); return; }
   hide(empty);
+
+  if (currentView === "table") {
+    hide(grid); show(tableWrap);
+    const rows = catDs.map(ds => `
+      <tr onclick="openDataset(allDs.find(d=>d.id==='${ds.id}'))">
+        <td><span style="color:${ds.accent};font-weight:700">${ds.title}</span></td>
+        <td style="color:var(--ink-soft)">${ds.subtitle || ""}</td>
+        <td>${ds.data?.length || 0} pts</td>
+        <td>${ds.source || ""}</td>
+        <td><span style="color:${ds.accent}">${ds.chartType}</span></td>
+        <td style="font-weight:700;color:${ds.accent}">${ds.data?.[ds.data.length-1]?.value ?? "—"}${ds.unit||""}</td>
+        <td><button class="pin-btn ${ds.pinned?'pinned':''}" onclick="event.stopPropagation();togglePin('${ds.id}')">${ds.pinned?'📌':'📍'}</button></td>
+      </tr>`).join("");
+    tableWrap.innerHTML = `<table><thead><tr><th>Title</th><th>Subtitle</th><th>Points</th><th>Source</th><th>Type</th><th>Latest</th><th>Pin</th></tr></thead><tbody>${rows}</tbody></table>`;
+    return;
+  }
+
+  show(grid); hide(tableWrap);
   catDs.forEach((ds, i) => {
     const latest = ds.data?.[ds.data.length - 1];
     const card = document.createElement("div");
     card.className = "ds-card fade-up";
     card.style.animationDelay = (i * 0.05) + "s";
     card.innerHTML = `
-      <div class="ds-card-source" style="color:${ds.accent}">${ds.source}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div class="ds-card-source" style="color:${ds.accent};margin-bottom:0">${ds.source}</div>
+        <button class="pin-btn ${ds.pinned?'pinned':''}" onclick="event.stopPropagation();togglePin('${ds.id}')" title="${ds.pinned?'Unpin':'Pin to featured'}">${ds.pinned?'📌':'📍'}</button>
+      </div>
       <div class="ds-card-title">${ds.title}</div>
       <div class="ds-card-sub">${ds.subtitle || ""}</div>
       <div class="ds-card-kpi">
@@ -1619,15 +2742,15 @@ function renderSite() {
         ${ds.report ? `<span class="tag">Report</span>` : ""}
         ${ds.insights?.length > 0 ? `<span class="tag">${ds.insights.length} insights</span>` : ""}
         <span class="tag">${ds.data.length} pts</span>
+        ${ds.pinned ? `<span class="tag" style="background:#fbbf2418;color:#fbbf24">📌 Featured</span>` : ""}
       </div>`;
     card.onmouseenter = () => { card.style.borderColor = ds.accent + "55"; card.style.boxShadow = `0 24px 52px ${ds.accent}18`; };
     card.onmouseleave = () => { card.style.borderColor = "rgba(191, 206, 223, 0.92)"; card.style.boxShadow = ""; };
     card.onclick = () => openDataset(ds);
     grid.appendChild(card);
-    // Mini chart (after DOM paint)
     requestAnimationFrame(() => {
       const mc = document.getElementById("mini-" + ds.id);
-      if (mc) renderChart(mc, ds, 124, false);
+      if (mc) renderChart(mc, ds, 160, false);
     });
   });
 }
@@ -1637,23 +2760,61 @@ function renderSite() {
 // ──────────────────────────────────────────────
 function openDataset(ds) {
   activeDs = ds;
+  dsView = "chart";
   hide(document.getElementById("site"));
   const page = document.getElementById("ds-page-wrap");
   show(page);
+  // Update hash for sharing
+  history.replaceState(null, "", "#ds=" + ds.id);
 
   document.getElementById("ds-source").textContent = ds.source;
   document.getElementById("ds-source").style.color = ds.accent;
   document.getElementById("ds-title").textContent = ds.title;
   document.getElementById("ds-subtitle").textContent = ds.subtitle || "";
 
+  // Populate ds-page nav category links
+  const dsNavLinks = document.getElementById("ds-nav-links");
+  if (dsNavLinks) {
+    dsNavLinks.innerHTML = "";
+    CATEGORIES.forEach(c => {
+      const btn = document.createElement("button");
+      btn.className = "nav-link-pill" + (ds.category === c.id ? " active" : "");
+      btn.innerHTML = `<span class="nav-link-icon">${c.icon}</span><span>${c.label}</span>`;
+      btn.onclick = () => {
+        activeCat = c.id;
+        document.getElementById("ds-back").click();
+        requestAnimationFrame(() => {
+          const target = document.getElementById("cat-pills");
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      };
+      dsNavLinks.appendChild(btn);
+    });
+  }
+  // Sync theme toggle label on ds page
+  applyTheme();
+
+  // Action buttons
+  document.getElementById("btn-download-png").onclick = downloadPNG;
+  document.getElementById("btn-download-csv").onclick = downloadCSV;
+  document.getElementById("btn-share").onclick = shareLink;
+  document.getElementById("btn-embed").onclick = showEmbed;
+
+  // Reset ds view
+  setDsView("chart");
+
   // Key stats
   const ksRow = document.getElementById("ks-row");
   ksRow.style.gridTemplateColumns = `repeat(${ds.keyStats?.length || 1}, 1fr)`;
-  ksRow.innerHTML = (ds.keyStats || []).map(k => `
-    <div class="ks-card">
+  ksRow.innerHTML = (ds.keyStats || []).map(k => {
+    const trendColor = k.trendDir === "up" ? "#34d399" : k.trendDir === "down" ? "#f87171" : "#94a3b8";
+    const trendHtml = k.trend ? `<div style="font-size:12px;color:${trendColor};margin-top:4px;">${k.trend}</div>` : "";
+    return `<div class="ks-card">
       <div class="ks-val" style="color:${ds.accent}">${k.value}</div>
       <div class="ks-lbl">${k.label}${k.year ? ` · ${k.year}` : ""}</div>
-    </div>`).join("");
+      ${trendHtml}
+    </div>`;
+  }).join("");
 
   // Ticker
   const vals = ds.data.map(d => d.value);
@@ -1675,7 +2836,39 @@ function openDataset(ds) {
   chartBox.style.border = `1px solid ${ds.accent}25`;
   document.getElementById("chart-box-hint").style.color = ds.accent;
   const chartInner = document.getElementById("chart-box-inner");
-  requestAnimationFrame(() => renderChart(chartInner, ds, 260, true));
+  requestAnimationFrame(() => {
+    renderChart(chartInner, ds, 380, true);
+    // Render comparison overlay if present
+    if (ds.showCompare !== false && ds.compareData?.length > 0) {
+      renderCompareOverlay(chartInner, ds);
+    }
+    // Render annotations
+    if (ds.annotations?.length > 0) {
+      renderAnnotations(chartInner, ds);
+    }
+  });
+
+  // Render heatmap
+  renderDataHeatmap(ds);
+
+  // Table view
+  renderDsTable(ds);
+
+  // Meta row (source, last updated, notes)
+  let metaHtml = "";
+  const metaItems = [];
+  if (ds.source) metaItems.push(`<span style="display:inline-flex;align-items:center;gap:4px;">📌 ${ds.source}</span>`);
+  if (ds.lastUpdated) metaItems.push(`<span>🗓 Updated: ${ds.lastUpdated}</span>`);
+  if (ds.notes) metaItems.push(`<span style="font-style:italic;">* ${ds.notes}</span>`);
+  if (metaItems.length) {
+    const existingMeta = document.getElementById("ds-meta-row");
+    if (existingMeta) existingMeta.remove();
+    const metaDiv = document.createElement("div");
+    metaDiv.id = "ds-meta-row";
+    metaDiv.style.cssText = "display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-soft);margin-bottom:20px;";
+    metaDiv.innerHTML = metaItems.join("");
+    document.getElementById("ds-subtitle").after(metaDiv);
+  }
 
   // Report + Insights
   const bottom = document.getElementById("ds-bottom");
@@ -1700,6 +2893,56 @@ function openDataset(ds) {
     </div>`;
   }
   bottom.innerHTML = html;
+
+  // Related
+  renderRelated(ds);
+}
+
+// ──────────────────────────────────────────────
+// DATA HEATMAP
+// ──────────────────────────────────────────────
+function renderDataHeatmap(ds) {
+  const section = document.getElementById("heatmap-section");
+  const grid    = document.getElementById("heatmap-grid");
+  const labels  = document.getElementById("heatmap-labels");
+  const legend  = document.getElementById("heatmap-legend");
+  if (!ds.data || ds.data.length < 4) { section.classList.add("hidden"); return; }
+  section.classList.remove("hidden");
+
+  const vals = ds.data.map(d => d.value);
+  const vMin = Math.min(...vals);
+  const vMax = Math.max(...vals);
+  const vRange = vMax - vMin || 1;
+
+  // Build a 7-column grid from data (pad to multiple of 7)
+  const cols = 7;
+  const data = [...ds.data];
+  while (data.length % cols !== 0) data.push(null);
+
+  // Day labels from first row
+  const dayNames = data.slice(0,cols).map(d => d ? String(d.label).slice(0,3) : "");
+  labels.innerHTML = dayNames.map(n => `<div class="hm-day-label">${n}</div>`).join("");
+
+  grid.innerHTML = "";
+  data.forEach((d, i) => {
+    const cell = document.createElement("div");
+    cell.className = "hm-cell";
+    if (!d) {
+      cell.style.background = "transparent";
+    } else {
+      const t = (d.value - vMin) / vRange;
+      cell.style.background = heatColor(t);
+      cell.style.opacity = 0.85 + t * 0.15;
+      cell.title = `${d.label}: ${d.value}${ds.unit || ""}`;
+    }
+    grid.appendChild(cell);
+  });
+
+  legend.innerHTML = [
+    { color: heatColor(0),   label: `Low (${vMin}${ds.unit||""})` },
+    { color: heatColor(0.5), label: "Mid" },
+    { color: heatColor(1),   label: `High (${vMax}${ds.unit||""})` },
+  ].map(l => `<div class="hm-legend-item"><div class="hm-legend-dot" style="background:${l.color}"></div>${l.label}</div>`).join("");
 }
 
 // ──────────────────────────────────────────────
@@ -1772,9 +3015,9 @@ function openAdminGate() {
   setTimeout(() => document.getElementById("pw-input").focus(), 100);
 }
 
-// Keyboard shortcut
+// Keyboard shortcut (handle both 'A' and 'a' for cross-browser)
 document.addEventListener("keydown", e => {
-  if (e.ctrlKey && e.shiftKey && e.key === "A") {
+  if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
     e.preventDefault();
     if (!adminOpen) openAdminGate();
   }
@@ -1801,7 +3044,7 @@ function setupPwGate() {
 
   function attempt() {
     if (pwLocked) return;
-    if (inp.value === ADMIN_PASSWORD) {
+    if (inp.value === (window._adminPw || ADMIN_PASSWORD)) {
       adminAuthed = true;
       adminOpen = true;
       hide(document.getElementById("pw-gate"));
@@ -1859,6 +3102,8 @@ function renderAdmin() {
   show(panel);
   renderAdminList();
   showAdminListView();
+  populateGhConfigUI();
+  initAdminTabs();
 }
 
 function showAdminListView() {
@@ -1877,6 +3122,7 @@ function showAdminFormView(editing = false) {
   document.getElementById("admin-form-header").textContent = editing ? "Edit Dataset" : "New Dataset";
   document.getElementById("form-save-btn").textContent = editing ? "Save Changes" : "Add Dataset";
   resetI2C();
+  initChartTypeChips();
   renderFormPreview();
 }
 
@@ -1894,6 +3140,7 @@ function renderAdminList() {
     row.className = "admin-ds-row";
     const catLabel = CATEGORIES.find(c => c.id === ds.category)?.label || ds.category;
     row.innerHTML = `
+      <div class="drag-handle" title="Drag to reorder">⠿</div>
       <div class="admin-ds-dot" style="background:${ds.accent}"></div>
       <div class="admin-ds-info">
         <div class="admin-ds-name">${ds.title}</div>
@@ -1911,6 +3158,7 @@ function renderAdminList() {
       renderAdminList();
       showToast("Deleted");
     };
+    setupDragReorder(row, ds.id);
     listEl.appendChild(row);
     requestAnimationFrame(() => {
       const sp = document.getElementById("sp-" + ds.id);
@@ -1922,28 +3170,50 @@ function renderAdminList() {
 function openEdit(ds) {
   editId = ds.id;
   selectedAccent = ds.accent;
-  // Fill form
   document.getElementById("f-title").value    = ds.title;
   document.getElementById("f-subtitle").value = ds.subtitle || "";
   document.getElementById("f-unit").value     = ds.unit || "";
   document.getElementById("f-source").value   = ds.source || "";
+  document.getElementById("f-notes").value    = ds.notes || "";
+  document.getElementById("f-updated").value  = ds.lastUpdated || "";
   document.getElementById("f-category").value = ds.category;
   document.getElementById("f-charttype").value= ds.chartType;
   document.getElementById("f-data").value     = ds.data.map(r => `${r.label}, ${r.value}`).join("\n");
+  document.getElementById("f-compare").value  = (ds.compareData||[]).map(r=>`${r.label}, ${r.value}`).join("\n");
+  document.getElementById("f-compare-label").value = ds.compareLabel || "";
   document.getElementById("f-report").value   = ds.report || "";
   document.getElementById("f-insights").value = (ds.insights || []).join("\n");
   const ks = ds.keyStats || [];
   document.getElementById("ks1l").value = ks[0]?.label || "";
   document.getElementById("ks1v").value = ks[0]?.value || "";
   document.getElementById("ks1y").value = ks[0]?.year  || "";
+  document.getElementById("ks1t").value = ks[0]?.trend || "";
   document.getElementById("ks2l").value = ks[1]?.label || "";
   document.getElementById("ks2v").value = ks[1]?.value || "";
   document.getElementById("ks2y").value = ks[1]?.year  || "";
+  document.getElementById("ks2t").value = ks[1]?.trend || "";
   document.getElementById("ks3l").value = ks[2]?.label || "";
   document.getElementById("ks3v").value = ks[2]?.value || "";
   document.getElementById("ks3y").value = ks[2]?.year  || "";
+  document.getElementById("ks3t").value = ks[2]?.trend || "";
+  setTrendBadge("tb1", ks[0]?.trendDir || "up");
+  setTrendBadge("tb2", ks[1]?.trendDir || "up");
+  setTrendBadge("tb3", ks[2]?.trendDir || "down");
+  // Toggles
+  const setTog = (id, val) => { const el=document.getElementById(id); if(el){ el.classList.toggle("on", val !== false); } };
+  setTog("tog-labels",    ds.showLabels   !== false);
+  setTog("tog-neg",       ds.negativeRed  !== false);
+  setTog("tog-trend",     !!ds.showTrendLine);
+  setTog("tog-compare",   ds.showCompare  !== false);
+  setTog("tog-published", ds.published    !== false);
+  setTog("tog-png",       ds.allowPng     !== false);
+  setTog("tog-csv",       ds.allowCsv     !== false);
+  setTog("tog-embed",     ds.allowEmbed   !== false);
+  setAnnotations(ds.annotations || []);
   showAdminFormView(true);
   buildAccentSwatches();
+  // Sync chart type chips
+  document.querySelectorAll(".ctype-chip").forEach(c => c.classList.toggle("active", c.dataset.type === ds.chartType));
   renderFormPreview();
 }
 
@@ -1954,14 +3224,25 @@ function openAdd() {
   document.getElementById("f-subtitle").value = "";
   document.getElementById("f-unit").value     = "";
   document.getElementById("f-source").value   = "";
+  document.getElementById("f-notes").value    = "";
+  document.getElementById("f-updated").value  = "";
   document.getElementById("f-category").value = "economy";
   document.getElementById("f-charttype").value= "bar";
   document.getElementById("f-data").value     = "2020, 10\n2021, 20\n2022, 30";
+  document.getElementById("f-compare").value  = "";
+  document.getElementById("f-compare-label").value = "";
   document.getElementById("f-report").value   = "";
   document.getElementById("f-insights").value = "";
-  ["ks1l","ks1v","ks1y","ks2l","ks2v","ks2y","ks3l","ks3v","ks3y"].forEach(id => document.getElementById(id).value = "");
+  ["ks1l","ks1v","ks1y","ks1t","ks2l","ks2v","ks2y","ks2t","ks3l","ks3v","ks3y","ks3t"].forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
+  setTrendBadge("tb1","up"); setTrendBadge("tb2","up"); setTrendBadge("tb3","down");
+  // Reset toggles to defaults
+  ["tog-labels","tog-neg","tog-compare","tog-published","tog-png","tog-csv","tog-embed"].forEach(id => { const el=document.getElementById(id); if(el) el.classList.add("on"); });
+  document.getElementById("tog-trend")?.classList.remove("on");
+  setAnnotations([]);
   showAdminFormView(false);
   buildAccentSwatches();
+  // Reset chips
+  document.querySelectorAll(".ctype-chip").forEach(c => c.classList.toggle("active", c.dataset.type === "bar"));
   renderFormPreview();
 }
 
@@ -1982,27 +3263,129 @@ function buildAccentSwatches() {
   });
 }
 
+// ──────────────────────────────────────────────
+// CHART TYPE CHIPS
+// ──────────────────────────────────────────────
+function initChartTypeChips() {
+  document.querySelectorAll(".ctype-chip").forEach(chip => {
+    chip.onclick = () => {
+      document.querySelectorAll(".ctype-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      document.getElementById("f-charttype").value = chip.dataset.type;
+      renderFormPreview();
+    };
+  });
+}
+
+// ──────────────────────────────────────────────
+// TREND BADGE CYCLE
+// ──────────────────────────────────────────────
+function cycleTrendBadge(id) {
+  const el = document.getElementById(id);
+  const states = ["up","down","neutral"];
+  const labels = ["↑ Up","↓ Down","— Neutral"];
+  let cur = states.findIndex(s => el.classList.contains(s));
+  if (cur < 0) cur = 0;
+  const next = (cur + 1) % 3;
+  el.classList.remove(...states);
+  el.classList.add(states[next]);
+  el.textContent = labels[next];
+}
+
+function getTrendDir(id) {
+  const el = document.getElementById(id);
+  if (!el) return "neutral";
+  if (el.classList.contains("up")) return "up";
+  if (el.classList.contains("down")) return "down";
+  return "neutral";
+}
+
+function setTrendBadge(id, dir) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const labels = { up:"↑ Up", down:"↓ Down", neutral:"— Neutral" };
+  el.classList.remove("up","down","neutral");
+  el.classList.add(dir || "neutral");
+  el.textContent = labels[dir] || "— Neutral";
+}
+
+// ──────────────────────────────────────────────
+// ANNOTATIONS
+// ──────────────────────────────────────────────
+function addAnnotationRow(label="", note="") {
+  const list = document.getElementById("ann-list");
+  const row = document.createElement("div");
+  row.className = "ann-row-inp";
+  row.innerHTML = `
+    <span class="ann-lbl-sm">Point</span>
+    <input class="inp" placeholder="" style="max-width:80px;" data-ann-label value="${label}" />
+    <span class="ann-lbl-sm">Note</span>
+    <input class="inp" placeholder="" data-ann-note value="${note}" />
+    <button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;color:#f87171;cursor:pointer;font-size:14px;padding:0 4px;">✕</button>`;
+  list.appendChild(row);
+}
+
+function getAnnotations() {
+  const labels = document.querySelectorAll("[data-ann-label]");
+  const notes  = document.querySelectorAll("[data-ann-note]");
+  const anns = [];
+  labels.forEach((el, i) => {
+    if (el.value.trim() && notes[i]?.value.trim()) {
+      anns.push({ label: el.value.trim(), note: notes[i].value.trim() });
+    }
+  });
+  return anns;
+}
+
+function setAnnotations(anns) {
+  // Clear existing rows (keep the default 2 blank rows)
+  document.getElementById("ann-list").innerHTML = "";
+  const defaults = anns && anns.length > 0 ? anns : [{ label:"", note:"" }, { label:"", note:"" }];
+  defaults.forEach(a => addAnnotationRow(a.label || "", a.note || ""));
+}
+
 function getFormData() {
   const dataRaw = document.getElementById("f-data").value;
   const data = dataRaw.split("\n").map(r => r.trim()).filter(Boolean).map(r => {
     const parts = r.split(",");
     return { label: parts[0]?.trim(), value: parseFloat(parts[1]) };
   }).filter(r => r.label && !isNaN(r.value));
+
+  const compareRaw = document.getElementById("f-compare").value;
+  const compareData = compareRaw.split("\n").map(r => r.trim()).filter(Boolean).map(r => {
+    const parts = r.split(",");
+    return { label: parts[0]?.trim(), value: parseFloat(parts[1]) };
+  }).filter(r => r.label && !isNaN(r.value));
+
   const insights = document.getElementById("f-insights").value.split("\n").map(s=>s.trim()).filter(Boolean);
   const keyStats = [
-    { label:document.getElementById("ks1l").value, value:document.getElementById("ks1v").value, year:document.getElementById("ks1y").value },
-    { label:document.getElementById("ks2l").value, value:document.getElementById("ks2v").value, year:document.getElementById("ks2y").value },
-    { label:document.getElementById("ks3l").value, value:document.getElementById("ks3v").value, year:document.getElementById("ks3y").value },
+    { label:document.getElementById("ks1l").value, value:document.getElementById("ks1v").value, year:document.getElementById("ks1y").value, trend:document.getElementById("ks1t").value, trendDir:getTrendDir("tb1") },
+    { label:document.getElementById("ks2l").value, value:document.getElementById("ks2v").value, year:document.getElementById("ks2y").value, trend:document.getElementById("ks2t").value, trendDir:getTrendDir("tb2") },
+    { label:document.getElementById("ks3l").value, value:document.getElementById("ks3v").value, year:document.getElementById("ks3y").value, trend:document.getElementById("ks3t").value, trendDir:getTrendDir("tb3") },
   ].filter(k => k.label && k.value);
+
   return {
-    title:    document.getElementById("f-title").value.trim(),
-    subtitle: document.getElementById("f-subtitle").value.trim(),
-    unit:     document.getElementById("f-unit").value.trim(),
-    source:   document.getElementById("f-source").value.trim(),
-    category: document.getElementById("f-category").value,
-    chartType:document.getElementById("f-charttype").value,
-    accent:   selectedAccent,
-    report:   document.getElementById("f-report").value.trim(),
+    title:        document.getElementById("f-title").value.trim(),
+    subtitle:     document.getElementById("f-subtitle").value.trim(),
+    unit:         document.getElementById("f-unit").value.trim(),
+    source:       document.getElementById("f-source").value.trim(),
+    notes:        document.getElementById("f-notes").value.trim(),
+    lastUpdated:  document.getElementById("f-updated").value,
+    category:     document.getElementById("f-category").value,
+    chartType:    document.getElementById("f-charttype").value,
+    accent:       selectedAccent,
+    report:       document.getElementById("f-report").value.trim(),
+    compareData,
+    compareLabel: document.getElementById("f-compare-label").value.trim(),
+    annotations:  getAnnotations(),
+    showLabels:   document.getElementById("tog-labels").classList.contains("on"),
+    negativeRed:  document.getElementById("tog-neg").classList.contains("on"),
+    showTrendLine:document.getElementById("tog-trend").classList.contains("on"),
+    showCompare:  document.getElementById("tog-compare").classList.contains("on"),
+    published:    document.getElementById("tog-published").classList.contains("on"),
+    allowPng:     document.getElementById("tog-png").classList.contains("on"),
+    allowCsv:     document.getElementById("tog-csv").classList.contains("on"),
+    allowEmbed:   document.getElementById("tog-embed").classList.contains("on"),
     data, insights, keyStats,
   };
 }
@@ -2018,13 +3401,19 @@ function renderFormPreview() {
 }
 
 ["f-title","f-subtitle","f-unit","f-source","f-data","f-report","f-insights",
- "f-category","f-charttype","ks1l","ks1v","ks1y","ks2l","ks2v","ks2y","ks3l","ks3v","ks3y"
+ "f-category","f-charttype","f-notes","f-compare","f-compare-label",
+ "ks1l","ks1v","ks1y","ks1t","ks2l","ks2v","ks2y","ks2t","ks3l","ks3v","ks3y","ks3t"
 ].forEach(id => {
   document.getElementById(id)?.addEventListener("input", renderFormPreview);
   document.getElementById(id)?.addEventListener("change", renderFormPreview);
 });
 
 document.getElementById("admin-add-btn").onclick = openAdd;
+document.getElementById("ds-back").onclick = () => {
+  hide(document.getElementById("ds-page-wrap"));
+  history.replaceState(null, "", location.pathname);
+  renderSite();
+};
 document.getElementById("admin-back-btn").onclick = () => {
   adminOpen = false;
   adminAuthed = false;
@@ -2111,23 +3500,23 @@ document.getElementById("img-extract-btn").onclick = async () => {
   btn.innerHTML = `<span class="spin">⟳</span> Analysing image with Claude…`;
   hide(document.getElementById("img-err"));
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
+    const GEMINI_KEY = "";
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model:"claude-sonnet-4-6",
-        max_tokens:1200,
-        messages:[{
-          role:"user",
-          content:[
-            { type:"image", source:{ type:"base64", media_type:i2cMediaType, data:i2cImgBase64 } },
-            { type:"text", text:`You are a data extraction specialist. Analyze this chart image carefully and extract ALL visible data.\n\nReturn ONLY a valid JSON object — no markdown, no backticks, no explanation. Use this exact schema:\n{\n  "title": "chart title if visible, otherwise empty string",\n  "subtitle": "axis labels or description",\n  "unit": "unit symbol only: %, $, M, B, K, etc. Empty string if none.",\n  "chartType": "bar, line, or area — pick best match",\n  "source": "data source if mentioned, otherwise empty string",\n  "data": [{"label": "x-axis label", "value": numeric_value}, ...]\n}\nExtract EVERY visible data point. Labels are strings. Values are numbers. Sort chronologically.` }
+        contents: [{
+          parts: [
+            { inline_data: { mime_type: i2cMediaType, data: i2cImgBase64 } },
+            { text: `You are a data extraction specialist. Analyze this chart image carefully and extract ALL visible data.\n\nReturn ONLY a valid JSON object — no markdown, no backticks, no explanation. Use this exact schema:\n{\n  "title": "chart title if visible, otherwise empty string",\n  "subtitle": "axis labels or description",\n  "unit": "unit symbol only: %, $, M, B, K, etc. Empty string if none.",\n  "chartType": "bar, line, or area — pick best match",\n  "source": "data source if mentioned, otherwise empty string",\n  "data": [{"label": "x-axis label", "value": numeric_value}, ...]\n}\nExtract EVERY visible data point. Labels are strings. Values are numbers. Sort chronologically.` }
           ]
-        }]
+        }],
+        generationConfig: { temperature: 0.1, maxOutputTokens: 1200 }
       })
     });
     const json = await res.json();
-    const text = json.content?.[0]?.text || "";
+    if (json.error) throw new Error(json.error.message || JSON.stringify(json.error));
+    const text = json.candidates?.[0]?.content?.parts?.[0]?.text || "";
     const clean = text.replace(/```json|```/g,"").trim();
     const parsed = JSON.parse(clean);
     if (!parsed.data || parsed.data.length === 0) throw new Error("No data");
@@ -2144,7 +3533,7 @@ document.getElementById("img-extract-btn").onclick = async () => {
     i2cSetStep("preview");
   } catch(e) {
     const errEl = document.getElementById("img-err");
-    errEl.textContent = "Couldn't extract data. Try a cleaner chart image with visible labels.";
+    errEl.textContent = "Couldn't extract data: " + (e?.message || "Unknown error") + ". Try a cleaner chart image with visible labels.";
     show(errEl);
     btn.className = "ready";
     btn.innerHTML = "Extract &amp; Preview Chart Data";
@@ -2169,19 +3558,1039 @@ document.getElementById("ext-retry-btn").onclick = () => { i2cSetStep("loaded");
 document.getElementById("img2chart-retry-btn").onclick = resetI2C;
 
 // ──────────────────────────────────────────────
+// THEME TOGGLE
+// ──────────────────────────────────────────────
+let darkMode = localStorage.getItem("dv-theme") === "dark";
+function applyTheme() {
+  document.body.classList.toggle("dark", darkMode);
+  const label = darkMode ? "☀ Light" : "🌙 Dark";
+  // Update all theme buttons on every page
+  document.querySelectorAll(".theme-toggle-btn, #theme-toggle").forEach(btn => {
+    btn.textContent = label;
+  });
+  localStorage.setItem("dv-theme", darkMode ? "dark" : "light");
+}
+function toggleTheme() { darkMode = !darkMode; applyTheme(); }
+
+// ──────────────────────────────────────────────
+// VIEW TOGGLE (cards / table)
+// ──────────────────────────────────────────────
+let currentView = "cards";
+function setView(v) {
+  currentView = v;
+  document.getElementById("view-cards-btn").classList.toggle("active", v === "cards");
+  document.getElementById("view-table-btn").classList.toggle("active", v === "table");
+  renderSite();
+}
+
+// Dataset page chart/table toggle
+let dsView = "chart";
+function setDsView(v) {
+  dsView = v;
+  document.getElementById("ds-view-chart-btn").classList.toggle("active", v === "chart");
+  document.getElementById("ds-view-table-btn").classList.toggle("active", v === "table");
+  const chartBox = document.getElementById("chart-box");
+  const tableWrap = document.getElementById("ds-table-wrap");
+  if (v === "chart") { show(chartBox); hide(tableWrap); }
+  else { hide(chartBox); show(tableWrap); }
+}
+
+function renderDsTable(ds) {
+  const wrap = document.getElementById("ds-table-inner");
+  const rows = ds.data.map(d => `<tr><td>${d.label}</td><td style="font-variant-numeric:tabular-nums;font-weight:700">${d.value}${ds.unit || ""}</td></tr>`).join("");
+  wrap.innerHTML = `<div id="table-view-wrap"><table><thead><tr><th>Label</th><th>Value</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+// ──────────────────────────────────────────────
+// FILTERS
+// ──────────────────────────────────────────────
+function clearFilters() {
+  document.getElementById("filter-sort").value = "default";
+  document.getElementById("date-from").value = "";
+  document.getElementById("date-to").value = "";
+  renderSite();
+}
+
+function applyFilters(datasets) {
+  const sort = document.getElementById("filter-sort")?.value || "default";
+  const fromY = parseInt(document.getElementById("date-from")?.value) || null;
+  const toY   = parseInt(document.getElementById("date-to")?.value) || null;
+
+  let result = [...datasets];
+
+  if (fromY || toY) {
+    result = result.map(ds => {
+      const filtered = ds.data.filter(d => {
+        const y = parseInt(d.label);
+        if (fromY && y < fromY) return false;
+        if (toY   && y > toY  ) return false;
+        return true;
+      });
+      return { ...ds, data: filtered };
+    }).filter(ds => ds.data.length > 0);
+  }
+
+  if (sort === "az") result.sort((a,b) => a.title.localeCompare(b.title));
+  else if (sort === "za") result.sort((a,b) => b.title.localeCompare(a.title));
+  else if (sort === "most-data") result.sort((a,b) => (b.data?.length||0) - (a.data?.length||0));
+  else if (sort === "pinned") result.sort((a,b) => (b.pinned?1:0) - (a.pinned?1:0));
+
+  return result;
+}
+
+// ──────────────────────────────────────────────
+// PIN / FEATURED
+// ──────────────────────────────────────────────
+function togglePin(id) {
+  allDs = allDs.map(d => d.id === id ? { ...d, pinned: !d.pinned } : d);
+  persistDs();
+  renderSite();
+}
+
+// ──────────────────────────────────────────────
+// DOWNLOAD PNG
+// ──────────────────────────────────────────────
+function downloadPNG() {
+  const svg = document.querySelector("#chart-box-inner svg");
+  if (!svg) return;
+  const data = new XMLSerializer().serializeToString(svg);
+  const canvas = document.createElement("canvas");
+  const rect = svg.getBoundingClientRect();
+  canvas.width = rect.width * 2;
+  canvas.height = rect.height * 2;
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  const img = new Image();
+  const blob = new Blob([data], {type:"image/svg+xml"});
+  const url = URL.createObjectURL(blob);
+  img.onload = () => {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(url);
+    const a = document.createElement("a");
+    a.href = canvas.toDataURL("image/png");
+    a.download = (activeDs?.title || "chart") + ".png";
+    a.click();
+  };
+  img.src = url;
+}
+
+// ──────────────────────────────────────────────
+// DOWNLOAD CSV
+// ──────────────────────────────────────────────
+function downloadCSV() {
+  if (!activeDs) return;
+  const rows = [["Label", "Value"], ...activeDs.data.map(d => [d.label, d.value])];
+  const csv = rows.map(r => r.join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+  a.download = (activeDs.title || "data") + ".csv";
+  a.click();
+}
+
+// ──────────────────────────────────────────────
+// SHARE LINK
+// ──────────────────────────────────────────────
+function shareLink() {
+  if (!activeDs) return;
+  const url = window.location.origin + window.location.pathname + "#ds=" + activeDs.id;
+  navigator.clipboard.writeText(url).then(() => showToast("Link copied to clipboard ✓")).catch(() => {
+    prompt("Copy this link:", url);
+  });
+}
+
+// ──────────────────────────────────────────────
+// EMBED CODE
+// ──────────────────────────────────────────────
+function showEmbed() {
+  if (!activeDs) return;
+  const url = window.location.origin + window.location.pathname + "#ds=" + activeDs.id;
+  const code = `<iframe src="${url}" width="800" height="500" frameborder="0" style="border-radius:16px;border:1px solid #e2e8f0;" title="${activeDs.title}"></iframe>`;
+  document.getElementById("embed-code").value = code;
+  show(document.getElementById("embed-modal"));
+}
+function copyEmbed() {
+  const ta = document.getElementById("embed-code");
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(() => showToast("Embed code copied ✓"));
+}
+
+// ──────────────────────────────────────────────
+// RELATED DATASETS
+// ──────────────────────────────────────────────
+function renderRelated(ds) {
+  const related = allDs
+    .filter(d => d.id !== ds.id && (d.category === ds.category || d.chartType === ds.chartType))
+    .slice(0, 3);
+  const section = document.getElementById("related-section");
+  const grid    = document.getElementById("related-grid");
+  if (related.length === 0) { hide(section); return; }
+  show(section);
+  grid.innerHTML = related.map(r => `
+    <div class="related-card" onclick="openDataset(allDs.find(d=>d.id==='${r.id}'))">
+      <div class="related-card-title" style="color:${r.accent}">${r.title}</div>
+      <div class="related-card-sub">${r.subtitle || ""}</div>
+    </div>`).join("");
+}
+
+// ──────────────────────────────────────────────
+// BULK CSV IMPORT
+// ──────────────────────────────────────────────
+document.getElementById("bulk-csv-input").addEventListener("change", function(e) {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const text = ev.target.result;
+    const lines = text.split("\n").filter(l => l.trim());
+    const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
+    let imported = 0;
+    for (let i = 1; i < lines.length; i++) {
+      const cols = lines[i].split(",").map(c => c.trim());
+      if (cols.length < 3) continue;
+      const row = {};
+      headers.forEach((h, idx) => row[h] = cols[idx] || "");
+      const dataStr = row["data"] || "";
+      const data = dataStr.split("|").map(p => {
+        const [label, val] = p.split(":");
+        return { label: label?.trim(), value: parseFloat(val) };
+      }).filter(d => d.label && !isNaN(d.value));
+      if (!row["title"] || data.length === 0) continue;
+      const insights = (row["insights"] || "").split("|").map(s=>s.trim()).filter(Boolean);
+      const ds = {
+        id: slugify(row["title"]),
+        title: row["title"],
+        subtitle: row["subtitle"] || "",
+        unit: row["unit"] || "",
+        source: row["source"] || "",
+        category: row["category"] || "other",
+        chartType: row["charttype"] || "bar",
+        accent: ACCENTS[imported % ACCENTS.length],
+        data, insights,
+        report: row["report"] || "",
+        keyStats: [],
+      };
+      if (!allDs.find(d => d.id === ds.id)) { allDs.push(ds); imported++; }
+    }
+    persistDs();
+    document.getElementById("bulk-import-result").textContent = `✓ Imported ${imported} dataset${imported !== 1 ? "s" : ""}`;
+    e.target.value = "";
+    if (imported > 0) renderAdminList();
+  };
+  reader.readAsText(file);
+});
+
+// ──────────────────────────────────────────────
+// CHANGE PASSWORD
+// ──────────────────────────────────────────────
+function changePassword() {
+  const np = document.getElementById("new-pw-input").value;
+  const nc = document.getElementById("new-pw-confirm").value;
+  const err = document.getElementById("change-pw-err");
+  if (!np) { err.textContent = "Enter a new password"; return; }
+  if (np !== nc) { err.textContent = "Passwords don't match"; return; }
+  // Update in-memory constant (works for session; persisted in storage for full reload)
+  window._adminPw = np;
+  localStorage.setItem("dv-admin-pw", np);
+  document.getElementById("new-pw-input").value = "";
+  document.getElementById("new-pw-confirm").value = "";
+  err.textContent = "";
+  err.style.color = "#34d399";
+  err.textContent = "Password updated ✓";
+  setTimeout(() => { err.textContent = ""; err.style.color = "#f87171"; }, 2500);
+}
+
+// ──────────────────────────────────────────────
+// GITHUB CONFIG UI
+// ──────────────────────────────────────────────
+function populateGhConfigUI() {
+  const cfg = getGhConfig();
+  const o = document.getElementById("gh-owner-input");
+  const r = document.getElementById("gh-repo-input");
+  const p = document.getElementById("gh-path-input");
+  if (o) o.value = cfg.owner;
+  if (r) r.value = cfg.repo;
+  if (p) p.value = cfg.path || "data.json";
+  // Don't pre-fill token for security; just show a placeholder if set
+  const t = document.getElementById("gh-token-input");
+  if (t && cfg.token) t.placeholder = "••••••••  (token saved — enter new to change)";
+}
+
+function saveGhConfigFromUI() {
+  const owner = document.getElementById("gh-owner-input")?.value.trim();
+  const repo  = document.getElementById("gh-repo-input")?.value.trim();
+  const path  = document.getElementById("gh-path-input")?.value.trim() || "data.json";
+  const token = document.getElementById("gh-token-input")?.value.trim();
+  const status = document.getElementById("gh-config-status");
+  if (!owner || !repo) { status.style.color = "#f87171"; status.textContent = "Owner and repo are required"; return; }
+  saveGhConfig(owner, repo, path, token);
+  status.style.color = "#34d399";
+  status.textContent = "Saved ✓";
+  setTimeout(() => { status.textContent = ""; }, 2500);
+}
+
+async function testGhConnection() {
+  const { owner, repo, path, token } = getGhConfig();
+  const status = document.getElementById("gh-config-status");
+  if (!owner || !repo) { status.style.color = "#f87171"; status.textContent = "Save config first"; return; }
+  status.style.color = "var(--ink-soft)";
+  status.textContent = "Testing…";
+  try {
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const headers = { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const res = await fetch(url, { headers });
+    if (res.status === 404) {
+      status.style.color = "#f59e0b";
+      status.textContent = "Repo found, but data.json doesn't exist yet — will be created on first save ✓";
+    } else if (res.ok) {
+      status.style.color = "#34d399";
+      status.textContent = "Connected ✓ — data.json found";
+    } else {
+      const err = await res.json();
+      status.style.color = "#f87171";
+      status.textContent = "Error: " + (err.message || res.status);
+    }
+  } catch(e) {
+    status.style.color = "#f87171";
+    status.textContent = "Network error: " + e.message;
+  }
+}
+
+// ──────────────────────────────────────────────
+// DRAG TO REORDER
+// ──────────────────────────────────────────────
+let dragSrcId = null;
+function setupDragReorder(row, dsId) {
+  row.draggable = true;
+  row.addEventListener("dragstart", () => { dragSrcId = dsId; row.classList.add("dragging"); });
+  row.addEventListener("dragend",   () => { row.classList.remove("dragging"); dragSrcId = null; });
+  row.addEventListener("dragover",  e => { e.preventDefault(); row.classList.add("drag-over"); });
+  row.addEventListener("dragleave", () => row.classList.remove("drag-over"));
+  row.addEventListener("drop", e => {
+    e.preventDefault();
+    row.classList.remove("drag-over");
+    if (dragSrcId && dragSrcId !== dsId) {
+      const fromIdx = allDs.findIndex(d => d.id === dragSrcId);
+      const toIdx   = allDs.findIndex(d => d.id === dsId);
+      if (fromIdx > -1 && toIdx > -1) {
+        const moved = allDs.splice(fromIdx, 1)[0];
+        allDs.splice(toIdx, 0, moved);
+        persistDs();
+        renderAdminList();
+      }
+    }
+  });
+}
+
+// ──────────────────────────────────────────────
+// DEEP LINK (#ds=id)
+// ──────────────────────────────────────────────
+function checkDeepLink() {
+  const hash = location.hash;
+  if (hash.startsWith("#ds=")) {
+    const id = hash.slice(4);
+    const ds = allDs.find(d => d.id === id);
+    if (ds) setTimeout(() => openDataset(ds), 100);
+  }
+}
+
+// ──────────────────────────────────────────────
 // INIT
 // ──────────────────────────────────────────────
+// ──────────────────────────────────────────────
+// ADMIN TABS
+// ──────────────────────────────────────────────
+function initAdminTabs() {
+  document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + tab)?.classList.add('active');
+      // Show/hide add button for datasets tab only
+      const addBtn = document.getElementById('admin-add-btn');
+      if (addBtn) addBtn.style.display = tab === 'datasets' ? '' : 'none';
+      if (tab === 'notebooks') renderNotebookList();
+      if (tab === 'customize') initCustomizeTab();
+      if (tab === 'github') populateGhTabUI();
+    });
+  });
+}
+
+// ──────────────────────────────────────────────
+// NOTEBOOKS
+// ──────────────────────────────────────────────
+let activeNotebookId = null;
+
+function renderNotebookList() {
+  const list = document.getElementById('notebook-list');
+  if (!list) return;
+  if (allDs.length === 0) { list.innerHTML = '<div style="color:var(--ink-soft);padding:20px 0;font-size:13px;">No datasets yet. Add a dataset first.</div>'; return; }
+  list.innerHTML = allDs.map(ds => {
+    const hasNote = !!(ds.notebook && ds.notebook.trim());
+    return `<div style="background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;" onclick="openNotebook('${ds.id}')">
+      <div style="width:8px;height:8px;border-radius:50%;background:${ds.accent};flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:600;color:var(--ink);">${ds.title}</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:2px;">${hasNote ? '📝 Has notes · ' + (ds.notebook.trim().slice(0,80) + (ds.notebook.length > 80 ? '…' : '')) : 'No notes yet'}</div>
+      </div>
+      <div style="font-size:12px;color:${hasNote ? '#34d399' : 'var(--ink-soft)'};">${hasNote ? '✓ Notes' : 'Edit'} →</div>
+    </div>`;
+  }).join('');
+}
+
+function openNotebook(dsId) {
+  const ds = allDs.find(d => d.id === dsId);
+  if (!ds) return;
+  activeNotebookId = dsId;
+  document.getElementById('nb-dataset-title').textContent = ds.title;
+  document.getElementById('nb-content').value = ds.notebook || '';
+  document.getElementById('notebook-list').classList.add('hidden');
+  const editor = document.getElementById('notebook-editor');
+  editor.classList.remove('hidden');
+}
+
+function closeNotebook() {
+  activeNotebookId = null;
+  document.getElementById('notebook-list').classList.remove('hidden');
+  document.getElementById('notebook-editor').classList.add('hidden');
+}
+
+function saveNotebook() {
+  if (!activeNotebookId) return;
+  const content = document.getElementById('nb-content').value;
+  allDs = allDs.map(d => d.id === activeNotebookId ? { ...d, notebook: content } : d);
+  persistDs();
+  closeNotebook();
+  renderNotebookList();
+  showToast('Notebook saved ✓');
+}
+
+// ──────────────────────────────────────────────
+// THEME / CUSTOMIZE SYSTEM
+// ──────────────────────────────────────────────
+const DEFAULT_THEME = {
+  siteTitle: 'StatHub', tagline: 'Insights Library', logo: '', favicon: '',
+  primary: '#0c4fb7', secondary: '#6366f1',
+  bgLight: '#f4f7fb', bgDark: '#0a0a0f',
+  surfaceLight: '#ffffff', surfaceDark: '#111118',
+  textLight: '#10233d', textDark: '#e2e8f0',
+  font: 'Inter', fontSize: 16,
+  headingWeight: '800', letterSpacing: '0',
+  gridCols: 2, borderRadius: '22px', cardShadow: 'soft', cardBorder: 'subtle',
+  navbarPos: 'sticky', compact: false,
+  heroShow: true, heroTitle: 'Evidence, charts, and fast-moving market context.',
+  heroSubtitle: 'Browse a cleaner library of datasets, publisher-style summaries, and chart-driven reports.',
+  heroBg: 'gradient', heroHeight: 'medium', heroAlign: 'left', overlayOpacity: 0,
+  chartPalette: ['#8b5cf6','#f97316','#6366f1','#a855f7','#fb923c','#7c3aed','#c084fc','#38bdf8','#34d399','#f59e0b'],
+  barRounded: true, barRadius: 5, barGap: 'normal',
+  lineThickness: 3, dotSize: 'medium', fillOpacity: 35,
+  showGrid: true, gridStyle: 'dashed', showAxis: true, showValLabels: true,
+  showTooltip: true, animDuration: 300,
+  showChartTitle: true, showTrendBadge: true, showSource: true, showTs: true, cardPadding: 'normal',
+  showSearch: true, showCats: true, showDarkToggle: true, showDsCount: true,
+  publicPw: false, publicPwValue: '', comingSoon: false,
+  annShow: false, annText: '📊 New datasets added weekly — stay updated!', annBg: '#6366f1',
+  footerShow: false, footerCols: 1, footerHtml: '<p style="text-align:center;color:var(--ink-soft);font-size:13px;">© 2024 StatHub · Built with ❤</p>',
+  customCss: '',
+};
+
+let currentTheme = {};
+let savedTheme = {};
+let themeUnsaved = false;
+let czDebounceTimer = null;
+
+async function loadTheme() {
+  try {
+    let raw = null;
+    if (window.storage && typeof window.storage.get === 'function') {
+      const stored = await window.storage.get('stathub_theme');
+      if (stored && stored.value) raw = stored.value;
+    }
+    if (!raw) raw = localStorage.getItem('stathub_theme');
+    if (raw) {
+      currentTheme = { ...DEFAULT_THEME, ...JSON.parse(raw) };
+    } else {
+      currentTheme = { ...DEFAULT_THEME };
+    }
+  } catch {
+    currentTheme = { ...DEFAULT_THEME };
+  }
+  savedTheme = { ...currentTheme };
+  applyThemeToPublicPage();
+}
+
+async function saveTheme() {
+  try {
+    const json = JSON.stringify(currentTheme);
+    localStorage.setItem('stathub_theme', json);
+    if (window.storage && typeof window.storage.set === 'function') {
+      await window.storage.set('stathub_theme', json);
+    }
+    savedTheme = { ...currentTheme };
+    themeUnsaved = false;
+    document.getElementById('cz-unsaved-badge')?.classList.add('hidden');
+    await pushThemeToGitHub();
+  } catch(e) {
+    console.warn('Theme save error:', e);
+  }
+}
+
+async function pushThemeToGitHub() {
+  const { owner, repo, token } = getGhConfig();
+  if (!owner || !repo || !token) return;
+  try {
+    const themePath = 'theme.json';
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${themePath}`;
+    const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' };
+    // Check if exists to get SHA
+    let sha = null;
+    try {
+      const check = await fetch(url, { headers: { ...headers } });
+      if (check.ok) { const j = await check.json(); sha = j.sha; }
+    } catch {}
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(currentTheme, null, 2))));
+    const body = { message: 'Update theme via StatHub admin', content, ...(sha ? { sha } : {}) };
+    await fetch(url, { method: 'PUT', headers, body: JSON.stringify(body) });
+  } catch {}
+}
+
+function themeChanged() {
+  themeUnsaved = true;
+  document.getElementById('cz-unsaved-badge')?.classList.remove('hidden');
+  clearTimeout(czDebounceTimer);
+  czDebounceTimer = setTimeout(() => {
+    collectThemeFromUI();
+    applyThemeToPublicPage();
+    updatePreviewFrame();
+  }, 300);
+}
+
+function collectThemeFromUI() {
+  const g = id => document.getElementById(id);
+  const tog = id => g(id)?.classList.contains('on') || false;
+  const chip = id => { const el = document.querySelector(`#${id} .cz-chip.active`); return el ? el.dataset.v : null; };
+  currentTheme = {
+    ...currentTheme,
+    siteTitle: g('cz-site-title')?.value || 'StatHub',
+    tagline: g('cz-tagline')?.value || '',
+    logo: g('cz-logo-data')?.value || '',
+    favicon: g('cz-favicon-data')?.value || '',
+    primary: g('cz-primary')?.value || DEFAULT_THEME.primary,
+    secondary: g('cz-secondary')?.value || DEFAULT_THEME.secondary,
+    bgLight: g('cz-bg-light')?.value || DEFAULT_THEME.bgLight,
+    bgDark: g('cz-bg-dark')?.value || DEFAULT_THEME.bgDark,
+    surfaceLight: g('cz-surface-light')?.value || DEFAULT_THEME.surfaceLight,
+    surfaceDark: g('cz-surface-dark')?.value || DEFAULT_THEME.surfaceDark,
+    textLight: g('cz-text-light')?.value || DEFAULT_THEME.textLight,
+    textDark: g('cz-text-dark')?.value || DEFAULT_THEME.textDark,
+    font: g('cz-font')?.value || 'Inter',
+    fontSize: parseInt(g('cz-font-size')?.value) || 16,
+    headingWeight: chip('cz-heading-weight') || '800',
+    letterSpacing: chip('cz-letter-spacing') || '0',
+    gridCols: parseInt(chip('cz-grid-cols')) || 2,
+    borderRadius: chip('cz-border-radius') || '22px',
+    cardShadow: chip('cz-card-shadow') || 'soft',
+    cardBorder: chip('cz-card-border') || 'subtle',
+    navbarPos: chip('cz-navbar-pos') || 'sticky',
+    compact: tog('cz-compact'),
+    heroShow: tog('cz-hero-show'),
+    heroTitle: g('cz-hero-title')?.value || '',
+    heroSubtitle: g('cz-hero-subtitle')?.value || '',
+    heroBg: chip('cz-hero-bg') || 'gradient',
+    heroHeight: chip('cz-hero-height') || 'medium',
+    heroAlign: chip('cz-hero-align') || 'left',
+    overlayOpacity: parseInt(g('cz-overlay-opacity')?.value) || 0,
+    chartPalette: Array.from(document.querySelectorAll('.cz-palette-color')).map(el => el.value),
+    barRounded: tog('cz-bar-rounded'),
+    barRadius: parseInt(g('cz-bar-radius')?.value) || 5,
+    barGap: chip('cz-bar-gap') || 'normal',
+    lineThickness: parseInt(g('cz-line-thickness')?.value) || 3,
+    dotSize: chip('cz-dot-size') || 'medium',
+    fillOpacity: parseInt(g('cz-fill-opacity')?.value) || 35,
+    showGrid: tog('cz-show-grid'),
+    gridStyle: chip('cz-grid-style') || 'dashed',
+    showAxis: tog('cz-show-axis'),
+    showValLabels: tog('cz-show-val-labels'),
+    showTooltip: tog('cz-show-tooltip'),
+    animDuration: parseInt(chip('cz-anim')) || 300,
+    showChartTitle: tog('cz-show-chart-title'),
+    showTrendBadge: tog('cz-show-trend-badge'),
+    showSource: tog('cz-show-source'),
+    showTs: tog('cz-show-ts'),
+    cardPadding: chip('cz-card-padding') || 'normal',
+    showSearch: tog('cz-show-search'),
+    showCats: tog('cz-show-cats'),
+    showDarkToggle: tog('cz-show-dark-toggle'),
+    showDsCount: tog('cz-show-ds-count'),
+    publicPw: tog('cz-public-pw'),
+    publicPwValue: g('cz-public-pw-value')?.value || '',
+    comingSoon: tog('cz-coming-soon'),
+    annShow: tog('cz-ann-show'),
+    annText: g('cz-ann-text')?.value || '',
+    annBg: g('cz-ann-bg')?.value || '#6366f1',
+    footerShow: tog('cz-footer-show'),
+    footerCols: parseInt(chip('cz-footer-cols')) || 1,
+    footerHtml: g('cz-footer-html')?.value || '',
+    customCss: g('cz-custom-css')?.value || '',
+  };
+}
+
+function applyThemeToPublicPage() {
+  const t = currentTheme;
+  const isDark = darkMode;
+
+  // CSS variables
+  const root = document.documentElement;
+  root.style.setProperty('--brand', t.primary);
+  root.style.setProperty('--brand-deep', t.secondary);
+  if (isDark) {
+    root.style.setProperty('--bg', t.bgDark);
+    root.style.setProperty('--surface', t.surfaceDark);
+    root.style.setProperty('--ink', t.textDark);
+  } else {
+    root.style.setProperty('--bg', t.bgLight);
+    root.style.setProperty('--surface', t.surfaceLight);
+    root.style.setProperty('--ink', t.textLight);
+  }
+
+  // Font
+  document.body.style.fontFamily = `'${t.font}', system-ui, sans-serif`;
+  document.body.style.fontSize = t.fontSize + 'px';
+
+  // Cards grid
+  const grid = document.getElementById('cards-grid');
+  if (grid) grid.style.gridTemplateColumns = `repeat(${t.gridCols}, minmax(0, 1fr))`;
+
+  // Card radius / shadow / border via CSS var
+  root.style.setProperty('--card-radius', t.borderRadius);
+  const shadowMap = { none:'none', soft:'0 18px 44px rgba(16,35,61,0.08)', medium:'0 24px 56px rgba(16,35,61,0.13)', strong:'0 32px 72px rgba(16,35,61,0.2)' };
+  root.style.setProperty('--shadow', shadowMap[t.cardShadow] || shadowMap.soft);
+
+  // Site title
+  const logoEls = document.querySelectorAll('#nav-logo, .site-nav-logo');
+  logoEls.forEach(el => {
+    if (t.logo) {
+      el.innerHTML = `<img src="${t.logo}" style="height:42px;object-fit:contain;" alt="logo">`;
+    } else {
+      el.textContent = t.siteTitle;
+    }
+  });
+  document.title = `${t.siteTitle} | ${t.tagline}`;
+
+  // Navbar position
+  const navEl = document.getElementById('nav');
+  if (navEl) navEl.style.position = t.navbarPos === 'static' ? 'static' : 'sticky';
+
+  // Compact mode
+  document.body.classList.toggle('compact-mode', !!t.compact);
+
+  // Hero section
+  const hero = document.getElementById('hero');
+  if (hero) hero.style.display = t.heroShow ? '' : 'none';
+  const heroH1 = document.querySelector('#hero h1');
+  if (heroH1) heroH1.textContent = t.heroTitle;
+  const heroP = document.querySelector('#hero p');
+  if (heroP) heroP.textContent = t.heroSubtitle;
+
+  // Announcement bar
+  const annBar = document.getElementById('announcement-bar');
+  if (annBar) {
+    annBar.style.display = t.annShow ? 'block' : 'none';
+    annBar.textContent = t.annText;
+    annBar.style.background = t.annBg;
+    annBar.style.color = '#fff';
+  }
+
+  // Footer
+  const footer = document.getElementById('site-footer');
+  if (footer) {
+    footer.style.display = t.footerShow ? 'block' : 'none';
+    const inner = document.getElementById('site-footer-inner');
+    if (inner) inner.innerHTML = t.footerHtml;
+  }
+
+  // Custom CSS
+  const cssEl = document.getElementById('custom-css-style');
+  if (cssEl) cssEl.textContent = t.customCss || '';
+
+  // Coming soon
+  const cs = document.getElementById('coming-soon-overlay');
+  const siteEl = document.getElementById('site');
+  if (cs) {
+    if (t.comingSoon && siteEl && !document.getElementById('admin-panel').offsetParent) {
+      cs.classList.remove('hidden');
+      siteEl.style.visibility = 'hidden';
+    } else {
+      cs.classList.add('hidden');
+      if (siteEl) siteEl.style.visibility = '';
+    }
+  }
+
+  // Show/hide UI elements
+  const searchWrap = document.getElementById('search-wrap');
+  if (searchWrap) searchWrap.style.display = t.showSearch !== false ? '' : 'none';
+  const catPills = document.getElementById('cat-pills');
+  if (catPills) catPills.style.display = t.showCats !== false ? '' : 'none';
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) themeToggle.style.display = t.showDarkToggle !== false ? '' : 'none';
+
+  // Favicon
+  if (t.favicon) {
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+    link.href = t.favicon;
+  }
+}
+
+function initCustomizeTab() {
+  const t = currentTheme;
+  const g = id => document.getElementById(id);
+  const setTog = (id, val) => { const el = g(id); if (el) el.classList.toggle('on', !!val); };
+  const setChip = (groupId, val) => {
+    document.querySelectorAll(`#${groupId} .cz-chip`).forEach(c => c.classList.toggle('active', c.dataset.v === String(val)));
+  };
+
+  // Branding
+  if (g('cz-site-title')) g('cz-site-title').value = t.siteTitle || 'StatHub';
+  if (g('cz-tagline')) g('cz-tagline').value = t.tagline || '';
+  if (t.logo && g('cz-logo-data')) { g('cz-logo-data').value = t.logo; const prev = g('cz-logo-preview'); if(prev){prev.src=t.logo;prev.style.display='';} }
+
+  // Colors
+  const colorMap = { 'cz-primary': t.primary, 'cz-secondary': t.secondary, 'cz-bg-light': t.bgLight, 'cz-bg-dark': t.bgDark, 'cz-surface-light': t.surfaceLight, 'cz-surface-dark': t.surfaceDark, 'cz-text-light': t.textLight, 'cz-text-dark': t.textDark };
+  Object.entries(colorMap).forEach(([id, val]) => { if (g(id)) g(id).value = val || '#000000'; });
+
+  // Typography
+  if (g('cz-font')) g('cz-font').value = t.font;
+  if (g('cz-font-size')) { g('cz-font-size').value = t.fontSize; g('cz-font-size-lbl').textContent = t.fontSize + 'px'; }
+  setChip('cz-heading-weight', t.headingWeight);
+  setChip('cz-letter-spacing', t.letterSpacing);
+
+  // Layout
+  setChip('cz-grid-cols', t.gridCols);
+  setChip('cz-border-radius', t.borderRadius);
+  setChip('cz-card-shadow', t.cardShadow);
+  setChip('cz-card-border', t.cardBorder);
+  setChip('cz-navbar-pos', t.navbarPos);
+  setTog('cz-compact', t.compact);
+
+  // Hero
+  setTog('cz-hero-show', t.heroShow !== false);
+  if (g('cz-hero-title')) g('cz-hero-title').value = t.heroTitle || '';
+  if (g('cz-hero-subtitle')) g('cz-hero-subtitle').value = t.heroSubtitle || '';
+  setChip('cz-hero-bg', t.heroBg);
+  setChip('cz-hero-height', t.heroHeight);
+  setChip('cz-hero-align', t.heroAlign);
+  if (g('cz-overlay-opacity')) { g('cz-overlay-opacity').value = t.overlayOpacity || 0; g('cz-overlay-lbl').textContent = (t.overlayOpacity || 0) + '%'; }
+
+  // Chart palette
+  buildChartPaletteUI();
+
+  // Chart defaults
+  setTog('cz-bar-rounded', t.barRounded !== false);
+  if (g('cz-bar-radius')) g('cz-bar-radius').value = t.barRadius || 5;
+  setChip('cz-bar-gap', t.barGap);
+  if (g('cz-line-thickness')) { g('cz-line-thickness').value = t.lineThickness || 3; g('cz-line-thick-lbl').textContent = (t.lineThickness || 3) + 'px'; }
+  setChip('cz-dot-size', t.dotSize);
+  if (g('cz-fill-opacity')) { g('cz-fill-opacity').value = t.fillOpacity || 35; g('cz-fill-lbl').textContent = (t.fillOpacity || 35) + '%'; }
+  setTog('cz-show-grid', t.showGrid !== false);
+  setChip('cz-grid-style', t.gridStyle);
+  setTog('cz-show-axis', t.showAxis !== false);
+  setTog('cz-show-val-labels', t.showValLabels !== false);
+  setTog('cz-show-tooltip', t.showTooltip !== false);
+  setChip('cz-anim', t.animDuration ?? 300);
+  setTog('cz-show-chart-title', t.showChartTitle !== false);
+  setTog('cz-show-trend-badge', t.showTrendBadge !== false);
+  setTog('cz-show-source', t.showSource !== false);
+  setTog('cz-show-ts', t.showTs !== false);
+  setChip('cz-card-padding', t.cardPadding);
+
+  // Public controls
+  setTog('cz-show-search', t.showSearch !== false);
+  setTog('cz-show-cats', t.showCats !== false);
+  setTog('cz-show-dark-toggle', t.showDarkToggle !== false);
+  setTog('cz-show-ds-count', t.showDsCount !== false);
+  setTog('cz-public-pw', t.publicPw);
+  if (g('cz-public-pw-value')) g('cz-public-pw-value').value = t.publicPwValue || '';
+  setTog('cz-coming-soon', t.comingSoon);
+
+  // Announcement & Footer
+  setTog('cz-ann-show', t.annShow);
+  if (g('cz-ann-text')) g('cz-ann-text').value = t.annText || '';
+  if (g('cz-ann-bg')) g('cz-ann-bg').value = t.annBg || '#6366f1';
+  setTog('cz-footer-show', t.footerShow);
+  setChip('cz-footer-cols', t.footerCols);
+  if (g('cz-footer-html')) g('cz-footer-html').value = t.footerHtml || '';
+
+  // Custom CSS
+  if (g('cz-custom-css')) g('cz-custom-css').value = t.customCss || '';
+
+  // Init chip click listeners
+  document.querySelectorAll('.cz-chip').forEach(chip => {
+    chip.onclick = () => {
+      const group = chip.closest('[id]');
+      if (group) group.querySelectorAll('.cz-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      themeChanged();
+    };
+  });
+
+  // Init theme presets
+  buildThemePresets();
+  buildChartPalettePresets();
+}
+
+function buildThemePresets() {
+  const PRESETS = [
+    { label:'Default', primary:'#0c4fb7', secondary:'#6366f1', bgLight:'#f4f7fb', bgDark:'#0a0a0f', surfaceLight:'#ffffff', surfaceDark:'#111118', textLight:'#10233d', textDark:'#e2e8f0' },
+    { label:'Ocean', primary:'#0d9488', secondary:'#0e7490', bgLight:'#f0fdfa', bgDark:'#042f2e', surfaceLight:'#ffffff', surfaceDark:'#0f3b38', textLight:'#0f2a27', textDark:'#ccfbf1' },
+    { label:'Sunset', primary:'#ea580c', secondary:'#e11d48', bgLight:'#fff7ed', bgDark:'#1c0a00', surfaceLight:'#ffffff', surfaceDark:'#2a1000', textLight:'#431407', textDark:'#fed7aa' },
+    { label:'Forest', primary:'#16a34a', secondary:'#65a30d', bgLight:'#f0fdf4', bgDark:'#052e16', surfaceLight:'#ffffff', surfaceDark:'#0a3d1a', textLight:'#14532d', textDark:'#bbf7d0' },
+    { label:'Midnight', primary:'#7c3aed', secondary:'#6d28d9', bgLight:'#faf5ff', bgDark:'#09050f', surfaceLight:'#ffffff', surfaceDark:'#120d1e', textLight:'#2e1065', textDark:'#e9d5ff' },
+    { label:'Mono', primary:'#18181b', secondary:'#52525b', bgLight:'#fafafa', bgDark:'#09090b', surfaceLight:'#ffffff', surfaceDark:'#18181b', textLight:'#18181b', textDark:'#f4f4f5' },
+  ];
+  const wrap = document.getElementById('theme-presets');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  PRESETS.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'cz-preset-btn';
+    btn.textContent = p.label;
+    btn.onclick = () => {
+      currentTheme = { ...currentTheme, ...p };
+      initCustomizeTab();
+      themeChanged();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function buildChartPaletteUI() {
+  const t = currentTheme;
+  const wrap = document.getElementById('chart-palette-colors');
+  if (!wrap) return;
+  const palette = t.chartPalette && t.chartPalette.length === 10 ? t.chartPalette : DEFAULT_THEME.chartPalette;
+  wrap.innerHTML = palette.map((col, i) =>
+    `<input type="color" class="cz-color cz-palette-color" value="${col}" data-idx="${i}" oninput="themeChanged()" />`
+  ).join('');
+}
+
+function buildChartPalettePresets() {
+  const PALETTES = {
+    'Heatmap': ['#6366f1','#8b5cf6','#a855f7','#c084fc','#f97316','#fb923c','#fbbf24','#34d399','#38bdf8','#94a3b8'],
+    'Pastel': ['#a5b4fc','#fbcfe8','#bbf7d0','#fde68a','#bae6fd','#fca5a5','#c4b5fd','#6ee7b7','#93c5fd','#fcd34d'],
+    'Vivid': ['#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#8b5cf6','#ec4899','#14b8a6','#f59e0b','#6366f1'],
+    'Earth': ['#78350f','#92400e','#b45309','#047857','#065f46','#1e3a5f','#374151','#6b7280','#9ca3af','#d1d5db'],
+    'Neon': ['#f0f','#0ff','#ff0','#f80','#0f8','#80f','#f08','#08f','#8f0','#f00'],
+    'Monochrome': ['#18181b','#27272a','#3f3f46','#52525b','#71717a','#a1a1aa','#d4d4d8','#e4e4e7','#f4f4f5','#fafafa'],
+  };
+  const wrap = document.getElementById('chart-palette-presets');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  Object.entries(PALETTES).forEach(([name, cols]) => {
+    const btn = document.createElement('button');
+    btn.className = 'cz-preset-btn';
+    btn.textContent = name;
+    btn.onclick = () => {
+      currentTheme.chartPalette = cols;
+      buildChartPaletteUI();
+      themeChanged();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function resetColorDefaults() {
+  const d = DEFAULT_THEME;
+  currentTheme = { ...currentTheme, primary: d.primary, secondary: d.secondary, bgLight: d.bgLight, bgDark: d.bgDark, surfaceLight: d.surfaceLight, surfaceDark: d.surfaceDark, textLight: d.textLight, textDark: d.textDark };
+  initCustomizeTab();
+  themeChanged();
+}
+
+function loadCustomFont() {
+  const font = document.getElementById('cz-font')?.value;
+  if (!font || font === 'Inter') return;
+  const encoded = font.replace(/ /g, '+');
+  if (!document.querySelector(`link[data-font="${font}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${encoded}:wght@400;600;700;800&display=swap`;
+    link.dataset.font = font;
+    document.head.appendChild(link);
+  }
+  document.body.style.fontFamily = `'${font}', system-ui, sans-serif`;
+}
+
+function loadImageToField(input, fieldId) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const data = ev.target.result;
+    const field = document.getElementById(fieldId);
+    if (field) field.value = data;
+    if (fieldId === 'cz-logo-data') {
+      const prev = document.getElementById('cz-logo-preview');
+      if (prev) { prev.src = data; prev.style.display = ''; }
+    }
+    themeChanged();
+  };
+  reader.readAsDataURL(file);
+}
+
+function publishTheme() {
+  collectThemeFromUI();
+  saveTheme();
+  applyThemeToPublicPage();
+  showToast('Theme published ✓');
+}
+
+function discardTheme() {
+  currentTheme = { ...savedTheme };
+  initCustomizeTab();
+  applyThemeToPublicPage();
+  themeUnsaved = false;
+  document.getElementById('cz-unsaved-badge')?.classList.add('hidden');
+  showToast('Changes discarded');
+}
+
+function exportTheme() {
+  collectThemeFromUI();
+  const blob = new Blob([JSON.stringify(currentTheme, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'stathub-theme.json';
+  a.click();
+}
+
+function importTheme(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      currentTheme = { ...DEFAULT_THEME, ...imported };
+      initCustomizeTab();
+      themeChanged();
+      showToast('Theme imported ✓');
+    } catch { showToast('Invalid theme file'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// Preview panel
+function openPreviewPanel() {
+  const panel = document.getElementById('cz-preview-panel');
+  if (panel) panel.classList.add('open');
+  updatePreviewFrame();
+}
+
+function closePreviewPanel() {
+  const panel = document.getElementById('cz-preview-panel');
+  if (panel) panel.classList.remove('open');
+}
+
+function updatePreviewFrame() {
+  // Preview is just the current page in an iframe — theme changes are reflected in real time
+  const frame = document.getElementById('cz-preview-frame');
+  if (!frame || !frame.closest('.open')) return;
+  // Reload with a query param to avoid auth
+  if (frame.src === 'about:blank') {
+    frame.src = location.pathname + '?preview=1';
+  }
+}
+
+// ──────────────────────────────────────────────
+// GITHUB TAB HELPERS
+// ──────────────────────────────────────────────
+function populateGhTabUI() {
+  const cfg = getGhConfig();
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+  set('gh-owner-tab', cfg.owner);
+  set('gh-repo-tab', cfg.repo);
+  set('gh-path-tab', cfg.path || 'data.json');
+  const t = document.getElementById('gh-token-tab');
+  if (t && cfg.token) t.placeholder = '•••••••• (token saved — enter new to change)';
+}
+
+function saveGhConfigTabFromUI() {
+  const owner = document.getElementById('gh-owner-tab')?.value.trim();
+  const repo = document.getElementById('gh-repo-tab')?.value.trim();
+  const path = document.getElementById('gh-path-tab')?.value.trim() || 'data.json';
+  const token = document.getElementById('gh-token-tab')?.value.trim();
+  const status = document.getElementById('gh-config-status-tab');
+  if (!owner || !repo) { status.style.color = '#f87171'; status.textContent = 'Owner and repo are required'; return; }
+  saveGhConfig(owner, repo, path, token);
+  // Sync to original inputs
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  set('gh-owner-input', owner); set('gh-repo-input', repo); set('gh-path-input', path);
+  status.style.color = '#34d399'; status.textContent = 'Saved ✓';
+  setTimeout(() => { status.textContent = ''; }, 2500);
+}
+
+async function testGhConnectionTab() {
+  const { owner, repo, path, token } = getGhConfig();
+  const status = document.getElementById('gh-config-status-tab');
+  if (!owner || !repo) { status.style.color = '#f87171'; status.textContent = 'Save config first'; return; }
+  status.style.color = 'var(--ink-soft)'; status.textContent = 'Testing…';
+  try {
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const res = await fetch(url, { headers });
+    if (res.status === 404) { status.style.color = '#f59e0b'; status.textContent = 'Repo found, data.json not yet created ✓'; }
+    else if (res.ok) { status.style.color = '#34d399'; status.textContent = 'Connected ✓ — data.json found'; }
+    else { const err = await res.json(); status.style.color = '#f87171'; status.textContent = 'Error: ' + (err.message || res.status); }
+  } catch(e) { status.style.color = '#f87171'; status.textContent = 'Network error: ' + e.message; }
+}
+
+function changePasswordTab() {
+  const np = document.getElementById('new-pw-tab').value;
+  const nc = document.getElementById('new-pw-confirm-tab').value;
+  const err = document.getElementById('change-pw-err-tab');
+  if (!np) { err.textContent = 'Enter a new password'; return; }
+  if (np !== nc) { err.textContent = "Passwords don't match"; return; }
+  window._adminPw = np;
+  localStorage.setItem('dv-admin-pw', np);
+  document.getElementById('new-pw-tab').value = '';
+  document.getElementById('new-pw-confirm-tab').value = '';
+  err.style.color = '#34d399'; err.textContent = 'Password updated ✓';
+  setTimeout(() => { err.textContent = ''; err.style.color = '#f87171'; }, 2500);
+}
+
+
 (async function init() {
+  // Load custom password if saved
+  const savedPw = localStorage.getItem("dv-admin-pw");
+  if (savedPw) window._adminPw = savedPw;
+  applyTheme();
+  await loadTheme();
   await loadDs();
   setupSearch();
   setupPwGate();
   hide(document.getElementById("loading-screen"));
   renderSite();
+  applyThemeToPublicPage();
+  checkDeepLink();
   // Check hash on load
   if (location.hash === "#admin") {
     setTimeout(openAdminGate, 200);
   }
 })();
+
+
+
 </script>
+<!-- Site Footer -->
+<div id="site-footer">
+  <div id="site-footer-inner"></div>
+</div>
+<!-- Custom CSS injection point -->
+<style id="custom-css-style"></style>
+
 </body>
 </html>
