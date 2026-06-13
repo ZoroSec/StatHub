@@ -129,20 +129,31 @@ function saveGhConfig(owner, repo, path, token) {
 let _ghFileSha = null;
 
 async function loadDs() {
-  const { owner, repo, path } = getGhConfig();
+  const { owner, repo, path, token } = getGhConfig();
   if (owner && repo) {
     try {
       const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-      const res = await fetch(url, { headers: { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" } });
+      const headers = {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      };
+      // FIX: include token so private repos and rate-limit issues are handled
+      if (token) headers.Authorization = `Bearer ${token}`;
+      const res = await fetch(url, { headers });
       if (res.ok) {
         const json = await res.json();
         _ghFileSha = json.sha;
-        const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g,""))));
+        // FIX: GitHub paginates base64 with newlines — strip before decoding
+        const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ""))));
         allDs = JSON.parse(decoded);
         return;
       }
-    } catch (e) { console.warn("GitHub load failed:", e); }
+      // Log the actual failure reason instead of swallowing it
+      const errText = await res.text().catch(() => res.status);
+      console.warn(`GitHub load failed (${res.status}):`, errText);
+    } catch (e) { console.warn("GitHub fetch error:", e); }
   }
+  // Fallback: localStorage → seed data
   try {
     const saved = localStorage.getItem("dv-datasets-local");
     allDs = saved ? JSON.parse(saved) : SEED;
@@ -168,7 +179,30 @@ async function persistDs() {
       },
       body: JSON.stringify(body)
     });
-    if (!res.ok) { const err = await res.json(); throw new Error(err.message || res.status); }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      // Common causes: 409 = sha mismatch (file changed externally), 422 = missing sha
+      if (res.status === 409 || res.status === 422) {
+        // sha is stale — re-fetch it and retry once
+        const recheck = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+          { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" } }
+        );
+        if (recheck.ok) {
+          const meta = await recheck.json();
+          _ghFileSha = meta.sha;
+          body.sha = _ghFileSha;
+          const retry = await fetch(url, { method: "PUT", headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "Content-Type": "application/json" }, body: JSON.stringify(body) });
+          if (retry.ok) {
+            const r2 = await retry.json();
+            _ghFileSha = r2.content?.sha || _ghFileSha;
+            showToast("✓ Saved to GitHub");
+            return;
+          }
+        }
+      }
+      throw new Error((err.message || res.status) + (err.errors ? " — " + JSON.stringify(err.errors) : ""));
+    }
     const result = await res.json();
     _ghFileSha = result.content?.sha || _ghFileSha;
     showToast("✓ Saved to GitHub");

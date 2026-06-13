@@ -58,7 +58,6 @@ function renderAdmin() {
   show(panel);
   renderAdminList();
   showAdminListView();
-  populateGhConfigUI();
   initAdminTabs();
 }
 
@@ -336,28 +335,10 @@ function changePassword() {
   document.getElementById("new-pw-input").value = ""; document.getElementById("new-pw-confirm").value = "";
   err.style.color = "#34d399"; err.textContent = "Password updated ✓"; setTimeout(() => { err.textContent = ""; err.style.color = "#f87171"; }, 2500);
 }
-function populateGhConfigUI() {
-  const cfg = getGhConfig(), t = document.getElementById("gh-token-input");
-  document.getElementById("gh-owner-input").value = cfg.owner; document.getElementById("gh-repo-input").value = cfg.repo; document.getElementById("gh-path-input").value = cfg.path || "data.json";
-  if (t && cfg.token) t.placeholder = "••••••••  (token saved — enter new to change)";
-}
-function saveGhConfigFromUI() {
-  const owner = document.getElementById("gh-owner-input")?.value.trim(), repo = document.getElementById("gh-repo-input")?.value.trim(), path = document.getElementById("gh-path-input")?.value.trim() || "data.json", token = document.getElementById("gh-token-input")?.value.trim(), status = document.getElementById("gh-config-status");
-  if (!owner || !repo) { status.style.color = "#f87171"; status.textContent = "Owner and repo are required"; return; }
-  saveGhConfig(owner, repo, path, token); status.style.color = "#34d399"; status.textContent = "Saved ✓"; setTimeout(() => { status.textContent = ""; }, 2500);
-}
-async function testGhConnection() {
-  const { owner, repo, path, token } = getGhConfig(), status = document.getElementById("gh-config-status");
-  if (!owner || !repo) { status.style.color = "#f87171"; status.textContent = "Save config first"; return; }
-  status.style.color = "var(--ink-soft)"; status.textContent = "Testing…";
-  try {
-    const headers = { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" }; if (token) headers.Authorization = `Bearer ${token}`;
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, { headers });
-    if (res.status === 404) { status.style.color = "#f59e0b"; status.textContent = "Repo found, data.json not yet created ✓"; }
-    else if (res.ok) { status.style.color = "#34d399"; status.textContent = "Connected ✓ — data.json found"; }
-    else { const err = await res.json(); status.style.color = "#f87171"; status.textContent = "Error: " + (err.message || res.status); }
-  } catch(e) { status.style.color = "#f87171"; status.textContent = "Network error: " + e.message; }
-}
+// Aliases kept for backwards-compatibility; the live UI uses the *-tab variants below.
+const populateGhConfigUI = () => populateGhTabUI();
+const saveGhConfigFromUI = () => saveGhConfigTabFromUI();
+const testGhConnection   = () => testGhConnectionTab();
 
 // DRAG REORDER
 let dragSrcId = null;
@@ -378,6 +359,8 @@ function setupDragReorder(row, dsId) {
 
 // ADMIN TABS
 function initAdminTabs() {
+  // Pre-populate GitHub fields so they're ready when the user switches tabs
+  populateGhTabUI();
   document.querySelectorAll('.admin-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const tab = btn.dataset.tab;
