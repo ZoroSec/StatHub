@@ -1187,6 +1187,72 @@
     background: #1e1e2e; border-color: #2a2a3e; color: #94a3b8;
   }
   #pw-gate .theme-toggle-btn:hover { border-color: #6366f1; color: #a5b4fc; }
+
+  /* ── ADMIN TABS ── */
+  #admin-tabs { display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:0; }
+  .admin-tab-btn {
+    background:none; border:none; border-bottom:2px solid transparent;
+    padding:12px 18px; font-size:13px; font-weight:600; color:var(--ink-soft);
+    cursor:pointer; transition:all 0.15s; margin-bottom:-1px;
+  }
+  .admin-tab-btn.active { color:#6366f1; border-bottom-color:#6366f1; }
+  .admin-tab-btn:hover:not(.active) { color:var(--ink); }
+  .admin-tab-pane { display:none; }
+  .admin-tab-pane.active { display:block; }
+
+  /* ── CUSTOMIZE TAB ── */
+  #customize-tab { padding-top:24px; }
+  .cz-section { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:16px; }
+  .cz-section-title { font-size:11px; color:#6366f1; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .cz-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); gap:12px; }
+  .cz-row:last-child { border-bottom:none; padding-bottom:0; }
+  .cz-row-label { font-size:13px; color:var(--ink); flex:1; }
+  .cz-row-sub { font-size:11px; color:var(--ink-soft); margin-top:2px; }
+  .cz-inp { background:var(--surface-alt); border:1px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; color:var(--ink); outline:none; min-width:0; }
+  .cz-inp:focus { border-color:#6366f1; }
+  .cz-inp-sm { width:90px; }
+  .cz-inp-md { width:150px; }
+  .cz-color { width:38px; height:32px; border-radius:6px; border:1px solid var(--line); cursor:pointer; padding:2px; background:none; }
+  .cz-select { background:var(--surface-alt); border:1px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; color:var(--ink); outline:none; cursor:pointer; }
+  .cz-range { width:120px; accent-color:#6366f1; }
+  .cz-tog { width:36px; height:20px; border-radius:10px; background:var(--line-strong); border:1px solid var(--line); cursor:pointer; position:relative; flex-shrink:0; transition:background 0.2s; }
+  .cz-tog.on { background:#6366f1; border-color:#6366f1; }
+  .cz-tog::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:#fff; transition:left 0.2s; }
+  .cz-tog.on::after { left:18px; }
+  .cz-palette-grid { display:grid; grid-template-columns: repeat(10, 32px); gap:6px; margin-top:8px; }
+  .cz-preset-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .cz-preset-btn { background:var(--surface-alt); border:1px solid var(--line); border-radius:6px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; color:var(--ink-soft); transition:all 0.12s; }
+  .cz-preset-btn:hover { border-color:#6366f1; color:#6366f1; }
+  .cz-chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .cz-chip { background:var(--surface-alt); border:1px solid var(--line); border-radius:6px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; color:var(--ink-soft); transition:all 0.12s; }
+  .cz-chip.active { background:#6366f1; color:#fff; border-color:#6366f1; }
+  .cz-upload-btn { display:inline-flex; align-items:center; gap:6px; background:var(--surface-alt); border:1px solid var(--line); color:var(--ink-soft); border-radius:8px; padding:7px 14px; font-size:12px; cursor:pointer; font-weight:600; }
+  .cz-save-row { display:flex; gap:10px; align-items:center; margin-top:20px; flex-wrap:wrap; }
+  .cz-publish-btn { background:#6366f1; color:#fff; border:none; border-radius:8px; padding:10px 24px; font-size:14px; font-weight:600; cursor:pointer; }
+  .cz-publish-btn:hover { background:#5254cc; }
+  .cz-discard-btn { background:var(--surface-alt); color:var(--ink-soft); border:1px solid var(--line); border-radius:8px; padding:10px 18px; font-size:13px; cursor:pointer; }
+  .cz-unsaved { font-size:12px; color:#f59e0b; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:6px; padding:4px 10px; }
+  /* Live preview panel */
+  #cz-preview-panel { position:fixed; right:0; top:0; bottom:0; width:420px; background:var(--surface); border-left:1px solid var(--line); z-index:200; overflow:hidden; display:flex; flex-direction:column; transform:translateX(100%); transition:transform 0.3s; }
+  #cz-preview-panel.open { transform:translateX(0); }
+  #cz-preview-header { padding:14px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
+  #cz-preview-header span { font-size:13px; font-weight:600; color:var(--ink); }
+  #cz-preview-close { background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:18px; padding:0; }
+  #cz-preview-frame-wrap { flex:1; overflow:hidden; transform-origin:top left; }
+  #cz-preview-frame { width:200%; height:200%; border:none; transform:scale(0.5); transform-origin:top left; }
+  .cz-preview-btn { background:var(--surface-alt); border:1px solid var(--line); color:var(--ink-soft); border-radius:8px; padding:7px 14px; font-size:12px; cursor:pointer; font-weight:600; }
+  .cz-preview-btn:hover { border-color:#6366f1; color:#6366f1; }
+  /* Dataset per-style overrides */
+  .ds-override-row { background:var(--surface-alt); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:16px; }
+  .ds-override-title { font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; font-weight:700; }
+  /* Announcement bar */
+  #announcement-bar { display:none; padding:9px 20px; text-align:center; font-size:13px; font-weight:600; }
+  /* Footer */
+  #site-footer { display:none; padding:32px 20px; }
+  #site-footer-inner { max-width:1120px; margin:0 auto; }
+  /* Coming soon */
+  #coming-soon-overlay { position:fixed; inset:0; z-index:250; background:var(--bg); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; }
+
   #loading-screen {
     background: #0a0a0f; min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
@@ -1452,8 +1518,16 @@
         <button id="admin-add-btn" class="btn-add">+ Add Dataset</button>
       </div>
     </div>
+    <div id="admin-tabs">
+      <button class="admin-tab-btn active" data-tab="datasets">📋 Datasets</button>
+      <button class="admin-tab-btn" data-tab="notebooks">📓 Notebooks</button>
+      <button class="admin-tab-btn" data-tab="customize">🎨 Customize</button>
+      <button class="admin-tab-btn" data-tab="github">⚙ GitHub</button>
+    </div>
   </div>
   <div id="admin-content">
+    <!-- DATASETS TAB -->
+    <div id="tab-datasets" class="admin-tab-pane active">
     <!-- LIST VIEW -->
     <div id="admin-list-view">
       <div id="admin-list-header"></div>
@@ -1759,6 +1833,332 @@
         </div>
       </div>
     </div>
+    </div><!-- /tab-datasets -->
+
+    <!-- NOTEBOOKS TAB -->
+    <div id="tab-notebooks" class="admin-tab-pane">
+      <div style="padding:28px 0 0;">
+        <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px;">📓 Dataset Notebooks</div>
+        <div style="font-size:13px;color:var(--ink-soft);margin-bottom:20px;line-height:1.7;">Each dataset can have its own notebook — rich notes, analysis, sources, and context stored alongside the dataset.</div>
+        <div id="notebook-list"></div>
+        <div id="notebook-editor" class="hidden" style="margin-top:20px;">
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;" id="nb-dataset-title"></div>
+          <div style="font-size:11px;color:var(--ink-soft);margin-bottom:12px;">Notebook content is saved with the dataset and synced to GitHub.</div>
+          <textarea class="inp" id="nb-content" rows="14" style="resize:vertical;font-family:inherit;font-size:13px;line-height:1.7;width:100%;margin-bottom:10px;" placeholder="Write analysis, methodology notes, data sources, context..."></textarea>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-save" onclick="saveNotebook()">Save Notebook</button>
+            <button class="btn-cancel" onclick="closeNotebook()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-notebooks -->
+
+    <!-- CUSTOMIZE TAB -->
+    <div id="tab-customize" class="admin-tab-pane">
+      <div id="customize-tab">
+        <div class="cz-save-row" style="margin-bottom:20px;margin-top:4px;">
+          <button class="cz-publish-btn" onclick="publishTheme()">🚀 Publish Changes</button>
+          <button class="cz-discard-btn" onclick="discardTheme()">Discard Changes</button>
+          <span id="cz-unsaved-badge" class="cz-unsaved hidden">● Unsaved changes</span>
+          <button class="cz-preview-btn" onclick="openPreviewPanel()">👁 Live Preview</button>
+          <button class="cz-preview-btn" onclick="window.open(location.pathname,'_blank')">↗ Preview in full tab</button>
+          <button class="cz-preview-btn" onclick="exportTheme()">⬇ Export Theme</button>
+          <label class="cz-preview-btn" style="display:inline-flex;align-items:center;gap:6px;">⬆ Import Theme<input type="file" accept=".json" id="theme-import-input" style="display:none" onchange="importTheme(this)"></label>
+        </div>
+
+        <!-- BRANDING -->
+        <div class="cz-section">
+          <div class="cz-section-title">🏷 Branding</div>
+          <div class="cz-row"><div><div class="cz-row-label">Site Title</div></div><input class="cz-inp cz-inp-md" id="cz-site-title" value="StatHub" oninput="themeChanged()"/></div>
+          <div class="cz-row"><div><div class="cz-row-label">Tagline</div></div><input class="cz-inp cz-inp-md" id="cz-tagline" value="Insights Library" oninput="themeChanged()"/></div>
+          <div class="cz-row"><div><div class="cz-row-label">Logo</div><div class="cz-row-sub">Upload image (shown instead of text)</div></div><label class="cz-upload-btn">📁 Upload Logo<input type="file" accept="image/*" style="display:none" onchange="loadImageToField(this,'cz-logo-data')"></label><img id="cz-logo-preview" style="height:32px;border-radius:4px;display:none;margin-left:8px;" /><input type="hidden" id="cz-logo-data" /></div>
+          <div class="cz-row"><div><div class="cz-row-label">Favicon</div></div><label class="cz-upload-btn">📁 Upload Favicon<input type="file" accept="image/*" style="display:none" onchange="loadImageToField(this,'cz-favicon-data')"></label><input type="hidden" id="cz-favicon-data" /></div>
+        </div>
+
+        <!-- COLOR SCHEME -->
+        <div class="cz-section">
+          <div class="cz-section-title">🎨 Color Scheme</div>
+          <div class="cz-preset-row" id="theme-presets"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+            <div class="cz-row"><div class="cz-row-label">Primary Accent</div><input type="color" class="cz-color" id="cz-primary" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Secondary Accent</div><input type="color" class="cz-color" id="cz-secondary" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Background (light)</div><input type="color" class="cz-color" id="cz-bg-light" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Background (dark)</div><input type="color" class="cz-color" id="cz-bg-dark" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Surface (light)</div><input type="color" class="cz-color" id="cz-surface-light" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Surface (dark)</div><input type="color" class="cz-color" id="cz-surface-dark" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Text (light)</div><input type="color" class="cz-color" id="cz-text-light" oninput="themeChanged()" /></div>
+            <div class="cz-row"><div class="cz-row-label">Text (dark)</div><input type="color" class="cz-color" id="cz-text-dark" oninput="themeChanged()" /></div>
+          </div>
+          <div style="margin-top:10px;"><button class="cz-discard-btn" onclick="resetColorDefaults()" style="font-size:12px;padding:6px 14px;">↺ Reset to defaults</button></div>
+        </div>
+
+        <!-- TYPOGRAPHY -->
+        <div class="cz-section">
+          <div class="cz-section-title">✏ Typography</div>
+          <div class="cz-row"><div class="cz-row-label">Font Family</div>
+            <select class="cz-select" id="cz-font" onchange="themeChanged();loadCustomFont()">
+              <option value="Inter">Inter</option>
+              <option value="DM Sans">DM Sans</option>
+              <option value="Sora">Sora</option>
+              <option value="Roboto">Roboto</option>
+              <option value="Poppins">Poppins</option>
+              <option value="Playfair Display">Playfair Display</option>
+            </select>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Base Font Size</div><div class="cz-row-sub" id="cz-font-size-lbl">16px</div></div><input type="range" class="cz-range" id="cz-font-size" min="12" max="18" value="16" oninput="themeChanged();document.getElementById('cz-font-size-lbl').textContent=this.value+'px'" /></div>
+          <div class="cz-row"><div class="cz-row-label">Heading Weight</div>
+            <div class="cz-chips" id="cz-heading-weight">
+              <span class="cz-chip" data-v="400">Normal</span>
+              <span class="cz-chip" data-v="600">Semibold</span>
+              <span class="cz-chip active" data-v="800">Bold</span>
+              <span class="cz-chip" data-v="900">Extrabold</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Letter Spacing</div>
+            <div class="cz-chips" id="cz-letter-spacing">
+              <span class="cz-chip" data-v="-0.05em">Tight</span>
+              <span class="cz-chip active" data-v="0">Normal</span>
+              <span class="cz-chip" data-v="0.04em">Wide</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="cz-section">
+          <div class="cz-section-title">⬛ Layout</div>
+          <div class="cz-row"><div class="cz-row-label">Dashboard Grid Columns</div>
+            <div class="cz-chips" id="cz-grid-cols">
+              <span class="cz-chip" data-v="1">1</span>
+              <span class="cz-chip active" data-v="2">2</span>
+              <span class="cz-chip" data-v="3">3</span>
+              <span class="cz-chip" data-v="4">4</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Card Border Radius</div>
+            <div class="cz-chips" id="cz-border-radius">
+              <span class="cz-chip" data-v="0px">None</span>
+              <span class="cz-chip" data-v="8px">Small</span>
+              <span class="cz-chip active" data-v="22px">Medium</span>
+              <span class="cz-chip" data-v="32px">Large</span>
+              <span class="cz-chip" data-v="999px">Pill</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Card Shadow</div>
+            <div class="cz-chips" id="cz-card-shadow">
+              <span class="cz-chip" data-v="none">None</span>
+              <span class="cz-chip active" data-v="soft">Soft</span>
+              <span class="cz-chip" data-v="medium">Medium</span>
+              <span class="cz-chip" data-v="strong">Strong</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Card Border</div>
+            <div class="cz-chips" id="cz-card-border">
+              <span class="cz-chip" data-v="none">None</span>
+              <span class="cz-chip active" data-v="subtle">Subtle</span>
+              <span class="cz-chip" data-v="visible">Visible</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Navbar Position</div>
+            <div class="cz-chips" id="cz-navbar-pos">
+              <span class="cz-chip active" data-v="sticky">Top Fixed</span>
+              <span class="cz-chip" data-v="static">Top Static</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Compact Mode</div><div class="cz-row-sub">Reduces padding and spacing</div></div><div class="cz-tog" id="cz-compact" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+        </div>
+
+        <!-- HERO SECTION -->
+        <div class="cz-section">
+          <div class="cz-section-title">🦸 Hero Section</div>
+          <div class="cz-row"><div class="cz-row-label">Show Hero</div><div class="cz-tog on" id="cz-hero-show" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Hero Title</div><input class="cz-inp cz-inp-md" id="cz-hero-title" value="Evidence, charts, and fast-moving market context." oninput="themeChanged()" /></div>
+          <div class="cz-row"><div class="cz-row-label">Hero Subtitle</div><input class="cz-inp cz-inp-md" id="cz-hero-subtitle" value="Browse a cleaner library of datasets..." oninput="themeChanged()" /></div>
+          <div class="cz-row"><div class="cz-row-label">Background Style</div>
+            <div class="cz-chips" id="cz-hero-bg">
+              <span class="cz-chip active" data-v="gradient">Gradient</span>
+              <span class="cz-chip" data-v="solid">Solid</span>
+              <span class="cz-chip" data-v="image">Image</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Hero Height</div>
+            <div class="cz-chips" id="cz-hero-height">
+              <span class="cz-chip" data-v="small">Small</span>
+              <span class="cz-chip active" data-v="medium">Medium</span>
+              <span class="cz-chip" data-v="large">Large</span>
+              <span class="cz-chip" data-v="fullscreen">Fullscreen</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Text Align</div>
+            <div class="cz-chips" id="cz-hero-align">
+              <span class="cz-chip active" data-v="left">Left</span>
+              <span class="cz-chip" data-v="center">Center</span>
+              <span class="cz-chip" data-v="right">Right</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Overlay Opacity</div><div class="cz-row-sub" id="cz-overlay-lbl">0%</div></div><input type="range" class="cz-range" id="cz-overlay-opacity" min="0" max="80" value="0" oninput="themeChanged();document.getElementById('cz-overlay-lbl').textContent=this.value+'%'" /></div>
+        </div>
+
+        <!-- GLOBAL CHART DEFAULTS -->
+        <div class="cz-section">
+          <div class="cz-section-title">📊 Global Chart Defaults</div>
+          <div style="margin-bottom:10px;">
+            <div style="font-size:11px;color:var(--ink-soft);margin-bottom:8px;font-weight:600;">CHART PALETTE</div>
+            <div class="cz-preset-row" id="chart-palette-presets"></div>
+            <div class="cz-palette-grid" id="chart-palette-colors"></div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Bar Rounded Corners</div><div style="display:flex;align-items:center;gap:10px;"><div class="cz-tog on" id="cz-bar-rounded" onclick="this.classList.toggle('on');themeChanged()"></div><input type="range" class="cz-range" id="cz-bar-radius" min="0" max="16" value="5" oninput="themeChanged()" /></div></div>
+          <div class="cz-row"><div class="cz-row-label">Bar Gap</div>
+            <div class="cz-chips" id="cz-bar-gap">
+              <span class="cz-chip" data-v="tight">Tight</span>
+              <span class="cz-chip active" data-v="normal">Normal</span>
+              <span class="cz-chip" data-v="wide">Wide</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Line Thickness</div><div class="cz-row-sub" id="cz-line-thick-lbl">3px</div></div><input type="range" class="cz-range" id="cz-line-thickness" min="1" max="5" value="3" oninput="themeChanged();document.getElementById('cz-line-thick-lbl').textContent=this.value+'px'" /></div>
+          <div class="cz-row"><div class="cz-row-label">Line Dot Size</div>
+            <div class="cz-chips" id="cz-dot-size">
+              <span class="cz-chip" data-v="none">None</span>
+              <span class="cz-chip" data-v="small">Small</span>
+              <span class="cz-chip active" data-v="medium">Medium</span>
+              <span class="cz-chip" data-v="large">Large</span>
+            </div>
+          </div>
+          <div class="cz-row"><div><div class="cz-row-label">Fill Opacity</div><div class="cz-row-sub" id="cz-fill-lbl">35%</div></div><input type="range" class="cz-range" id="cz-fill-opacity" min="0" max="80" value="35" oninput="themeChanged();document.getElementById('cz-fill-lbl').textContent=this.value+'%'" /></div>
+          <div class="cz-row"><div><div class="cz-row-label">Show Grid Lines</div></div><div style="display:flex;align-items:center;gap:10px;"><div class="cz-tog on" id="cz-show-grid" onclick="this.classList.toggle('on');themeChanged()"></div>
+            <div class="cz-chips" id="cz-grid-style">
+              <span class="cz-chip" data-v="solid">Solid</span>
+              <span class="cz-chip active" data-v="dashed">Dashed</span>
+              <span class="cz-chip" data-v="dotted">Dotted</span>
+            </div>
+          </div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Axis Labels</div><div class="cz-tog on" id="cz-show-axis" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Value Labels on Bars</div><div class="cz-tog on" id="cz-show-val-labels" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Tooltip</div><div class="cz-tog on" id="cz-show-tooltip" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Animation Duration</div>
+            <div class="cz-chips" id="cz-anim">
+              <span class="cz-chip" data-v="0">None</span>
+              <span class="cz-chip" data-v="150">Fast</span>
+              <span class="cz-chip active" data-v="300">Normal</span>
+              <span class="cz-chip" data-v="600">Slow</span>
+            </div>
+          </div>
+          <div class="cz-row"><div class="cz-row-label">Show Chart Title</div><div class="cz-tog on" id="cz-show-chart-title" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Trend Badge</div><div class="cz-tog on" id="cz-show-trend-badge" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Source Credit</div><div class="cz-tog on" id="cz-show-source" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Timestamp</div><div class="cz-tog on" id="cz-show-ts" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Card Padding</div>
+            <div class="cz-chips" id="cz-card-padding">
+              <span class="cz-chip" data-v="compact">Compact</span>
+              <span class="cz-chip active" data-v="normal">Normal</span>
+              <span class="cz-chip" data-v="spacious">Spacious</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUBLIC PAGE CONTROLS -->
+        <div class="cz-section">
+          <div class="cz-section-title">🌐 Public Page Controls</div>
+          <div class="cz-row"><div class="cz-row-label">Show Search Bar</div><div class="cz-tog on" id="cz-show-search" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Category Filters</div><div class="cz-tog on" id="cz-show-cats" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Dark Mode Toggle</div><div class="cz-tog on" id="cz-show-dark-toggle" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Show Dataset Count</div><div class="cz-tog on" id="cz-show-ds-count" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div><div class="cz-row-label">Password-Protect Public View</div><div class="cz-row-sub">Visitors must enter a password</div></div><div class="cz-tog" id="cz-public-pw" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Public Password</div><input class="cz-inp cz-inp-md" id="cz-public-pw-value" type="password" placeholder="Set public password" oninput="themeChanged()" /></div>
+          <div class="cz-row"><div><div class="cz-row-label">"Coming Soon" Mode</div><div class="cz-row-sub">Shows a coming soon screen instead of content</div></div><div class="cz-tog" id="cz-coming-soon" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+        </div>
+
+        <!-- ANNOUNCEMENT BAR & FOOTER -->
+        <div class="cz-section">
+          <div class="cz-section-title">📢 Announcement Bar</div>
+          <div class="cz-row"><div class="cz-row-label">Show Bar</div><div class="cz-tog" id="cz-ann-show" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Bar Text</div><input class="cz-inp cz-inp-md" id="cz-ann-text" value="📊 New datasets added weekly — stay updated!" oninput="themeChanged()" /></div>
+          <div class="cz-row"><div class="cz-row-label">Bar Background</div><input type="color" class="cz-color" id="cz-ann-bg" value="#6366f1" oninput="themeChanged()" /></div>
+        </div>
+        <div class="cz-section">
+          <div class="cz-section-title">🦶 Footer</div>
+          <div class="cz-row"><div class="cz-row-label">Show Footer</div><div class="cz-tog" id="cz-footer-show" onclick="this.classList.toggle('on');themeChanged()"></div></div>
+          <div class="cz-row"><div class="cz-row-label">Columns</div>
+            <div class="cz-chips" id="cz-footer-cols">
+              <span class="cz-chip active" data-v="1">1</span>
+              <span class="cz-chip" data-v="2">2</span>
+              <span class="cz-chip" data-v="3">3</span>
+            </div>
+          </div>
+          <div class="cz-row" style="flex-direction:column;align-items:flex-start;gap:6px;"><div class="cz-row-label">Footer HTML</div><textarea class="cz-inp" id="cz-footer-html" rows="4" style="width:100%;resize:vertical;font-size:12px;font-family:monospace;" placeholder="<p>© 2024 StatHub</p>" oninput="themeChanged()"></textarea></div>
+        </div>
+
+        <!-- CUSTOM CSS -->
+        <div class="cz-section">
+          <div class="cz-section-title">💅 Custom CSS</div>
+          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;">Injected into the public page. Admin panel is not affected.</div>
+          <textarea class="cz-inp" id="cz-custom-css" rows="8" style="width:100%;resize:vertical;font-size:12px;font-family:monospace;" placeholder="/* your custom CSS here */&#10;.ds-card { border-radius: 32px; }" oninput="themeChanged()"></textarea>
+          <div style="margin-top:8px;"><button class="cz-discard-btn" onclick="document.getElementById('cz-custom-css').value='';themeChanged()" style="font-size:12px;padding:6px 14px;">↺ Reset custom CSS</button></div>
+        </div>
+      </div>
+    </div><!-- /tab-customize -->
+
+    <!-- GITHUB TAB -->
+    <div id="tab-github" class="admin-tab-pane">
+      <div style="padding-top:24px;">
+        <div id="gh-config-wrap-tab" style="background:var(--surface-alt);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:0;">
+          <div style="font-size:12px;color:#34d399;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;font-weight:600;">🐙 GitHub Storage</div>
+          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:12px;line-height:1.6;">
+            Data saved here is committed to your GitHub repo as <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-size:11px;">data.json</code>. Theme settings are saved as <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-size:11px;">theme.json</code>.
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">GitHub Username / Org</div><input class="inp" id="gh-owner-tab" placeholder="e.g. harshit" style="width:100%" /></div>
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Repository name</div><input class="inp" id="gh-repo-tab" placeholder="e.g. stathub" style="width:100%" /></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">File path in repo</div><input class="inp" id="gh-path-tab" placeholder="data.json" style="width:100%" /></div>
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Personal Access Token <span style="color:#f87171">*</span></div><input class="inp" id="gh-token-tab" type="password" placeholder="ghp_…" style="width:100%" /></div>
+          </div>
+          <div style="font-size:11px;color:#f59e0b;margin-bottom:10px;">&#9888; Token stays in your browser only — never sent to anyone except GitHub.</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button class="btn-save" style="padding:9px 18px;background:#34d399;border-color:#34d399;color:#000;" onclick="saveGhConfigTabFromUI()">Save GitHub Config</button>
+            <button style="padding:9px 18px;background:none;border:1px solid var(--line);border-radius:8px;color:var(--ink-soft);font-size:13px;cursor:pointer;font-family:inherit;" onclick="testGhConnectionTab()">Test connection</button>
+            <span id="gh-config-status-tab" style="font-size:12px;color:#34d399;"></span>
+          </div>
+        </div>
+        <!-- Change Password in GitHub tab -->
+        <div id="change-pw-wrap-tab" style="background:var(--surface-alt);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px;">
+          <div style="font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;font-weight:600;">🔑 Change Admin Password</div>
+          <div style="display:flex;gap:10px;">
+            <input class="inp" id="new-pw-tab" type="password" placeholder="New password" style="flex:1" />
+            <input class="inp" id="new-pw-confirm-tab" type="password" placeholder="Confirm" style="flex:1" />
+            <button class="btn-save" style="padding:9px 18px;" onclick="changePasswordTab()">Save</button>
+          </div>
+          <div id="change-pw-err-tab" style="font-size:12px;color:#f87171;margin-top:6px;"></div>
+        </div>
+      </div>
+    </div><!-- /tab-github -->
+
+  </div><!-- /admin-content -->
+</div>
+
+<!-- Live Preview Panel -->
+<div id="cz-preview-panel">
+  <div id="cz-preview-header">
+    <span>Live Preview (50% scale)</span>
+    <div style="display:flex;gap:8px;">
+      <button class="cz-preview-btn" onclick="window.open(location.pathname,'_blank')">Full Tab ↗</button>
+      <button id="cz-preview-close" onclick="closePreviewPanel()">✕</button>
+    </div>
+  </div>
+  <div id="cz-preview-frame-wrap">
+    <iframe id="cz-preview-frame" src="about:blank"></iframe>
+  </div>
+</div>
+
+<!-- Announcement Bar (public) -->
+<div id="announcement-bar"></div>
+
+<!-- Coming Soon Overlay -->
+<div id="coming-soon-overlay" class="hidden">
+  <div style="text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">🚀</div>
+    <div style="font-size:28px;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-0.8px;">Coming Soon</div>
+    <div style="font-size:15px;color:var(--ink-soft);">Something great is on its way. Check back later.</div>
   </div>
 </div>
 
@@ -2703,6 +3103,7 @@ function renderAdmin() {
   renderAdminList();
   showAdminListView();
   populateGhConfigUI();
+  initAdminTabs();
 }
 
 function showAdminListView() {
@@ -3497,22 +3898,699 @@ function checkDeepLink() {
 // ──────────────────────────────────────────────
 // INIT
 // ──────────────────────────────────────────────
+// ──────────────────────────────────────────────
+// ADMIN TABS
+// ──────────────────────────────────────────────
+function initAdminTabs() {
+  document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + tab)?.classList.add('active');
+      // Show/hide add button for datasets tab only
+      const addBtn = document.getElementById('admin-add-btn');
+      if (addBtn) addBtn.style.display = tab === 'datasets' ? '' : 'none';
+      if (tab === 'notebooks') renderNotebookList();
+      if (tab === 'customize') initCustomizeTab();
+      if (tab === 'github') populateGhTabUI();
+    });
+  });
+}
+
+// ──────────────────────────────────────────────
+// NOTEBOOKS
+// ──────────────────────────────────────────────
+let activeNotebookId = null;
+
+function renderNotebookList() {
+  const list = document.getElementById('notebook-list');
+  if (!list) return;
+  if (allDs.length === 0) { list.innerHTML = '<div style="color:var(--ink-soft);padding:20px 0;font-size:13px;">No datasets yet. Add a dataset first.</div>'; return; }
+  list.innerHTML = allDs.map(ds => {
+    const hasNote = !!(ds.notebook && ds.notebook.trim());
+    return `<div style="background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;" onclick="openNotebook('${ds.id}')">
+      <div style="width:8px;height:8px;border-radius:50%;background:${ds.accent};flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:600;color:var(--ink);">${ds.title}</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:2px;">${hasNote ? '📝 Has notes · ' + (ds.notebook.trim().slice(0,80) + (ds.notebook.length > 80 ? '…' : '')) : 'No notes yet'}</div>
+      </div>
+      <div style="font-size:12px;color:${hasNote ? '#34d399' : 'var(--ink-soft)'};">${hasNote ? '✓ Notes' : 'Edit'} →</div>
+    </div>`;
+  }).join('');
+}
+
+function openNotebook(dsId) {
+  const ds = allDs.find(d => d.id === dsId);
+  if (!ds) return;
+  activeNotebookId = dsId;
+  document.getElementById('nb-dataset-title').textContent = ds.title;
+  document.getElementById('nb-content').value = ds.notebook || '';
+  document.getElementById('notebook-list').classList.add('hidden');
+  const editor = document.getElementById('notebook-editor');
+  editor.classList.remove('hidden');
+}
+
+function closeNotebook() {
+  activeNotebookId = null;
+  document.getElementById('notebook-list').classList.remove('hidden');
+  document.getElementById('notebook-editor').classList.add('hidden');
+}
+
+function saveNotebook() {
+  if (!activeNotebookId) return;
+  const content = document.getElementById('nb-content').value;
+  allDs = allDs.map(d => d.id === activeNotebookId ? { ...d, notebook: content } : d);
+  persistDs();
+  closeNotebook();
+  renderNotebookList();
+  showToast('Notebook saved ✓');
+}
+
+// ──────────────────────────────────────────────
+// THEME / CUSTOMIZE SYSTEM
+// ──────────────────────────────────────────────
+const DEFAULT_THEME = {
+  siteTitle: 'StatHub', tagline: 'Insights Library', logo: '', favicon: '',
+  primary: '#0c4fb7', secondary: '#6366f1',
+  bgLight: '#f4f7fb', bgDark: '#0a0a0f',
+  surfaceLight: '#ffffff', surfaceDark: '#111118',
+  textLight: '#10233d', textDark: '#e2e8f0',
+  font: 'Inter', fontSize: 16,
+  headingWeight: '800', letterSpacing: '0',
+  gridCols: 2, borderRadius: '22px', cardShadow: 'soft', cardBorder: 'subtle',
+  navbarPos: 'sticky', compact: false,
+  heroShow: true, heroTitle: 'Evidence, charts, and fast-moving market context.',
+  heroSubtitle: 'Browse a cleaner library of datasets, publisher-style summaries, and chart-driven reports.',
+  heroBg: 'gradient', heroHeight: 'medium', heroAlign: 'left', overlayOpacity: 0,
+  chartPalette: ['#8b5cf6','#f97316','#6366f1','#a855f7','#fb923c','#7c3aed','#c084fc','#38bdf8','#34d399','#f59e0b'],
+  barRounded: true, barRadius: 5, barGap: 'normal',
+  lineThickness: 3, dotSize: 'medium', fillOpacity: 35,
+  showGrid: true, gridStyle: 'dashed', showAxis: true, showValLabels: true,
+  showTooltip: true, animDuration: 300,
+  showChartTitle: true, showTrendBadge: true, showSource: true, showTs: true, cardPadding: 'normal',
+  showSearch: true, showCats: true, showDarkToggle: true, showDsCount: true,
+  publicPw: false, publicPwValue: '', comingSoon: false,
+  annShow: false, annText: '📊 New datasets added weekly — stay updated!', annBg: '#6366f1',
+  footerShow: false, footerCols: 1, footerHtml: '<p style="text-align:center;color:var(--ink-soft);font-size:13px;">© 2024 StatHub · Built with ❤</p>',
+  customCss: '',
+};
+
+let currentTheme = {};
+let savedTheme = {};
+let themeUnsaved = false;
+let czDebounceTimer = null;
+
+async function loadTheme() {
+  try {
+    let raw = null;
+    if (window.storage && typeof window.storage.get === 'function') {
+      const stored = await window.storage.get('stathub_theme');
+      if (stored && stored.value) raw = stored.value;
+    }
+    if (!raw) raw = localStorage.getItem('stathub_theme');
+    if (raw) {
+      currentTheme = { ...DEFAULT_THEME, ...JSON.parse(raw) };
+    } else {
+      currentTheme = { ...DEFAULT_THEME };
+    }
+  } catch {
+    currentTheme = { ...DEFAULT_THEME };
+  }
+  savedTheme = { ...currentTheme };
+  applyThemeToPublicPage();
+}
+
+async function saveTheme() {
+  try {
+    const json = JSON.stringify(currentTheme);
+    localStorage.setItem('stathub_theme', json);
+    if (window.storage && typeof window.storage.set === 'function') {
+      await window.storage.set('stathub_theme', json);
+    }
+    savedTheme = { ...currentTheme };
+    themeUnsaved = false;
+    document.getElementById('cz-unsaved-badge')?.classList.add('hidden');
+    await pushThemeToGitHub();
+  } catch(e) {
+    console.warn('Theme save error:', e);
+  }
+}
+
+async function pushThemeToGitHub() {
+  const { owner, repo, token } = getGhConfig();
+  if (!owner || !repo || !token) return;
+  try {
+    const themePath = 'theme.json';
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${themePath}`;
+    const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' };
+    // Check if exists to get SHA
+    let sha = null;
+    try {
+      const check = await fetch(url, { headers: { ...headers } });
+      if (check.ok) { const j = await check.json(); sha = j.sha; }
+    } catch {}
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(currentTheme, null, 2))));
+    const body = { message: 'Update theme via StatHub admin', content, ...(sha ? { sha } : {}) };
+    await fetch(url, { method: 'PUT', headers, body: JSON.stringify(body) });
+  } catch {}
+}
+
+function themeChanged() {
+  themeUnsaved = true;
+  document.getElementById('cz-unsaved-badge')?.classList.remove('hidden');
+  clearTimeout(czDebounceTimer);
+  czDebounceTimer = setTimeout(() => {
+    collectThemeFromUI();
+    applyThemeToPublicPage();
+    updatePreviewFrame();
+  }, 300);
+}
+
+function collectThemeFromUI() {
+  const g = id => document.getElementById(id);
+  const tog = id => g(id)?.classList.contains('on') || false;
+  const chip = id => { const el = document.querySelector(`#${id} .cz-chip.active`); return el ? el.dataset.v : null; };
+  currentTheme = {
+    ...currentTheme,
+    siteTitle: g('cz-site-title')?.value || 'StatHub',
+    tagline: g('cz-tagline')?.value || '',
+    logo: g('cz-logo-data')?.value || '',
+    favicon: g('cz-favicon-data')?.value || '',
+    primary: g('cz-primary')?.value || DEFAULT_THEME.primary,
+    secondary: g('cz-secondary')?.value || DEFAULT_THEME.secondary,
+    bgLight: g('cz-bg-light')?.value || DEFAULT_THEME.bgLight,
+    bgDark: g('cz-bg-dark')?.value || DEFAULT_THEME.bgDark,
+    surfaceLight: g('cz-surface-light')?.value || DEFAULT_THEME.surfaceLight,
+    surfaceDark: g('cz-surface-dark')?.value || DEFAULT_THEME.surfaceDark,
+    textLight: g('cz-text-light')?.value || DEFAULT_THEME.textLight,
+    textDark: g('cz-text-dark')?.value || DEFAULT_THEME.textDark,
+    font: g('cz-font')?.value || 'Inter',
+    fontSize: parseInt(g('cz-font-size')?.value) || 16,
+    headingWeight: chip('cz-heading-weight') || '800',
+    letterSpacing: chip('cz-letter-spacing') || '0',
+    gridCols: parseInt(chip('cz-grid-cols')) || 2,
+    borderRadius: chip('cz-border-radius') || '22px',
+    cardShadow: chip('cz-card-shadow') || 'soft',
+    cardBorder: chip('cz-card-border') || 'subtle',
+    navbarPos: chip('cz-navbar-pos') || 'sticky',
+    compact: tog('cz-compact'),
+    heroShow: tog('cz-hero-show'),
+    heroTitle: g('cz-hero-title')?.value || '',
+    heroSubtitle: g('cz-hero-subtitle')?.value || '',
+    heroBg: chip('cz-hero-bg') || 'gradient',
+    heroHeight: chip('cz-hero-height') || 'medium',
+    heroAlign: chip('cz-hero-align') || 'left',
+    overlayOpacity: parseInt(g('cz-overlay-opacity')?.value) || 0,
+    chartPalette: Array.from(document.querySelectorAll('.cz-palette-color')).map(el => el.value),
+    barRounded: tog('cz-bar-rounded'),
+    barRadius: parseInt(g('cz-bar-radius')?.value) || 5,
+    barGap: chip('cz-bar-gap') || 'normal',
+    lineThickness: parseInt(g('cz-line-thickness')?.value) || 3,
+    dotSize: chip('cz-dot-size') || 'medium',
+    fillOpacity: parseInt(g('cz-fill-opacity')?.value) || 35,
+    showGrid: tog('cz-show-grid'),
+    gridStyle: chip('cz-grid-style') || 'dashed',
+    showAxis: tog('cz-show-axis'),
+    showValLabels: tog('cz-show-val-labels'),
+    showTooltip: tog('cz-show-tooltip'),
+    animDuration: parseInt(chip('cz-anim')) || 300,
+    showChartTitle: tog('cz-show-chart-title'),
+    showTrendBadge: tog('cz-show-trend-badge'),
+    showSource: tog('cz-show-source'),
+    showTs: tog('cz-show-ts'),
+    cardPadding: chip('cz-card-padding') || 'normal',
+    showSearch: tog('cz-show-search'),
+    showCats: tog('cz-show-cats'),
+    showDarkToggle: tog('cz-show-dark-toggle'),
+    showDsCount: tog('cz-show-ds-count'),
+    publicPw: tog('cz-public-pw'),
+    publicPwValue: g('cz-public-pw-value')?.value || '',
+    comingSoon: tog('cz-coming-soon'),
+    annShow: tog('cz-ann-show'),
+    annText: g('cz-ann-text')?.value || '',
+    annBg: g('cz-ann-bg')?.value || '#6366f1',
+    footerShow: tog('cz-footer-show'),
+    footerCols: parseInt(chip('cz-footer-cols')) || 1,
+    footerHtml: g('cz-footer-html')?.value || '',
+    customCss: g('cz-custom-css')?.value || '',
+  };
+}
+
+function applyThemeToPublicPage() {
+  const t = currentTheme;
+  const isDark = darkMode;
+
+  // CSS variables
+  const root = document.documentElement;
+  root.style.setProperty('--brand', t.primary);
+  root.style.setProperty('--brand-deep', t.secondary);
+  if (isDark) {
+    root.style.setProperty('--bg', t.bgDark);
+    root.style.setProperty('--surface', t.surfaceDark);
+    root.style.setProperty('--ink', t.textDark);
+  } else {
+    root.style.setProperty('--bg', t.bgLight);
+    root.style.setProperty('--surface', t.surfaceLight);
+    root.style.setProperty('--ink', t.textLight);
+  }
+
+  // Font
+  document.body.style.fontFamily = `'${t.font}', system-ui, sans-serif`;
+  document.body.style.fontSize = t.fontSize + 'px';
+
+  // Cards grid
+  const grid = document.getElementById('cards-grid');
+  if (grid) grid.style.gridTemplateColumns = `repeat(${t.gridCols}, minmax(0, 1fr))`;
+
+  // Card radius / shadow / border via CSS var
+  root.style.setProperty('--card-radius', t.borderRadius);
+  const shadowMap = { none:'none', soft:'0 18px 44px rgba(16,35,61,0.08)', medium:'0 24px 56px rgba(16,35,61,0.13)', strong:'0 32px 72px rgba(16,35,61,0.2)' };
+  root.style.setProperty('--shadow', shadowMap[t.cardShadow] || shadowMap.soft);
+
+  // Site title
+  const logoEls = document.querySelectorAll('#nav-logo, .site-nav-logo');
+  logoEls.forEach(el => {
+    if (t.logo) {
+      el.innerHTML = `<img src="${t.logo}" style="height:42px;object-fit:contain;" alt="logo">`;
+    } else {
+      el.textContent = t.siteTitle;
+    }
+  });
+  document.title = `${t.siteTitle} | ${t.tagline}`;
+
+  // Navbar position
+  const navEl = document.getElementById('nav');
+  if (navEl) navEl.style.position = t.navbarPos === 'static' ? 'static' : 'sticky';
+
+  // Compact mode
+  document.body.classList.toggle('compact-mode', !!t.compact);
+
+  // Hero section
+  const hero = document.getElementById('hero');
+  if (hero) hero.style.display = t.heroShow ? '' : 'none';
+  const heroH1 = document.querySelector('#hero h1');
+  if (heroH1) heroH1.textContent = t.heroTitle;
+  const heroP = document.querySelector('#hero p');
+  if (heroP) heroP.textContent = t.heroSubtitle;
+
+  // Announcement bar
+  const annBar = document.getElementById('announcement-bar');
+  if (annBar) {
+    annBar.style.display = t.annShow ? 'block' : 'none';
+    annBar.textContent = t.annText;
+    annBar.style.background = t.annBg;
+    annBar.style.color = '#fff';
+  }
+
+  // Footer
+  const footer = document.getElementById('site-footer');
+  if (footer) {
+    footer.style.display = t.footerShow ? 'block' : 'none';
+    const inner = document.getElementById('site-footer-inner');
+    if (inner) inner.innerHTML = t.footerHtml;
+  }
+
+  // Custom CSS
+  const cssEl = document.getElementById('custom-css-style');
+  if (cssEl) cssEl.textContent = t.customCss || '';
+
+  // Coming soon
+  const cs = document.getElementById('coming-soon-overlay');
+  const siteEl = document.getElementById('site');
+  if (cs) {
+    if (t.comingSoon && siteEl && !document.getElementById('admin-panel').offsetParent) {
+      cs.classList.remove('hidden');
+      siteEl.style.visibility = 'hidden';
+    } else {
+      cs.classList.add('hidden');
+      if (siteEl) siteEl.style.visibility = '';
+    }
+  }
+
+  // Show/hide UI elements
+  const searchWrap = document.getElementById('search-wrap');
+  if (searchWrap) searchWrap.style.display = t.showSearch !== false ? '' : 'none';
+  const catPills = document.getElementById('cat-pills');
+  if (catPills) catPills.style.display = t.showCats !== false ? '' : 'none';
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) themeToggle.style.display = t.showDarkToggle !== false ? '' : 'none';
+
+  // Favicon
+  if (t.favicon) {
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+    link.href = t.favicon;
+  }
+}
+
+function initCustomizeTab() {
+  const t = currentTheme;
+  const g = id => document.getElementById(id);
+  const setTog = (id, val) => { const el = g(id); if (el) el.classList.toggle('on', !!val); };
+  const setChip = (groupId, val) => {
+    document.querySelectorAll(`#${groupId} .cz-chip`).forEach(c => c.classList.toggle('active', c.dataset.v === String(val)));
+  };
+
+  // Branding
+  if (g('cz-site-title')) g('cz-site-title').value = t.siteTitle || 'StatHub';
+  if (g('cz-tagline')) g('cz-tagline').value = t.tagline || '';
+  if (t.logo && g('cz-logo-data')) { g('cz-logo-data').value = t.logo; const prev = g('cz-logo-preview'); if(prev){prev.src=t.logo;prev.style.display='';} }
+
+  // Colors
+  const colorMap = { 'cz-primary': t.primary, 'cz-secondary': t.secondary, 'cz-bg-light': t.bgLight, 'cz-bg-dark': t.bgDark, 'cz-surface-light': t.surfaceLight, 'cz-surface-dark': t.surfaceDark, 'cz-text-light': t.textLight, 'cz-text-dark': t.textDark };
+  Object.entries(colorMap).forEach(([id, val]) => { if (g(id)) g(id).value = val || '#000000'; });
+
+  // Typography
+  if (g('cz-font')) g('cz-font').value = t.font;
+  if (g('cz-font-size')) { g('cz-font-size').value = t.fontSize; g('cz-font-size-lbl').textContent = t.fontSize + 'px'; }
+  setChip('cz-heading-weight', t.headingWeight);
+  setChip('cz-letter-spacing', t.letterSpacing);
+
+  // Layout
+  setChip('cz-grid-cols', t.gridCols);
+  setChip('cz-border-radius', t.borderRadius);
+  setChip('cz-card-shadow', t.cardShadow);
+  setChip('cz-card-border', t.cardBorder);
+  setChip('cz-navbar-pos', t.navbarPos);
+  setTog('cz-compact', t.compact);
+
+  // Hero
+  setTog('cz-hero-show', t.heroShow !== false);
+  if (g('cz-hero-title')) g('cz-hero-title').value = t.heroTitle || '';
+  if (g('cz-hero-subtitle')) g('cz-hero-subtitle').value = t.heroSubtitle || '';
+  setChip('cz-hero-bg', t.heroBg);
+  setChip('cz-hero-height', t.heroHeight);
+  setChip('cz-hero-align', t.heroAlign);
+  if (g('cz-overlay-opacity')) { g('cz-overlay-opacity').value = t.overlayOpacity || 0; g('cz-overlay-lbl').textContent = (t.overlayOpacity || 0) + '%'; }
+
+  // Chart palette
+  buildChartPaletteUI();
+
+  // Chart defaults
+  setTog('cz-bar-rounded', t.barRounded !== false);
+  if (g('cz-bar-radius')) g('cz-bar-radius').value = t.barRadius || 5;
+  setChip('cz-bar-gap', t.barGap);
+  if (g('cz-line-thickness')) { g('cz-line-thickness').value = t.lineThickness || 3; g('cz-line-thick-lbl').textContent = (t.lineThickness || 3) + 'px'; }
+  setChip('cz-dot-size', t.dotSize);
+  if (g('cz-fill-opacity')) { g('cz-fill-opacity').value = t.fillOpacity || 35; g('cz-fill-lbl').textContent = (t.fillOpacity || 35) + '%'; }
+  setTog('cz-show-grid', t.showGrid !== false);
+  setChip('cz-grid-style', t.gridStyle);
+  setTog('cz-show-axis', t.showAxis !== false);
+  setTog('cz-show-val-labels', t.showValLabels !== false);
+  setTog('cz-show-tooltip', t.showTooltip !== false);
+  setChip('cz-anim', t.animDuration ?? 300);
+  setTog('cz-show-chart-title', t.showChartTitle !== false);
+  setTog('cz-show-trend-badge', t.showTrendBadge !== false);
+  setTog('cz-show-source', t.showSource !== false);
+  setTog('cz-show-ts', t.showTs !== false);
+  setChip('cz-card-padding', t.cardPadding);
+
+  // Public controls
+  setTog('cz-show-search', t.showSearch !== false);
+  setTog('cz-show-cats', t.showCats !== false);
+  setTog('cz-show-dark-toggle', t.showDarkToggle !== false);
+  setTog('cz-show-ds-count', t.showDsCount !== false);
+  setTog('cz-public-pw', t.publicPw);
+  if (g('cz-public-pw-value')) g('cz-public-pw-value').value = t.publicPwValue || '';
+  setTog('cz-coming-soon', t.comingSoon);
+
+  // Announcement & Footer
+  setTog('cz-ann-show', t.annShow);
+  if (g('cz-ann-text')) g('cz-ann-text').value = t.annText || '';
+  if (g('cz-ann-bg')) g('cz-ann-bg').value = t.annBg || '#6366f1';
+  setTog('cz-footer-show', t.footerShow);
+  setChip('cz-footer-cols', t.footerCols);
+  if (g('cz-footer-html')) g('cz-footer-html').value = t.footerHtml || '';
+
+  // Custom CSS
+  if (g('cz-custom-css')) g('cz-custom-css').value = t.customCss || '';
+
+  // Init chip click listeners
+  document.querySelectorAll('.cz-chip').forEach(chip => {
+    chip.onclick = () => {
+      const group = chip.closest('[id]');
+      if (group) group.querySelectorAll('.cz-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      themeChanged();
+    };
+  });
+
+  // Init theme presets
+  buildThemePresets();
+  buildChartPalettePresets();
+}
+
+function buildThemePresets() {
+  const PRESETS = [
+    { label:'Default', primary:'#0c4fb7', secondary:'#6366f1', bgLight:'#f4f7fb', bgDark:'#0a0a0f', surfaceLight:'#ffffff', surfaceDark:'#111118', textLight:'#10233d', textDark:'#e2e8f0' },
+    { label:'Ocean', primary:'#0d9488', secondary:'#0e7490', bgLight:'#f0fdfa', bgDark:'#042f2e', surfaceLight:'#ffffff', surfaceDark:'#0f3b38', textLight:'#0f2a27', textDark:'#ccfbf1' },
+    { label:'Sunset', primary:'#ea580c', secondary:'#e11d48', bgLight:'#fff7ed', bgDark:'#1c0a00', surfaceLight:'#ffffff', surfaceDark:'#2a1000', textLight:'#431407', textDark:'#fed7aa' },
+    { label:'Forest', primary:'#16a34a', secondary:'#65a30d', bgLight:'#f0fdf4', bgDark:'#052e16', surfaceLight:'#ffffff', surfaceDark:'#0a3d1a', textLight:'#14532d', textDark:'#bbf7d0' },
+    { label:'Midnight', primary:'#7c3aed', secondary:'#6d28d9', bgLight:'#faf5ff', bgDark:'#09050f', surfaceLight:'#ffffff', surfaceDark:'#120d1e', textLight:'#2e1065', textDark:'#e9d5ff' },
+    { label:'Mono', primary:'#18181b', secondary:'#52525b', bgLight:'#fafafa', bgDark:'#09090b', surfaceLight:'#ffffff', surfaceDark:'#18181b', textLight:'#18181b', textDark:'#f4f4f5' },
+  ];
+  const wrap = document.getElementById('theme-presets');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  PRESETS.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'cz-preset-btn';
+    btn.textContent = p.label;
+    btn.onclick = () => {
+      currentTheme = { ...currentTheme, ...p };
+      initCustomizeTab();
+      themeChanged();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function buildChartPaletteUI() {
+  const t = currentTheme;
+  const wrap = document.getElementById('chart-palette-colors');
+  if (!wrap) return;
+  const palette = t.chartPalette && t.chartPalette.length === 10 ? t.chartPalette : DEFAULT_THEME.chartPalette;
+  wrap.innerHTML = palette.map((col, i) =>
+    `<input type="color" class="cz-color cz-palette-color" value="${col}" data-idx="${i}" oninput="themeChanged()" />`
+  ).join('');
+}
+
+function buildChartPalettePresets() {
+  const PALETTES = {
+    'Heatmap': ['#6366f1','#8b5cf6','#a855f7','#c084fc','#f97316','#fb923c','#fbbf24','#34d399','#38bdf8','#94a3b8'],
+    'Pastel': ['#a5b4fc','#fbcfe8','#bbf7d0','#fde68a','#bae6fd','#fca5a5','#c4b5fd','#6ee7b7','#93c5fd','#fcd34d'],
+    'Vivid': ['#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#8b5cf6','#ec4899','#14b8a6','#f59e0b','#6366f1'],
+    'Earth': ['#78350f','#92400e','#b45309','#047857','#065f46','#1e3a5f','#374151','#6b7280','#9ca3af','#d1d5db'],
+    'Neon': ['#f0f','#0ff','#ff0','#f80','#0f8','#80f','#f08','#08f','#8f0','#f00'],
+    'Monochrome': ['#18181b','#27272a','#3f3f46','#52525b','#71717a','#a1a1aa','#d4d4d8','#e4e4e7','#f4f4f5','#fafafa'],
+  };
+  const wrap = document.getElementById('chart-palette-presets');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  Object.entries(PALETTES).forEach(([name, cols]) => {
+    const btn = document.createElement('button');
+    btn.className = 'cz-preset-btn';
+    btn.textContent = name;
+    btn.onclick = () => {
+      currentTheme.chartPalette = cols;
+      buildChartPaletteUI();
+      themeChanged();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function resetColorDefaults() {
+  const d = DEFAULT_THEME;
+  currentTheme = { ...currentTheme, primary: d.primary, secondary: d.secondary, bgLight: d.bgLight, bgDark: d.bgDark, surfaceLight: d.surfaceLight, surfaceDark: d.surfaceDark, textLight: d.textLight, textDark: d.textDark };
+  initCustomizeTab();
+  themeChanged();
+}
+
+function loadCustomFont() {
+  const font = document.getElementById('cz-font')?.value;
+  if (!font || font === 'Inter') return;
+  const encoded = font.replace(/ /g, '+');
+  if (!document.querySelector(`link[data-font="${font}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${encoded}:wght@400;600;700;800&display=swap`;
+    link.dataset.font = font;
+    document.head.appendChild(link);
+  }
+  document.body.style.fontFamily = `'${font}', system-ui, sans-serif`;
+}
+
+function loadImageToField(input, fieldId) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const data = ev.target.result;
+    const field = document.getElementById(fieldId);
+    if (field) field.value = data;
+    if (fieldId === 'cz-logo-data') {
+      const prev = document.getElementById('cz-logo-preview');
+      if (prev) { prev.src = data; prev.style.display = ''; }
+    }
+    themeChanged();
+  };
+  reader.readAsDataURL(file);
+}
+
+function publishTheme() {
+  collectThemeFromUI();
+  saveTheme();
+  applyThemeToPublicPage();
+  showToast('Theme published ✓');
+}
+
+function discardTheme() {
+  currentTheme = { ...savedTheme };
+  initCustomizeTab();
+  applyThemeToPublicPage();
+  themeUnsaved = false;
+  document.getElementById('cz-unsaved-badge')?.classList.add('hidden');
+  showToast('Changes discarded');
+}
+
+function exportTheme() {
+  collectThemeFromUI();
+  const blob = new Blob([JSON.stringify(currentTheme, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'stathub-theme.json';
+  a.click();
+}
+
+function importTheme(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      currentTheme = { ...DEFAULT_THEME, ...imported };
+      initCustomizeTab();
+      themeChanged();
+      showToast('Theme imported ✓');
+    } catch { showToast('Invalid theme file'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// Preview panel
+function openPreviewPanel() {
+  const panel = document.getElementById('cz-preview-panel');
+  if (panel) panel.classList.add('open');
+  updatePreviewFrame();
+}
+
+function closePreviewPanel() {
+  const panel = document.getElementById('cz-preview-panel');
+  if (panel) panel.classList.remove('open');
+}
+
+function updatePreviewFrame() {
+  // Preview is just the current page in an iframe — theme changes are reflected in real time
+  const frame = document.getElementById('cz-preview-frame');
+  if (!frame || !frame.closest('.open')) return;
+  // Reload with a query param to avoid auth
+  if (frame.src === 'about:blank') {
+    frame.src = location.pathname + '?preview=1';
+  }
+}
+
+// ──────────────────────────────────────────────
+// GITHUB TAB HELPERS
+// ──────────────────────────────────────────────
+function populateGhTabUI() {
+  const cfg = getGhConfig();
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+  set('gh-owner-tab', cfg.owner);
+  set('gh-repo-tab', cfg.repo);
+  set('gh-path-tab', cfg.path || 'data.json');
+  const t = document.getElementById('gh-token-tab');
+  if (t && cfg.token) t.placeholder = '•••••••• (token saved — enter new to change)';
+}
+
+function saveGhConfigTabFromUI() {
+  const owner = document.getElementById('gh-owner-tab')?.value.trim();
+  const repo = document.getElementById('gh-repo-tab')?.value.trim();
+  const path = document.getElementById('gh-path-tab')?.value.trim() || 'data.json';
+  const token = document.getElementById('gh-token-tab')?.value.trim();
+  const status = document.getElementById('gh-config-status-tab');
+  if (!owner || !repo) { status.style.color = '#f87171'; status.textContent = 'Owner and repo are required'; return; }
+  saveGhConfig(owner, repo, path, token);
+  // Sync to original inputs
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  set('gh-owner-input', owner); set('gh-repo-input', repo); set('gh-path-input', path);
+  status.style.color = '#34d399'; status.textContent = 'Saved ✓';
+  setTimeout(() => { status.textContent = ''; }, 2500);
+}
+
+async function testGhConnectionTab() {
+  const { owner, repo, path, token } = getGhConfig();
+  const status = document.getElementById('gh-config-status-tab');
+  if (!owner || !repo) { status.style.color = '#f87171'; status.textContent = 'Save config first'; return; }
+  status.style.color = 'var(--ink-soft)'; status.textContent = 'Testing…';
+  try {
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const res = await fetch(url, { headers });
+    if (res.status === 404) { status.style.color = '#f59e0b'; status.textContent = 'Repo found, data.json not yet created ✓'; }
+    else if (res.ok) { status.style.color = '#34d399'; status.textContent = 'Connected ✓ — data.json found'; }
+    else { const err = await res.json(); status.style.color = '#f87171'; status.textContent = 'Error: ' + (err.message || res.status); }
+  } catch(e) { status.style.color = '#f87171'; status.textContent = 'Network error: ' + e.message; }
+}
+
+function changePasswordTab() {
+  const np = document.getElementById('new-pw-tab').value;
+  const nc = document.getElementById('new-pw-confirm-tab').value;
+  const err = document.getElementById('change-pw-err-tab');
+  if (!np) { err.textContent = 'Enter a new password'; return; }
+  if (np !== nc) { err.textContent = "Passwords don't match"; return; }
+  window._adminPw = np;
+  localStorage.setItem('dv-admin-pw', np);
+  document.getElementById('new-pw-tab').value = '';
+  document.getElementById('new-pw-confirm-tab').value = '';
+  err.style.color = '#34d399'; err.textContent = 'Password updated ✓';
+  setTimeout(() => { err.textContent = ''; err.style.color = '#f87171'; }, 2500);
+}
+
+
 (async function init() {
   // Load custom password if saved
   const savedPw = localStorage.getItem("dv-admin-pw");
   if (savedPw) window._adminPw = savedPw;
   applyTheme();
+  await loadTheme();
   await loadDs();
   setupSearch();
   setupPwGate();
   hide(document.getElementById("loading-screen"));
   renderSite();
+  applyThemeToPublicPage();
   checkDeepLink();
   // Check hash on load
   if (location.hash === "#admin") {
     setTimeout(openAdminGate, 200);
   }
 })();
+
+
+
 </script>
+<!-- Site Footer -->
+<div id="site-footer">
+  <div id="site-footer-inner"></div>
+</div>
+<!-- Custom CSS injection point -->
+<style id="custom-css-style"></style>
+
 </body>
 </html>
