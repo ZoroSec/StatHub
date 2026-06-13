@@ -1,26 +1,13 @@
 [
   {
+    "id": "gdp-growth",
+    "category": "economy",
     "title": "Global GDP Growth Rate",
     "subtitle": "Annual % change — 2015 to 2024",
     "unit": "%",
     "source": "World Bank, 2024",
-    "notes": "",
-    "lastUpdated": "",
-    "category": "economy",
     "chartType": "area",
     "accent": "#6366f1",
-    "report": "Global GDP contracted sharply in 2020 due to the COVID-19 pandemic, recording a −3.1% decline — the worst since the Great Depression. The subsequent 2021 rebound of 6.0% was driven by pent-up demand, fiscal stimulus, and vaccine rollouts.",
-    "compareData": [],
-    "compareLabel": "",
-    "annotations": [],
-    "showLabels": true,
-    "negativeRed": true,
-    "showTrendLine": false,
-    "showCompare": true,
-    "published": true,
-    "allowPng": true,
-    "allowCsv": true,
-    "allowEmbed": true,
     "data": [
       {
         "label": "2015",
@@ -63,35 +50,29 @@
         "value": 3.2
       }
     ],
-    "insights": [
-      "The pandemic caused a larger GDP shock than the 2008 financial crisis.",
-      "2021's 6% bounce was the fastest global recovery in post-war history.",
-      "India and China together accounted for over 40% of global growth in 2023."
-    ],
     "keyStats": [
       {
         "label": "Peak growth",
         "value": "6.0%",
-        "year": "2021",
-        "trend": "",
-        "trendDir": "up"
+        "year": "2021"
       },
       {
         "label": "Worst year",
         "value": "−3.1%",
-        "year": "2020",
-        "trend": "",
-        "trendDir": "up"
+        "year": "2020"
       },
       {
         "label": "10yr avg",
         "value": "2.8%",
-        "year": "",
-        "trend": "",
-        "trendDir": "down"
+        "year": ""
       }
     ],
-    "id": "gdp-growth"
+    "report": "Global GDP contracted sharply in 2020 due to the COVID-19 pandemic, recording a −3.1% decline — the worst since the Great Depression. The subsequent 2021 rebound of 6.0% was driven by pent-up demand, fiscal stimulus, and vaccine rollouts.",
+    "insights": [
+      "The pandemic caused a larger GDP shock than the 2008 financial crisis.",
+      "2021's 6% bounce was the fastest global recovery in post-war history.",
+      "India and China together accounted for over 40% of global growth in 2023."
+    ]
   },
   {
     "id": "ai-market",
@@ -250,85 +231,5 @@
     "insights": [],
     "keyStats": [],
     "id": "global-gdp-growth-rate"
-  },
-  {
-    "title": "Infertility Rates Are Rising",
-    "subtitle": "Global prevalence and age-related fertility decline",
-    "unit": "%",
-    "source": "WHO, InVia Fertility Specialists, 2023",
-    "notes": "",
-    "lastUpdated": "2026-06-13",
-    "category": "health",
-    "chartType": "line",
-    "accent": "#6366f1",
-    "report": "Infertility has become a major global health issue, affecting approximately one in six adults during their lifetime. Studies show that infertility rates are relatively similar across high-, middle-, and low-income countries, indicating that it is a worldwide challenge rather than a problem limited to specific regions. Female fertility naturally declines with age, beginning around 27 years and becoming more pronounced after 35, with a severe reduction after 40. Early evaluation and timely medical intervention can significantly improve reproductive outcomes.",
-    "compareData": [],
-    "compareLabel": "",
-    "annotations": [],
-    "showLabels": true,
-    "negativeRed": true,
-    "showTrendLine": true,
-    "showCompare": true,
-    "published": true,
-    "allowPng": true,
-    "allowCsv": true,
-    "allowEmbed": true,
-    "data": [
-      {
-        "label": "20",
-        "value": 25
-      },
-      {
-        "label": "25",
-        "value": 25
-      },
-      {
-        "label": "30",
-        "value": 20
-      },
-      {
-        "label": "35",
-        "value": 15
-      },
-      {
-        "label": "40",
-        "value": 5
-      },
-      {
-        "label": "45",
-        "value": 1
-      }
-    ],
-    "insights": [
-      "1 in 6 adults worldwide experience infertility.",
-      "Female fertility declines noticeably after age 35.",
-      "Infertility affects high- and low-income countries at similar rates.",
-      "Early specialist consultation improves treatment opportunities."
-    ],
-    "keyStats": [
-      {
-        "label": "Global adults affected",
-        "value": "17.5%",
-        "year": "2023",
-        "trend": "≈ 1 in 6 people worldwide",
-        "trendDir": "up"
-      },
-      {
-        "label": "High-income countries",
-        "value": "17.8%",
-        "year": "2023",
-        "trend": "Lifetime infertility prevalence",
-        "trendDir": "up"
-      },
-      {
-        "label": "Low & middle-income countries",
-        "value": "16.5%",
-        "year": "2023",
-        "trend": "Comparable global burden",
-        "trendDir": "up"
-      }
-    ],
-    "id": "infertility-rates-are-rising",
-    "pinned": true
   }
 ]

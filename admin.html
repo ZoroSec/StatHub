@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StatHub | Admin Panel</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div id="loading-screen"><span>Loading…</span></div>
+<div id="toast" class="hidden"></div>
+<div id="chart-tooltip">
+  <div id="tt-label"></div>
+  <div id="tt-value"></div>
+</div>
+
+<div id="pw-gate" class="hidden">
+  <div style="position:fixed;top:16px;right:20px;">
+    <button class="theme-toggle-btn" onclick="toggleTheme()" id="pw-theme-btn">🌙 Dark</button>
+  </div>
+  <div id="pw-box">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div id="pw-icon-wrap"><span id="pw-icon">🔐</span></div>
+      <div id="pw-title">Admin Access</div>
+      <div id="pw-hint">Enter your password to continue</div>
+    </div>
+    <input id="pw-input" type="password" placeholder="Password" autocomplete="off" />
+    <div id="pw-err" class="hidden"></div>
+    <button id="pw-submit">Unlock Admin</button>
+  </div>
+</div>
+
+<div id="admin-panel" class="hidden">
+  <div id="admin-nav">
+    <div id="admin-nav-inner">
+      <div id="admin-nav-left">
+        <a href="index.html" id="admin-back-btn" style="text-decoration:none;">← Back to site</a>
+        <span id="admin-divider">|</span>
+        <span id="admin-title-lbl">Admin Panel</span>
+        <span id="admin-auth-badge">Authenticated</span>
+      </div>
+      <div id="admin-nav-right">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="admin-theme-btn">🌙 Dark</button>
+        <button id="admin-add-btn" class="btn-add">+ Add Dataset</button>
+      </div>
+    </div>
+    <div id="admin-tabs">
+      <button class="admin-tab-btn active" data-tab="datasets">📋 Datasets</button>
+      <button class="admin-tab-btn" data-tab="github">⚙ GitHub</button>
+    </div>
+  </div>
+  
+  <div id="admin-content">
+    <div id="tab-datasets" class="admin-tab-pane active">
+      <div id="admin-list-view">
+        <div id="admin-list-header"></div>
+        <div id="admin-ds-list"></div>
+        <div id="admin-empty" class="hidden">No datasets yet.</div>
+        
+        <div id="change-pw-wrap">
+          <div id="change-pw-lbl">🔑 Change Admin Password</div>
+          <div id="change-pw-row">
+            <input class="inp" id="new-pw-input" type="password" placeholder="New password" style="flex:1" />
+            <input class="inp" id="new-pw-confirm" type="password" placeholder="Confirm new password" style="flex:1" />
+            <button class="btn-save" style="padding:9px 18px;" onclick="changePassword()">Save</button>
+          </div>
+          <div id="change-pw-err" style="font-size:12px;color:#f87171;margin-top:6px;"></div>
+        </div>
+      </div>
+      
+      <div id="admin-form-view" class="hidden">
+        <div id="admin-form-header">New Dataset</div>
+        
+        <div id="img2chart-wrap">
+          <div id="img2chart-header">
+            <span id="img2chart-lbl">✦ Image → Interactive Chart</span>
+            <span id="img2chart-badge">AI-Powered</span>
+          </div>
+          <p id="img2chart-desc">Upload any chart image — Claude will read the data and fill in the form automatically.</p>
+          <div id="i2c-upload">
+            <div id="img-dropzone">
+              <div id="img-dropzone-icon">📊</div>
+              <div id="img-dropzone-text">Click or drag a chart image here</div>
+              <div id="img-dropzone-hint">PNG, JPG, WEBP supported</div>
+              <input id="img-file-input" type="file" accept="image/*" />
+            </div>
+          </div>
+          <div id="i2c-loaded" class="hidden">
+            <div id="img-preview-wrap">
+              <img id="img-preview-img" alt="uploaded chart" />
+              <button id="img-clear-btn">✕</button>
+            </div>
+            <div id="img-err" class="hidden"></div>
+            <button id="img-extract-btn" class="ready">Extract &amp; Preview Chart Data</button>
+          </div>
+          <div id="i2c-preview" class="hidden">
+            <div id="extracted-grid">
+              <div>
+                <div class="extracted-col-lbl">Original</div>
+                <img id="ext-original-img" alt="original" />
+              </div>
+              <div>
+                <div id="ext-count-lbl" class="extracted-col-lbl">Extracted</div>
+                <div id="ext-chart-wrap"></div>
+              </div>
+            </div>
+            <div id="ext-meta">
+              <div id="ext-meta-grid">
+                <div><span class="ext-meta-lbl">Title: </span><span id="ext-meta-title" class="ext-meta-val"></span></div>
+                <div><span class="ext-meta-lbl">Unit: </span><span id="ext-meta-unit" class="ext-meta-val"></span></div>
+                <div><span class="ext-meta-lbl">Type: </span><span id="ext-meta-type" class="ext-meta-val"></span></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button id="ext-confirm-btn">✓ Use this data — fill form</button>
+              <button id="ext-retry-btn">Retry</button>
+            </div>
+          </div>
+          <div id="i2c-done" class="hidden">
+            <div id="img2chart-done">
+              <div id="img2chart-done-icon">✅</div>
+              <div id="img2chart-done-title">Data extracted successfully</div>
+              <div id="img2chart-done-sub">Review the form below and fill in any missing fields</div>
+              <button id="img2chart-retry-btn">Try another image</button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="bulk-import-wrap">
+          <div id="bulk-import-lbl">⬆ Bulk CSV Import</div>
+          <div id="bulk-import-hint">Upload a CSV with columns: title, subtitle, unit, source, category, chartType, data (label:value pairs separated by |), report, insights (separated by |)</div>
+          <input id="bulk-csv-input" type="file" accept=".csv" />
+          <button id="bulk-import-btn" onclick="document.getElementById('bulk-csv-input').click()">📂 Choose CSV file</button>
+          <div id="bulk-import-result" style="font-size:12px;color:#34d399;margin-top:8px;"></div>
+        </div>
+
+        <div id="form-grid">
+          <div>
+            <div class="field">
+              <div class="field-label">Title</div>
+              <input class="inp" id="f-title" type="text" placeholder="e.g. India GDP Growth" />
+            </div>
+            <div class="field">
+              <div class="field-label">Subtitle</div>
+              <input class="inp" id="f-subtitle" type="text" placeholder="e.g. Annual % change — 2015 to 2024" />
+            </div>
+            <div class="inp-2col">
+              <div class="field">
+                <div class="field-label">Unit</div>
+                <input class="inp" id="f-unit" type="text" placeholder="%, $B, M…" />
+              </div>
+              <div class="field">
+                <div class="field-label">Source</div>
+                <input class="inp" id="f-source" type="text" placeholder="World Bank, 2024" />
+              </div>
+            </div>
+            <div class="inp-2col">
+              <div class="field">
+                <div class="field-label">Category</div>
+                <select class="inp sel" id="f-category">
+                  <option value="economy">Economy</option>
+                  <option value="technology">Technology</option>
+                  <option value="health">Health</option>
+                  <option value="sports">Sports</option>
+                  <option value="environment">Environment</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <div class="field-label">Last Updated</div>
+                <input class="inp" id="f-updated" type="date" />
+              </div>
+            </div>
+            <div class="field">
+              <div class="field-label">Chart Type</div>
+              <div class="chart-type-chips" id="chart-type-chips">
+                <span class="ctype-chip active" data-type="bar">Bar</span>
+                <span class="ctype-chip" data-type="line">Line</span>
+                <span class="ctype-chip" data-type="area">Area</span>
+                <span class="ctype-chip" data-type="donut">Donut</span>
+                <span class="ctype-chip" data-type="scatter">Scatter</span>
+              </div>
+              <input type="hidden" id="f-charttype" value="bar" />
+            </div>
+            <div class="field">
+              <div class="field-label">Accent Colour</div>
+              <div class="accent-swatches" id="accent-swatches"></div>
+            </div>
+            <div class="field">
+              <div class="field-label">Notes / Caveats</div>
+              <input class="inp" id="f-notes" type="text" placeholder="e.g. Adjusted for inflation, PPP basis" />
+            </div>
+            <div class="field">
+              <div class="field-label">Data Points</div>
+              <div class="field-hint">Format: label, value (one per line). Negative values supported.</div>
+              <textarea class="inp" id="f-data" rows="7" style="resize:vertical;font-family:monospace;font-size:12px;margin-top:4px;" placeholder="2020, 10&#10;2021, 20&#10;2022, 30"></textarea>
+            </div>
+            <div class="field">
+              <div class="field-label">Comparison Dataset (optional)</div>
+              <div class="field-hint">Label: value per line — shown as dashed overlay line</div>
+              <textarea class="inp" id="f-compare" rows="4" style="resize:vertical;font-family:monospace;font-size:12px;margin-top:4px;" placeholder="2020, 3.4&#10;2021, 6.1&#10;2022, 3.4"></textarea>
+            </div>
+            <div class="field">
+              <div class="field-label">Comparison Label</div>
+              <input class="inp" id="f-compare-label" type="text" placeholder="e.g. Global Average" />
+            </div>
+            <div class="section-divider">Annotations</div>
+            <div class="field-hint" style="margin-bottom:8px;">Pin labels on specific data points (e.g. "COVID impact" on 2020)</div>
+            <div id="ann-list">
+              <div class="ann-row-inp">
+                <span class="ann-lbl-sm">Point</span>
+                <input class="inp" placeholder="2020" style="max-width:80px;" data-ann-label />
+                <span class="ann-lbl-sm">Note</span>
+                <input class="inp" placeholder="COVID impact" data-ann-note />
+              </div>
+              <div class="ann-row-inp">
+                <span class="ann-lbl-sm">Point</span>
+                <input class="inp" placeholder="" style="max-width:80px;" data-ann-label />
+                <span class="ann-lbl-sm">Note</span>
+                <input class="inp" placeholder="" data-ann-note />
+              </div>
+            </div>
+            <button type="button" onclick="addAnnotationRow()" style="font-size:12px;padding:4px 10px;margin-top:4px;">+ Add annotation</button>
+          </div>
+          
+          <div>
+            <div class="field">
+              <div class="field-label">Key Stats (up to 3)</div>
+              <div style="margin-bottom:4px;font-size:10px;color:#334155;display:grid;grid-template-columns:2fr 1fr 1fr 80px;gap:6px;padding:0 2px;">
+                <span>Label</span><span>Value</span><span>Year</span><span>Trend</span>
+              </div>
+              <div class="inp-3col" style="grid-template-columns:2fr 1fr 1fr;">
+                <input class="inp" id="ks1l" placeholder="Label" />
+                <input class="inp" id="ks1v" placeholder="7.2%" />
+                <input class="inp" id="ks1y" placeholder="2024" />
+              </div>
+              <div class="ks-trend-row">
+                <input class="inp trend-inp" id="ks1t" placeholder="↑ +0.4% vs 2023" />
+                <button type="button" class="trend-badge up" id="tb1" onclick="cycleTrendBadge('tb1')">↑ Up</button>
+              </div>
+              <div class="inp-3col" style="grid-template-columns:2fr 1fr 1fr;">
+                <input class="inp" id="ks2l" placeholder="Label" />
+                <input class="inp" id="ks2v" placeholder="6.1%" />
+                <input class="inp" id="ks2y" placeholder="2024" />
+              </div>
+              <div class="ks-trend-row">
+                <input class="inp trend-inp" id="ks2t" placeholder="↑ Above global avg" />
+                <button type="button" class="trend-badge up" id="tb2" onclick="cycleTrendBadge('tb2')">↑ Up</button>
+              </div>
+              <div class="inp-3col" style="grid-template-columns:2fr 1fr 1fr;">
+                <input class="inp" id="ks3l" placeholder="Label" />
+                <input class="inp" id="ks3v" placeholder="-6.6%" />
+                <input class="inp" id="ks3y" placeholder="2020" />
+              </div>
+              <div class="ks-trend-row">
+                <input class="inp trend-inp" id="ks3t" placeholder="↓ 2020 (COVID)" />
+                <button type="button" class="trend-badge down" id="tb3" onclick="cycleTrendBadge('tb3')">↓ Down</button>
+              </div>
+            </div>
+            
+            <div class="field">
+              <div class="field-label">Report</div>
+              <textarea class="inp" id="f-report" rows="5" style="resize:vertical;" placeholder="Write your analysis here…"></textarea>
+            </div>
+            <div class="field">
+              <div class="field-label">Insights</div>
+              <div class="field-hint">One insight per line</div>
+              <textarea class="inp" id="f-insights" rows="4" style="resize:vertical;margin-top:4px;" placeholder="First key insight&#10;Second key insight"></textarea>
+            </div>
+
+            <div class="publish-row">
+              <div class="publish-row-title">Chart options</div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Show value labels</div><div class="tog-sub">Numbers on each bar/point</div></div>
+                <div class="tog-sw on" id="tog-labels" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Colour negative bars red</div><div class="tog-sub">Values below 0 shown in red</div></div>
+                <div class="tog-sw on" id="tog-neg" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Show trend line</div><div class="tog-sub">Auto regression overlay</div></div>
+                <div class="tog-sw" id="tog-trend" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Show comparison overlay</div><div class="tog-sub">Dashed line from comparison data</div></div>
+                <div class="tog-sw on" id="tog-compare" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+
+            <div class="publish-row">
+              <div class="publish-row-title">Publish &amp; export</div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Published</div><div class="tog-sub">Visible on the public site</div></div>
+                <div class="tog-sw on" id="tog-published" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Allow PNG download</div></div>
+                <div class="tog-sw on" id="tog-png" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Allow CSV download</div></div>
+                <div class="tog-sw on" id="tog-csv" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="toggle-row-admin">
+                <div><div class="tog-lbl">Show embed code</div></div>
+                <div class="tog-sw on" id="tog-embed" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+
+            <div id="form-preview-wrap">
+              <div id="form-preview-lbl">Live Preview</div>
+              <div id="form-preview-chart"></div>
+            </div>
+            
+            <div class="form-btns">
+              <button class="btn-save" id="form-save-btn">Add Dataset</button>
+              <button class="btn-cancel" id="form-cancel-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="tab-github" class="admin-tab-pane">
+      <div style="padding-top:24px;">
+        <div id="gh-config-wrap-tab" style="background:var(--surface-alt);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:0;">
+          <div style="font-size:12px;color:#34d399;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;font-weight:600;">🐙 GitHub Storage</div>
+          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:12px;line-height:1.6;">
+            Data saved here is committed to your GitHub repo as <code style="background:var(--surface);padding:1px 5px;border-radius:4px;font-size:11px;">data.json</code>.
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">GitHub Username / Org</div><input class="inp" id="gh-owner-tab" placeholder="e.g. harshit" style="width:100%" /></div>
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Repository name</div><input class="inp" id="gh-repo-tab" placeholder="e.g. stathub" style="width:100%" /></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">File path in repo</div><input class="inp" id="gh-path-tab" placeholder="data.json" style="width:100%" /></div>
+            <div><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Personal Access Token <span style="color:#f87171">*</span></div><input class="inp" id="gh-token-tab" type="password" placeholder="ghp_…" style="width:100%" /></div>
+          </div>
+          <div style="font-size:11px;color:#f59e0b;margin-bottom:10px;">&#9888; Token stays in your browser only — never sent to anyone except GitHub.</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button class="btn-save" style="padding:9px 18px;background:#34d399;border-color:#34d399;color:#000;" onclick="saveGhConfigTabFromUI()">Save GitHub Config</button>
+            <button style="padding:9px 18px;background:none;border:1px solid var(--line);border-radius:8px;color:var(--ink-soft);font-size:13px;cursor:pointer;font-family:inherit;" onclick="testGhConnectionTab()">Test connection</button>
+            <span id="gh-config-status-tab" style="font-size:12px;color:#34d399;"></span>
+          </div>
+        </div>
+        <div id="change-pw-wrap-tab" style="background:var(--surface-alt);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px;">
+          <div style="font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;font-weight:600;">🔑 Change Admin Password</div>
+          <div style="display:flex;gap:10px;">
+            <input class="inp" id="new-pw-tab" type="password" placeholder="New password" style="flex:1" />
+            <input class="inp" id="new-pw-confirm-tab" type="password" placeholder="Confirm" style="flex:1" />
+            <button class="btn-save" style="padding:9px 18px;" onclick="changePasswordTab()">Save</button>
+          </div>
+          <div id="change-pw-err-tab" style="font-size:12px;color:#f87171;margin-top:6px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="utils.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
