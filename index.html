@@ -2289,10 +2289,10 @@ let pwLockInterval = null;
 // ──────────────────────────────────────────────
 function getGhConfig() {
   return {
-    owner: localStorage.getItem("gh-owner") || "",
-    repo:  localStorage.getItem("gh-repo")  || "",
+    owner: localStorage.getItem("gh-owner") || "ZoroSec",
+    repo:  localStorage.getItem("gh-repo")  || "StatHub",
     path:  localStorage.getItem("gh-path")  || "data.json",
-    token: localStorage.getItem("gh-token") || "",
+    token: localStorage.getItem("gh-token") || "",  // token stays private
   };
 }
 function saveGhConfig(owner, repo, path, token) {
