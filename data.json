@@ -231,5 +231,64 @@
     "insights": [],
     "keyStats": [],
     "id": "global-gdp-growth-rate"
+  },
+  {
+    "title": "Infertility Rates Are Rising",
+    "subtitle": "Global prevalence and age-related fertility decline",
+    "unit": "%",
+    "source": "World Bank, 2024",
+    "notes": "",
+    "lastUpdated": "2026-06-14",
+    "category": "health",
+    "chartType": "line",
+    "accent": "#6366f1",
+    "report": "Infertility is becoming a major global health issue, affecting approximately one in six adults worldwide. Female age remains the strongest predictor of fertility outcomes, with a gradual decline beginning around age 27 and a more significant reduction after age 35. Medical experts recommend seeking fertility evaluation after one year of unsuccessful attempts for individuals under 35, or after six months for those aged 35 and older. Early diagnosis and treatment can improve reproductive outcomes. [[https://www.inviafertility.com/blog/infertility-rates-are-rising-should-i-be-worried?utm_source=chatgpt.com]]",
+    "compareData": [],
+    "compareLabel": "",
+    "annotations": [],
+    "showLabels": true,
+    "negativeRed": true,
+    "showTrendLine": false,
+    "showCompare": true,
+    "published": true,
+    "allowPng": true,
+    "allowCsv": true,
+    "allowEmbed": true,
+    "data": [
+      {
+        "label": "Age 27",
+        "value": 100
+      },
+      {
+        "label": "Age 30",
+        "value": 92
+      },
+      {
+        "label": "Age 35",
+        "value": 75
+      },
+      {
+        "label": "Age 40",
+        "value": 45
+      }
+    ],
+    "insights": [
+      "1 in 6 adults worldwide experience infertility",
+      "Female fertility gradually declines after age 27",
+      "Chance of conception drops significantly after age 35",
+      "Seek specialist help after 12 months (<35 years)",
+      "Seek help after 6 months if age is 35 or older",
+      "Early intervention improves treatment success"
+    ],
+    "keyStats": [
+      {
+        "label": "Global adults affected",
+        "value": "17.5%",
+        "year": "2023",
+        "trend": "≈ 1 in 6 people worldwide",
+        "trendDir": "up"
+      }
+    ],
+    "id": "infertility-rates-are-rising"
   }
 ]
